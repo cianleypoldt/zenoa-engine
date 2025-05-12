@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "Physics_engine"
+			"path" : "2d_Physics"
 		}
 	],
 	"backtrace" : 1,
@@ -32,13 +32,19 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 17,
+				"line" : 21,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 25,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 16,
+				"line" : 14,
 				"parent" : 0
 			}
 		]
@@ -55,7 +61,7 @@
 			"includes" : 
 			[
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"path" : "/home/cianleypoldt/Documents/cpp/2d_Physics/include"
 				}
 			],
@@ -70,11 +76,14 @@
 			},
 			"sourceIndexes" : 
 			[
-				0
+				0,
+				1,
+				2,
+				3
 			]
 		}
 	],
-	"id" : "Physics_engine::@6890427a1f51a3e7e1df",
+	"id" : "2d_Physics::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -93,12 +102,17 @@
 				"backtrace" : 2,
 				"fragment" : "-lsfml-system",
 				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-lglm",
+				"role" : "libraries"
 			}
 		],
 		"language" : "CXX"
 	},
-	"name" : "Physics_engine",
-	"nameOnDisk" : "Physics_engine",
+	"name" : "2d_Physics",
+	"nameOnDisk" : "2d_Physics",
 	"paths" : 
 	{
 		"build" : ".",
@@ -110,7 +124,10 @@
 			"name" : "Source Files",
 			"sourceIndexes" : 
 			[
-				0
+				0,
+				1,
+				2,
+				3
 			]
 		}
 	],
@@ -119,7 +136,25 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
+			"path" : "src/engine/Simulation.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/graphics/Renderer.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
 			"path" : "src/main.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/utility/Time.cpp",
 			"sourceGroupIndex" : 0
 		}
 	],

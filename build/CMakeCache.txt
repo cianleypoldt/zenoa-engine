@@ -14,6 +14,15 @@
 # EXTERNAL cache entries
 ########################
 
+//Value Computed by CMake
+2d_Physics_BINARY_DIR:STATIC=/home/cianleypoldt/Documents/cpp/2d_Physics/build
+
+//Value Computed by CMake
+2d_Physics_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+2d_Physics_SOURCE_DIR:STATIC=/home/cianleypoldt/Documents/cpp/2d_Physics
+
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=/usr/bin/addr2line
 
@@ -122,7 +131,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=Physics_engine
+CMAKE_PROJECT_NAME:STATIC=2d_Physics
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -203,6 +212,9 @@ SFML_DIR:PATH=/usr/lib/cmake/SFML
 
 //Path to a file.
 SFML_DOC_DIR:PATH=/usr/share/doc/SFML
+
+//The directory containing a CMake configuration file for glm.
+glm_DIR:PATH=/usr/lib/cmake/glm
 
 
 ########################

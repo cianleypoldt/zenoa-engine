@@ -10,8 +10,16 @@ file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-# Find SFML package (make sure SFML is installed)
-find_package(SFML COMPONENTS Graphics Window System REQUIRED)
+# Include directories
+target_include_directories(${PROJECT_NAME}
+    PRIVATE
+        include
+)
 
-target_include_directories(${PROJECT_NAME} PRIVATE include)
+# SFML
+find_package(SFML COMPONENTS Graphics Window System REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE sfml-graphics sfml-window sfml-system)
+
+# GLM
+find_package(glm REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE glm)

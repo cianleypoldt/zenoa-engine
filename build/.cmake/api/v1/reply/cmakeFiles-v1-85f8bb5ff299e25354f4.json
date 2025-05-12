@@ -153,6 +153,18 @@
 		{
 			"isExternal" : true,
 			"path" : "/usr/lib/cmake/SFML/SFMLGraphicsSharedTargets-release.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/usr/lib/cmake/glm/glmConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/usr/lib/cmake/glm/glmConfig.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/usr/lib/cmake/glm/glmConfig-release.cmake"
 		}
 	],
 	"kind" : "cmakeFiles",

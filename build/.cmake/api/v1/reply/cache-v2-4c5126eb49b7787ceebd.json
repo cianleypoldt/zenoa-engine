@@ -2,6 +2,42 @@
 	"entries" : 
 	[
 		{
+			"name" : "2d_Physics_BINARY_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/home/cianleypoldt/Documents/cpp/2d_Physics/build"
+		},
+		{
+			"name" : "2d_Physics_IS_TOP_LEVEL",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "ON"
+		},
+		{
+			"name" : "2d_Physics_SOURCE_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/home/cianleypoldt/Documents/cpp/2d_Physics"
+		},
+		{
 			"name" : "CMAKE_ADDR2LINE",
 			"properties" : 
 			[
@@ -747,7 +783,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "Physics_engine"
+			"value" : "2d_Physics"
 		},
 		{
 			"name" : "CMAKE_RANLIB",
@@ -1104,6 +1140,18 @@
 			],
 			"type" : "PATH",
 			"value" : "/usr/share/doc/SFML"
+		},
+		{
+			"name" : "glm_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for glm."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/usr/lib/cmake/glm"
 		}
 	],
 	"kind" : "cache",
