@@ -1,35 +1,27 @@
 #pragma once
 #include <glm/glm.hpp>
 
-struct Position
+struct Body
 {
-    glm::vec2 value;
+    glm::vec2 position;
+    glm::vec2 velocity;
+    glm::vec2 force;
+
+    float rotation;
+    float angular_velocity;
+    float torque;
+
+    float mass;
+    float invMass;
+    float inertia;
+    float invInertia;
+    float elasticity;
 };
 
-struct PreviousPosition
-{
-    glm::vec2 value;
-};
-
-struct Rotation
-{
-    float value;
-};
-
-struct PreviousRotation
-{
-    float value;
-};
-
-struct Mass
-{
-    float value;
-};
 struct ConvexCollider
 {
-    float bounding_radius;
-    unsigned int begin;
-    unsigned int count;
+    unsigned int buffer_begin;
+    unsigned int buffer_end;
 };
 
 struct CircleCollider
@@ -38,6 +30,6 @@ struct CircleCollider
 };
 
 union Collider {
-    ConvexCollider convex_collider;
     CircleCollider circle_collider;
+    ConvexCollider convex_collider;
 };

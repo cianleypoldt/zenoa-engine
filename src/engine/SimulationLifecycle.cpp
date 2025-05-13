@@ -1,26 +1,27 @@
 #include "../utility/Utility.h"
 #include "Simulation.h"
 
-Simulation::context* Simulation::make_context()
+rbs::PhyiscsWorld* rbs::make_context()
 {
-    context* cntx = new context{new EntityManager<ENTITY_CAP>, utl::ScopedArena(ARENA_BUFFER_SIZE)};
+    PhyiscsWorld* cntx = new PhyiscsWorld{EntityManager<ENTITY_CAP>(), utl::MemoryArena::create(ARENA_BUFFER_SIZE)};
+
     cntx->convex_verticy_pool.reserve(INITIAL_VERTEX_POOL_SIZE);
     return cntx;
 }
 
-void Simulation::drop(context* cntx)
+void rbs::drop(PhyiscsWorld* cntx)
 {
     if (cntx == nullptr)
     {
-        UTL_ERROR("Attempted to drop null simulation context");
+        UTL_ERROR("Attempted to drop null rbs context");
         return;
     }
-    delete cntx->entity_manager;
+    cntx->memory_arena.destroy();
     delete cntx;
-    UTL_INFO("Simulation context destroyed");
+    UTL_INFO("rbs context destroyed");
 }
 
-unsigned int Simulation::addEntity(context* cntx, glm::vec2 pos, float mass)
+unsigned int rbs::addEntity(PhyiscsWorld* cntx, glm::vec2 pos, float mass)
 {
     if (cntx == nullptr) [[unlikely]]
     {
@@ -30,68 +31,39 @@ unsigned int Simulation::addEntity(context* cntx, glm::vec2 pos, float mass)
 
     for (unsigned int id = 0; id < ENTITY_CAP; ++id)
     {
-        if (cntx->entity_manager->isAlive(id))
+        if (cntx->entity_manager.isAlive(id))
             continue;
 
-        cntx->entity_manager->setAlive(id);
+        if (id >= cntx->max_id)
+            cntx->max_id++;
 
-        cntx->entity_manager->pos[id].value = pos;
-        cntx->entity_manager->prev_pos[id].value = pos;
+        cntx->entity_manager.setAlive(id, true);
+        cntx->entity_manager.setMoveable(id, true);
+        cntx->entity_manager.setGravity(id, true);
+        cntx->entity_manager.setCollider(id, false);
+        cntx->entity_manager.setConvex(id, false);
 
-        cntx->entity_manager->rot[id].value = 0.0f;
-        cntx->entity_manager->prev_rot[id].value = 0.0f;
+        cntx->entity_manager.body[id].position = pos;
+        cntx->entity_manager.body[id].velocity = {0, 0};
+        cntx->entity_manager.body[id].force = {0, 0};
+        cntx->entity_manager.body[id].rotation = 0.0f;
+        cntx->entity_manager.body[id].angular_velocity = 0.0f;
+        cntx->entity_manager.body[id].torque = 0.0f;
+        cntx->entity_manager.body[id].mass = 1;
+        cntx->entity_manager.body[id].invMass = 0;
+        cntx->entity_manager.body[id].invInertia = 0;
+        cntx->entity_manager.body[id].inertia = 0;
+        cntx->entity_manager.body[id].elasticity = DEFAULT_ELASTICITY;
 
-        cntx->entity_manager->mass[id].value = mass;
+        cntx->entity_manager.collider[id].circle_collider.radius = 0;
 
         return id;
     }
-    UTL_ERROR("Entity capacity exceeded, cannot create new entity");
+    UTL_ERROR("Entity capacity exceeded, cannot create more than %i entities", ENTITY_CAP);
     return UINT_MAX;
 }
 
-void Simulation::addConvexCollider(context* cntx, unsigned int id, const std::vector<glm::vec2>& points)
-{
-    if (cntx == nullptr) [[unlikely]]
-    {
-        UTL_ERROR("Null context passed to addConvexCollider");
-        return;
-    }
-    if (id >= ENTITY_CAP) [[unlikely]]
-    {
-        UTL_ERROR("Attempted to add convex collider to invalid entity id %u", id);
-        return;
-    }
-    if (!cntx->entity_manager->isAlive(id)) [[unlikely]]
-    {
-        UTL_ERROR("Attempted to add convex collider to non-existent entity %u", id);
-        return;
-    }
-    if (points.empty()) [[unlikely]]
-    {
-        UTL_ERROR("Empty points vector passed to addConvexCollider for entity %u", id);
-        return;
-    }
-
-    ConvexCollider collider;
-    collider.begin = static_cast<unsigned int>(cntx->convex_verticy_pool.size());
-    collider.count = static_cast<unsigned int>(points.size());
-
-    // Calculate maximum squared distance for bounding radius
-    float max_sq_dist = 0.0f;
-    for (const auto& point : points)
-    {
-        float dist_sq = glm::dot(point, point);
-        if (dist_sq > max_sq_dist)
-            max_sq_dist = dist_sq;
-    }
-
-    cntx->convex_verticy_pool.insert(cntx->convex_verticy_pool.end(), points.begin(), points.end());
-
-    cntx->entity_manager->setConvexCollider(id, collider);
-    UTL_INFO("Added convex collider to entity %u with %u vertices", id, collider.count);
-}
-
-void Simulation::addCircleCollider(context* cntx, unsigned int id, float radius)
+void rbs::addCircleCollider(PhyiscsWorld* cntx, unsigned int id, float radius)
 {
     if (cntx == nullptr) [[unlikely]]
     {
@@ -103,46 +75,79 @@ void Simulation::addCircleCollider(context* cntx, unsigned int id, float radius)
         UTL_ERROR("Attempted to add circle collider to invalid entity id %u", id);
         return;
     }
-    if (!cntx->entity_manager->isAlive(id)) [[unlikely]]
+    if (!cntx->entity_manager.isAlive(id)) [[unlikely]]
     {
         UTL_ERROR("Attempted to add convex collider to non-existent entity %u", id);
         return;
     }
 
     CircleCollider collider{radius};
-    cntx->entity_manager->setCircleCollider(id, collider);
+    cntx->entity_manager.setCircleCollider(id, collider);
 }
 
-void Simulation::killEntity(context* cntx, unsigned int id)
+void rbs::addConvexCollider(PhyiscsWorld* cntx, unsigned int id, const std::vector<glm::vec2>& points)
+{
+    if (cntx == nullptr) [[unlikely]]
+    {
+        UTL_ERROR("Null context passed to addConvexCollider");
+        return;
+    }
+    if (id >= ENTITY_CAP) [[unlikely]]
+    {
+        UTL_ERROR("Attempted to add convex collider to invalid entity id %u", id);
+        return;
+    }
+    if (!cntx->entity_manager.isAlive(id)) [[unlikely]]
+    {
+        UTL_ERROR("Attempted to add convex collider to non-existent entity %u", id);
+        return;
+    }
+    if (points.empty()) [[unlikely]]
+    {
+        UTL_ERROR("Empty points vector passed to addConvexCollider for entity %u", id);
+        return;
+    }
+
+    ConvexCollider collider;
+    collider.buffer_begin = static_cast<unsigned int>(cntx->convex_verticy_pool.size());
+    collider.buffer_end = collider.buffer_begin + static_cast<unsigned int>(points.size());
+
+    cntx->convex_verticy_pool.insert(cntx->convex_verticy_pool.end(), points.begin(), points.end());
+
+    cntx->entity_manager.setConvexCollider(id, collider);
+}
+
+void rbs::killEntity(PhyiscsWorld* cntx, unsigned int id)
 {
     if (id >= ENTITY_CAP) [[unlikely]]
     {
         UTL_ERROR("Attempted to access invalid entity id %u", id);
         return;
     }
-    cntx->entity_manager->kill(id);
+    cntx->entity_manager.kill(id);
 }
-glm::vec2 Simulation::getPosition(context* cntx, unsigned int id)
+
+glm::vec2 rbs::getPosition(PhyiscsWorld* cntx, unsigned int id)
 {
     if (id >= ENTITY_CAP) [[unlikely]]
     {
         UTL_ERROR("Attempted to access invalid entity id %u", id);
         return {};
     }
-    return cntx->entity_manager->pos[id].value;
+    return cntx->entity_manager.body[id].position;
 }
 
-float Simulation::getRotation(context* cntx, unsigned int id)
+float rbs::getRotation(PhyiscsWorld* cntx, unsigned int id)
 {
     if (id >= ENTITY_CAP) [[unlikely]]
     {
         UTL_ERROR("Attempted to access invalid entity id %u", id);
         return 0.0f;
     }
-    return cntx->entity_manager->rot[id].value;
+    return cntx->entity_manager.body[id].rotation;
 }
 
-float Simulation::getCircleRadius(context* cntx, unsigned int id)
+float rbs::getCircleRadius(PhyiscsWorld* cntx, unsigned int id)
 {
     if (id >= ENTITY_CAP) [[unlikely]]
     {
@@ -150,31 +155,31 @@ float Simulation::getCircleRadius(context* cntx, unsigned int id)
         return {};
     }
 
-    if (cntx->entity_manager->isConvex(id)) [[unlikely]]
+    if (cntx->entity_manager.isConvex(id)) [[unlikely]]
     {
         UTL_ERROR("Object with id %u is not a circle\n", id);
         return -1.0f;
     }
 
-    return cntx->entity_manager->collider[id].circle_collider.radius;
+    return cntx->entity_manager.collider[id].circle_collider.radius;
 }
 
-std::vector<glm::vec2> Simulation::getConvexShape(context* cntx, unsigned int id)
+std::vector<glm::vec2> rbs::getConvexShape(PhyiscsWorld* cntx, unsigned int id)
 {
-    if (!cntx->entity_manager->isAlive(id)) [[unlikely]]
+    if (!cntx->entity_manager.isAlive(id)) [[unlikely]]
     {
         UTL_ERROR("Object with id %u is dead\n", id);
         return {};
     }
 
-    if (!cntx->entity_manager->isConvex(id)) [[unlikely]]
+    if (!cntx->entity_manager.isConvex(id)) [[unlikely]]
     {
         UTL_ERROR("Object with id %u is not a convex shape\n", id);
         return {};
     }
 
-    const auto& collider = cntx->entity_manager->collider[id].convex_collider;
+    const auto& collider = cntx->entity_manager.collider[id].convex_collider;
     return std::vector<glm::vec2>(
-        cntx->convex_verticy_pool.begin() + collider.begin,
-        cntx->convex_verticy_pool.begin() + collider.begin + collider.count);
+        cntx->convex_verticy_pool.begin() + collider.buffer_begin,
+        cntx->convex_verticy_pool.begin() + collider.buffer_end);
 }

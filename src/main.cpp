@@ -2,6 +2,14 @@
 #include "utility/Utility.h"
 #include <SFML/Graphics.hpp>
 
+sf::Vector2f translate(glm::vec2 pos)
+{
+    return sf::Vector2f(pos.x + 500, -pos.y + 250);
+}
+float random(float min, float max)
+{
+    return min + static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * (max - min);
+}
 int main()
 {
 
@@ -12,36 +20,45 @@ int main()
     window.setPosition({0, 0});
     window.display();
 
-    auto simulation = Simulation::make_context();
-    unsigned int id[101];
-    float creationTime = utl::measureExecutionTime([&]() {
-        for (int i = 0; i < 101; i++)
-        {
-            id[i] = Simulation::addEntity(simulation);
-            Simulation::addCircleCollider(simulation, id[i], 10);
-        }
-    });
-    UTL_INFO("Created 100 entities in %.2f ms", creationTime);
+    auto simulation = rbs::make_context();
+    simulation->simulation_timestep = 0.01;
+    simulation->gravity = -0.005;
+    simulation->simulation_bounds[0] = {-500, -250};
+    simulation->simulation_bounds[1] = {500, 250};
+    simulation->bounded = true;
 
-    sf::CircleShape circle;
-    circle.setOutlineColor(sf::Color::White);
-    circle.setFillColor(sf::Color::Transparent);
+    unsigned int id[100];
+
+    // populate Physicsworld
+    for (int i = 0; i < 100; i++)
+    {
+        id[i] = rbs::addEntity(simulation, {random(-450, 450), random(-230, 230)});
+        rbs::addCircleCollider(simulation, id[i], random(5, 15));
+    }
+
+    sf::CircleShape circle_a;
+    circle_a.setOutlineColor(sf::Color::White);
+    circle_a.setOutlineThickness(1);
+    circle_a.setFillColor(sf::Color::Transparent);
+
     while (window.isOpen())
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
             window.close();
-        window.clear();
+
         for (int i = 0; i < 100; i++)
         {
-            float radius = Simulation::getCircleRadius(simulation, id[i]);
-            auto pos = Simulation::getPosition(simulation, id[i]);
-            circle.setPosition(sf::Vector2f(pos.x, pos.y));
-            circle.setRadius(radius);
-            window.draw(circle);
+            float radius_a = rbs::getCircleRadius(simulation, id[i]);
+            circle_a.setRadius(radius_a);
+            circle_a.setOrigin({radius_a, radius_a});
+            circle_a.setPosition(translate(rbs::getPosition(simulation, id[i])));
+            window.draw(circle_a);
         }
+
         window.display();
+        rbs::step(simulation);
+        window.clear();
     }
 
-    UTL_INFO("2D Physics Engine shutting down");
-    Simulation::drop(simulation);
+    rbs::drop(simulation);
 }
