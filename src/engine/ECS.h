@@ -1,5 +1,6 @@
 #pragma once
 #include "EntityComponents.h"
+#include <stdio.h>
 
 enum EntityFlag : uint8_t
 {
@@ -20,12 +21,20 @@ struct EntityManager
     Mass mass[max_entity_count];
     Collider collider[max_entity_count];
 
+    EntityManager()
+    {
+        for (unsigned int i = 0; i < max_entity_count; i++)
+        {
+            flag[i] = 0;
+        }
+    }
+
     void setAlive(unsigned int id) { flag[id] |= EntityFlag::ALIVE; }
     void kill(unsigned int id) { flag[id] = 0; }
     void moveable(unsigned int id, bool moveavle)
     {
         if (moveavle)
-            flag[id] |= -EntityFlag::MOVEABLE;
+            flag[id] |= EntityFlag::MOVEABLE;
         else
             flag[id] &= ~EntityFlag::MOVEABLE;
     }

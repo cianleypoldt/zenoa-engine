@@ -51,8 +51,8 @@
 CMakeFiles/2d_Physics.dir/src/engine/Simulation.cpp.o: /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/Simulation.cpp \
   /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/ECS.h \
   /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/EntityComponents.h \
+  /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/MemoryArena.h \
   /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/Simulation.h \
-  /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/memory.h \
   /usr/include/alloca.h \
   /usr/include/assert.h \
   /usr/include/bits/atomic_wide_counter.h \
@@ -83,6 +83,7 @@ CMakeFiles/2d_Physics.dir/src/engine/Simulation.cpp.o: /home/cianleypoldt/Docume
   /usr/include/bits/stdint-intn.h \
   /usr/include/bits/stdint-least.h \
   /usr/include/bits/stdint-uintn.h \
+  /usr/include/bits/stdio_lim.h \
   /usr/include/bits/stdlib-float.h \
   /usr/include/bits/struct_mutex.h \
   /usr/include/bits/struct_rwlock.h \
@@ -90,12 +91,19 @@ CMakeFiles/2d_Physics.dir/src/engine/Simulation.cpp.o: /home/cianleypoldt/Docume
   /usr/include/bits/time64.h \
   /usr/include/bits/timesize.h \
   /usr/include/bits/types.h \
+  /usr/include/bits/types/FILE.h \
+  /usr/include/bits/types/__FILE.h \
+  /usr/include/bits/types/__fpos64_t.h \
+  /usr/include/bits/types/__fpos_t.h \
   /usr/include/bits/types/__locale_t.h \
+  /usr/include/bits/types/__mbstate_t.h \
   /usr/include/bits/types/__sigset_t.h \
   /usr/include/bits/types/clock_t.h \
   /usr/include/bits/types/clockid_t.h \
+  /usr/include/bits/types/cookie_io_functions_t.h \
   /usr/include/bits/types/locale_t.h \
   /usr/include/bits/types/sigset_t.h \
+  /usr/include/bits/types/struct_FILE.h \
   /usr/include/bits/types/struct_timespec.h \
   /usr/include/bits/types/struct_timeval.h \
   /usr/include/bits/types/time_t.h \
@@ -325,12 +333,14 @@ CMakeFiles/2d_Physics.dir/src/engine/Simulation.cpp.o: /home/cianleypoldt/Docume
   /usr/include/math.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdint.h \
+  /usr/include/stdio.h \
   /usr/include/stdlib.h \
   /usr/include/sys/cdefs.h \
   /usr/include/sys/select.h \
   /usr/include/sys/types.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/float.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/limits.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stddef.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdint.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/syslimits.h
@@ -341,8 +351,8 @@ CMakeFiles/2d_Physics.dir/src/graphics/Renderer.cpp.o: /home/cianleypoldt/Docume
 CMakeFiles/2d_Physics.dir/src/main.cpp.o: /home/cianleypoldt/Documents/cpp/2d_Physics/src/main.cpp \
   /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/ECS.h \
   /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/EntityComponents.h \
+  /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/MemoryArena.h \
   /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/Simulation.h \
-  /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/memory.h \
   /usr/include/alloca.h \
   /usr/include/assert.h \
   /usr/include/bits/atomic_wide_counter.h \
@@ -641,18 +651,6 @@ CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o: /home/cianleypoldt/Documents/c
 
 /home/cianleypoldt/Documents/cpp/2d_Physics/src/utility/Time.cpp:
 
-/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h:
-
-/usr/include/bits/types/cookie_io_functions_t.h:
-
-/usr/include/bits/types/__mbstate_t.h:
-
-/usr/include/bits/types/__fpos_t.h:
-
-/usr/include/bits/types/__fpos64_t.h:
-
-/usr/include/bits/types/FILE.h:
-
 /home/cianleypoldt/Documents/cpp/2d_Physics/src/main.cpp:
 
 /home/cianleypoldt/Documents/cpp/2d_Physics/src/graphics/Renderer.cpp:
@@ -660,6 +658,8 @@ CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o: /home/cianleypoldt/Documents/c
 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/syslimits.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stddef.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h:
 
 /usr/include/sys/types.h:
 
@@ -761,13 +761,17 @@ CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o: /home/cianleypoldt/Documents/c
 
 /usr/include/glm/ext/matrix_float4x2.hpp:
 
-/usr/include/glm/ext/matrix_float4x4_precision.hpp:
+/usr/include/glm/ext/matrix_float3x4.hpp:
 
-/usr/include/c++/14.2.1/bits/predefined_ops.h:
+/usr/include/glm/ext/matrix_float3x3_precision.hpp:
 
-/usr/include/c++/14.2.1/bits/memoryfwd.h:
+/usr/include/glm/ext/matrix_float3x3.hpp:
 
-/usr/include/c++/14.2.1/bits/requires_hosted.h:
+/usr/include/glm/ext/matrix_float3x2_precision.hpp:
+
+/usr/include/glm/ext/matrix_float3x2.hpp:
+
+/usr/include/glm/ext/matrix_float2x4.hpp:
 
 /usr/include/glm/glm.hpp:
 
@@ -791,6 +795,10 @@ CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o: /home/cianleypoldt/Documents/c
 
 /usr/include/assert.h:
 
+/usr/include/c++/14.2.1/bits/memoryfwd.h:
+
+/usr/include/c++/14.2.1/bits/requires_hosted.h:
+
 /usr/include/stdio.h:
 
 /usr/include/bits/wordsize.h:
@@ -800,8 +808,6 @@ CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o: /home/cianleypoldt/Documents/c
 /usr/include/bits/waitflags.h:
 
 /usr/include/glm/detail/type_mat3x2.inl:
-
-/usr/include/bits/types/struct_timeval.h:
 
 /usr/include/bits/types/sigset_t.h:
 
@@ -821,11 +827,17 @@ CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o: /home/cianleypoldt/Documents/c
 
 /usr/include/c++/14.2.1/bits/exception.h:
 
-/usr/include/c++/14.2.1/bits/new_allocator.h:
-
-/usr/lib/libsfml-system.so:
-
 /usr/include/glm/ext/matrix_double4x3_precision.hpp:
+
+/usr/lib/libpng16.so.16:
+
+/usr/include/bits/types/struct_timeval.h:
+
+/usr/include/bits/types/__mbstate_t.h:
+
+/usr/include/glm/ext/matrix_float4x4_precision.hpp:
+
+/usr/include/c++/14.2.1/bits/predefined_ops.h:
 
 /usr/include/bits/stdint-least.h:
 
@@ -855,9 +867,13 @@ CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o: /home/cianleypoldt/Documents/c
 
 /usr/include/bits/types/time_t.h:
 
-/usr/include/glm/ext/matrix_float3x3.hpp:
-
 /usr/include/bits/struct_rwlock.h:
+
+/usr/include/bits/types/__fpos_t.h:
+
+/usr/include/bits/mathcalls.h:
+
+/usr/include/glm/detail/type_mat3x3.hpp:
 
 /usr/include/bits/long-double.h:
 
@@ -875,6 +891,8 @@ CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o: /home/cianleypoldt/Documents/c
 
 /usr/include/bits/flt-eval-method.h:
 
+/usr/include/bits/types/FILE.h:
+
 /usr/lib/libXau.so.6:
 
 /usr/lib/libfreetype.so.6:
@@ -885,11 +903,11 @@ CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o: /home/cianleypoldt/Documents/c
 
 /usr/lib/libX11.so.6:
 
+/usr/include/bits/types/__fpos64_t.h:
+
 /usr/include/c++/14.2.1/bits/stl_function.h:
 
 /usr/lib/libXrender.so.1:
-
-/usr/include/c++/14.2.1/bits/ptr_traits.h:
 
 /usr/lib/libXext.so.6:
 
@@ -902,10 +920,6 @@ CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o: /home/cianleypoldt/Documents/c
 /usr/include/c++/14.2.1/ext/alloc_traits.h:
 
 /usr/include/c++/14.2.1/tr1/bessel_function.tcc:
-
-/usr/include/c++/14.2.1/bits/refwrap.h:
-
-/home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/memory.h:
 
 /usr/include/bits/types/struct_timespec.h:
 
@@ -920,14 +934,6 @@ CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o: /home/cianleypoldt/Documents/c
 /usr/include/glm/ext/matrix_float3x4_precision.hpp:
 
 /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h:
-
-/usr/include/bits/mathcalls.h:
-
-/usr/include/glm/ext/matrix_double3x4.hpp:
-
-/usr/include/bits/types/clock_t.h:
-
-/usr/include/glm/detail/type_mat3x3.hpp:
 
 /usr/lib/libXcursor.so.1:
 
@@ -1025,6 +1031,12 @@ CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o: /home/cianleypoldt/Documents/c
 
 /usr/include/bits/libm-simd-decl-stubs.h:
 
+/usr/include/bits/types/cookie_io_functions_t.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/float.h:
+
+/usr/include/c++/14.2.1/bits/stl_uninitialized.h:
+
 /usr/include/bits/stdint-uintn.h:
 
 /usr/include/bits/typesizes.h:
@@ -1061,8 +1073,6 @@ CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o:
 
 /usr/lib/libharfbuzz.so.0:
 
-/usr/include/c++/14.2.1/bits/move.h:
-
 /usr/lib/libpcre2-8.so.0:
 
 /usr/include/c++/14.2.1/debug/debug.h:
@@ -1091,6 +1101,8 @@ CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o:
 
 /usr/include/c++/14.2.1/concepts:
 
+/home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/MemoryArena.h:
+
 /usr/include/glm/ext/vector_bool4_precision.hpp:
 
 /usr/include/alloca.h:
@@ -1105,13 +1117,9 @@ CMakeFiles/2d_Physics.dir/src/main.cpp.o:
 
 /usr/include/bits/atomic_wide_counter.h:
 
-/usr/include/glm/ext/matrix_float3x2.hpp:
-
 /usr/include/c++/14.2.1/tr1/modified_bessel_func.tcc:
 
 /usr/include/bits/byteswap.h:
-
-/usr/lib/libpng16.so.16:
 
 /usr/include/bits/endianness.h:
 
@@ -1125,9 +1133,19 @@ CMakeFiles/2d_Physics.dir/src/main.cpp.o:
 
 /usr/include/bits/floatn.h:
 
-/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/float.h:
+/usr/include/c++/14.2.1/bits/move.h:
 
-/usr/include/c++/14.2.1/bits/stl_uninitialized.h:
+/usr/lib/libsfml-system.so:
+
+/usr/include/c++/14.2.1/bits/new_allocator.h:
+
+/usr/include/bits/types/clock_t.h:
+
+/usr/include/glm/ext/matrix_double3x4.hpp:
+
+/usr/include/c++/14.2.1/bits/ptr_traits.h:
+
+/usr/include/c++/14.2.1/bits/refwrap.h:
 
 /usr/include/c++/14.2.1/bits/stl_vector.h:
 
@@ -1147,6 +1165,12 @@ CMakeFiles/2d_Physics.dir/src/main.cpp.o:
 
 /usr/include/c++/14.2.1/tr1/gamma.tcc:
 
+/usr/include/c++/14.2.1/initializer_list:
+
+/usr/lib/libbrotlidec.so.1:
+
+/usr/include/c++/14.2.1/cfloat:
+
 /usr/include/c++/14.2.1/tr1/hypergeometric.tcc:
 
 /usr/lib/ld-linux-x86-64.so.2:
@@ -1165,17 +1189,9 @@ CMakeFiles/2d_Physics.dir/src/main.cpp.o:
 
 /usr/include/c++/14.2.1/ext/type_traits.h:
 
-/usr/lib/libbrotlidec.so.1:
-
-/usr/include/c++/14.2.1/cfloat:
-
-/usr/include/c++/14.2.1/initializer_list:
-
 /usr/include/c++/14.2.1/backward/binders.h:
 
 /usr/include/c++/14.2.1/limits:
-
-/usr/include/glm/ext/matrix_float3x2_precision.hpp:
 
 /usr/include/c++/14.2.1/new:
 
@@ -1239,6 +1255,10 @@ CMakeFiles/2d_Physics.dir/src/engine/Simulation.cpp.o:
 
 /usr/include/glm/detail/func_vector_relational.inl:
 
+/usr/include/glm/detail/type_mat2x3.hpp:
+
+/usr/include/glm/detail/qualifier.hpp:
+
 /usr/include/glm/detail/setup.hpp:
 
 /usr/include/glm/detail/type_half.hpp:
@@ -1248,12 +1268,6 @@ CMakeFiles/2d_Physics.dir/src/engine/Simulation.cpp.o:
 /usr/include/glm/detail/type_half.inl:
 
 /usr/include/glm/detail/type_mat2x2.inl:
-
-/usr/include/glm/detail/qualifier.hpp:
-
-/usr/include/glm/detail/type_mat2x3.hpp:
-
-/usr/include/glm/ext/matrix_float3x4.hpp:
 
 /usr/include/glm/detail/type_mat2x4.hpp:
 
@@ -1324,7 +1338,3 @@ CMakeFiles/2d_Physics.dir/src/engine/Simulation.cpp.o:
 /usr/include/bits/posix2_lim.h:
 
 /usr/include/glm/ext/matrix_float2x3_precision.hpp:
-
-/usr/include/glm/ext/matrix_float2x4.hpp:
-
-/usr/include/glm/ext/matrix_float3x3_precision.hpp:

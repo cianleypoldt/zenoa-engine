@@ -7,7 +7,8 @@ int main()
     unsigned int id[100];
     for (int i = 0; i < 100; i++)
     {
-        id[i] = Simulation::addEntity(simulation, {{0, 0}, {1, 0}, {1, 1}, {0, 1}});
+        id[i] = Simulation::addEntity(simulation);
+        Simulation::addConvexCollider(simulation, id[i], {{0, 0}, {1, 0}, {1, 1}, {0, 1}});
     }
     Simulation::drop(simulation);
 }
