@@ -3,11 +3,11 @@
 
 int main()
 {
-    Simulation::init();
+    auto simulation = Simulation::make_context();
     unsigned int id[100];
     for (int i = 0; i < 100; i++)
     {
-        id[i] = Simulation::addRigidConvex({{0, 0}, {1, 0}, {1, 1}, {0, 1}});
+        id[i] = Simulation::addEntity(simulation, {{0, 0}, {1, 0}, {1, 1}, {0, 1}});
     }
-    Simulation::free();
+    Simulation::drop(simulation);
 }
