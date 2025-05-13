@@ -70,7 +70,3 @@ void Simulation::killEntity(context* cntx, unsigned int id)
 {
     cntx->entity_manager->kill(id);
 }
-
-void Simulation::step(context* cntx)
-{
-}

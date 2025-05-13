@@ -22,6 +22,7 @@ struct context
     std::vector<glm::vec2> convex_verticy_pool;
 };
 
+// Lifecycle
 context* make_context();
 void drop(context* cntx);
 
@@ -31,6 +32,7 @@ void addCircleCollider(context* cntx, unsigned int id, float radius);
 
 void killEntity(context* cntx, unsigned int id);
 
+// Simulation
 void step(context* cntx);
 
 } // namespace Simulation

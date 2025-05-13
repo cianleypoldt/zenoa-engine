@@ -86,10 +86,24 @@ CMakeFiles/2d_Physics.dir/src/engine/Simulation.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/2d_Physics.dir/src/engine/Simulation.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/Simulation.cpp -o CMakeFiles/2d_Physics.dir/src/engine/Simulation.cpp.s
 
+CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.o: CMakeFiles/2d_Physics.dir/flags.make
+CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.o: /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/SimulationLifecycle.cpp
+CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.o: CMakeFiles/2d_Physics.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.o -MF CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.o.d -o CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.o -c /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/SimulationLifecycle.cpp
+
+CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/SimulationLifecycle.cpp > CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.i
+
+CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/SimulationLifecycle.cpp -o CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.s
+
 CMakeFiles/2d_Physics.dir/src/graphics/Renderer.cpp.o: CMakeFiles/2d_Physics.dir/flags.make
 CMakeFiles/2d_Physics.dir/src/graphics/Renderer.cpp.o: /home/cianleypoldt/Documents/cpp/2d_Physics/src/graphics/Renderer.cpp
 CMakeFiles/2d_Physics.dir/src/graphics/Renderer.cpp.o: CMakeFiles/2d_Physics.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/2d_Physics.dir/src/graphics/Renderer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/2d_Physics.dir/src/graphics/Renderer.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/2d_Physics.dir/src/graphics/Renderer.cpp.o -MF CMakeFiles/2d_Physics.dir/src/graphics/Renderer.cpp.o.d -o CMakeFiles/2d_Physics.dir/src/graphics/Renderer.cpp.o -c /home/cianleypoldt/Documents/cpp/2d_Physics/src/graphics/Renderer.cpp
 
 CMakeFiles/2d_Physics.dir/src/graphics/Renderer.cpp.i: cmake_force
@@ -103,7 +117,7 @@ CMakeFiles/2d_Physics.dir/src/graphics/Renderer.cpp.s: cmake_force
 CMakeFiles/2d_Physics.dir/src/main.cpp.o: CMakeFiles/2d_Physics.dir/flags.make
 CMakeFiles/2d_Physics.dir/src/main.cpp.o: /home/cianleypoldt/Documents/cpp/2d_Physics/src/main.cpp
 CMakeFiles/2d_Physics.dir/src/main.cpp.o: CMakeFiles/2d_Physics.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/2d_Physics.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/2d_Physics.dir/src/main.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/2d_Physics.dir/src/main.cpp.o -MF CMakeFiles/2d_Physics.dir/src/main.cpp.o.d -o CMakeFiles/2d_Physics.dir/src/main.cpp.o -c /home/cianleypoldt/Documents/cpp/2d_Physics/src/main.cpp
 
 CMakeFiles/2d_Physics.dir/src/main.cpp.i: cmake_force
@@ -117,7 +131,7 @@ CMakeFiles/2d_Physics.dir/src/main.cpp.s: cmake_force
 CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o: CMakeFiles/2d_Physics.dir/flags.make
 CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o: /home/cianleypoldt/Documents/cpp/2d_Physics/src/utility/Time.cpp
 CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o: CMakeFiles/2d_Physics.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o -MF CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o.d -o CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o -c /home/cianleypoldt/Documents/cpp/2d_Physics/src/utility/Time.cpp
 
 CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.i: cmake_force
@@ -131,6 +145,7 @@ CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.s: cmake_force
 # Object files for target 2d_Physics
 2d_Physics_OBJECTS = \
 "CMakeFiles/2d_Physics.dir/src/engine/Simulation.cpp.o" \
+"CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.o" \
 "CMakeFiles/2d_Physics.dir/src/graphics/Renderer.cpp.o" \
 "CMakeFiles/2d_Physics.dir/src/main.cpp.o" \
 "CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o"
@@ -139,13 +154,14 @@ CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.s: cmake_force
 2d_Physics_EXTERNAL_OBJECTS =
 
 2d_Physics: CMakeFiles/2d_Physics.dir/src/engine/Simulation.cpp.o
+2d_Physics: CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.o
 2d_Physics: CMakeFiles/2d_Physics.dir/src/graphics/Renderer.cpp.o
 2d_Physics: CMakeFiles/2d_Physics.dir/src/main.cpp.o
 2d_Physics: CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o
 2d_Physics: CMakeFiles/2d_Physics.dir/build.make
 2d_Physics: CMakeFiles/2d_Physics.dir/compiler_depend.ts
 2d_Physics: CMakeFiles/2d_Physics.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable 2d_Physics"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable 2d_Physics"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/2d_Physics.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

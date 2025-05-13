@@ -85,12 +85,12 @@ clean: CMakeFiles/2d_Physics.dir/clean
 CMakeFiles/2d_Physics.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles --progress-num=1,2,3,4,5 "Built target 2d_Physics"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target 2d_Physics"
 .PHONY : CMakeFiles/2d_Physics.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/2d_Physics.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/2d_Physics.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles 0
 .PHONY : CMakeFiles/2d_Physics.dir/rule
@@ -102,7 +102,7 @@ CMakeFiles/2d_Physics.dir/rule: cmake_check_build_system
 # codegen rule for target.
 CMakeFiles/2d_Physics.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles --progress-num=1,2,3,4,5 "Finished codegen for target 2d_Physics"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Finished codegen for target 2d_Physics"
 .PHONY : CMakeFiles/2d_Physics.dir/codegen
 
 # clean rule for target.

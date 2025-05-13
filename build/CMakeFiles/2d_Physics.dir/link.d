@@ -3,6 +3,7 @@
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o \
   CMakeFiles/2d_Physics.dir/src/engine/Simulation.cpp.o \
+  CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.o \
   CMakeFiles/2d_Physics.dir/src/graphics/Renderer.cpp.o \
   CMakeFiles/2d_Physics.dir/src/main.cpp.o \
   CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o \
@@ -67,6 +68,8 @@
 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o:
 
 CMakeFiles/2d_Physics.dir/src/engine/Simulation.cpp.o:
+
+CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.o:
 
 CMakeFiles/2d_Physics.dir/src/graphics/Renderer.cpp.o:
 

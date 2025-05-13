@@ -4,6 +4,8 @@ file(REMOVE_RECURSE
   "2d_Physics.pdb"
   "CMakeFiles/2d_Physics.dir/src/engine/Simulation.cpp.o"
   "CMakeFiles/2d_Physics.dir/src/engine/Simulation.cpp.o.d"
+  "CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.o"
+  "CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.o.d"
   "CMakeFiles/2d_Physics.dir/src/graphics/Renderer.cpp.o"
   "CMakeFiles/2d_Physics.dir/src/graphics/Renderer.cpp.o.d"
   "CMakeFiles/2d_Physics.dir/src/main.cpp.o"

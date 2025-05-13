@@ -153,6 +153,30 @@ src/engine/Simulation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/Simulation.cpp.s
 .PHONY : src/engine/Simulation.cpp.s
 
+src/engine/SimulationLifecycle.o: src/engine/SimulationLifecycle.cpp.o
+.PHONY : src/engine/SimulationLifecycle.o
+
+# target to build an object file
+src/engine/SimulationLifecycle.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.o
+.PHONY : src/engine/SimulationLifecycle.cpp.o
+
+src/engine/SimulationLifecycle.i: src/engine/SimulationLifecycle.cpp.i
+.PHONY : src/engine/SimulationLifecycle.i
+
+# target to preprocess a source file
+src/engine/SimulationLifecycle.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.i
+.PHONY : src/engine/SimulationLifecycle.cpp.i
+
+src/engine/SimulationLifecycle.s: src/engine/SimulationLifecycle.cpp.s
+.PHONY : src/engine/SimulationLifecycle.s
+
+# target to generate assembly for a file
+src/engine/SimulationLifecycle.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.s
+.PHONY : src/engine/SimulationLifecycle.cpp.s
+
 src/graphics/Renderer.o: src/graphics/Renderer.cpp.o
 .PHONY : src/graphics/Renderer.o
 
@@ -237,6 +261,9 @@ help:
 	@echo "... src/engine/Simulation.o"
 	@echo "... src/engine/Simulation.i"
 	@echo "... src/engine/Simulation.s"
+	@echo "... src/engine/SimulationLifecycle.o"
+	@echo "... src/engine/SimulationLifecycle.i"
+	@echo "... src/engine/SimulationLifecycle.s"
 	@echo "... src/graphics/Renderer.o"
 	@echo "... src/graphics/Renderer.i"
 	@echo "... src/graphics/Renderer.s"
