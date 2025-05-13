@@ -249,6 +249,30 @@ src/utility/Time.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.s
 .PHONY : src/utility/Time.cpp.s
 
+src/utility/Utility.o: src/utility/Utility.cpp.o
+.PHONY : src/utility/Utility.o
+
+# target to build an object file
+src/utility/Utility.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/utility/Utility.cpp.o
+.PHONY : src/utility/Utility.cpp.o
+
+src/utility/Utility.i: src/utility/Utility.cpp.i
+.PHONY : src/utility/Utility.i
+
+# target to preprocess a source file
+src/utility/Utility.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/utility/Utility.cpp.i
+.PHONY : src/utility/Utility.cpp.i
+
+src/utility/Utility.s: src/utility/Utility.cpp.s
+.PHONY : src/utility/Utility.s
+
+# target to generate assembly for a file
+src/utility/Utility.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/utility/Utility.cpp.s
+.PHONY : src/utility/Utility.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -273,6 +297,9 @@ help:
 	@echo "... src/utility/Time.o"
 	@echo "... src/utility/Time.i"
 	@echo "... src/utility/Time.s"
+	@echo "... src/utility/Utility.o"
+	@echo "... src/utility/Utility.i"
+	@echo "... src/utility/Utility.s"
 .PHONY : help
 
 

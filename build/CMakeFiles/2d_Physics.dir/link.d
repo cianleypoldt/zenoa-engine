@@ -7,6 +7,7 @@
   CMakeFiles/2d_Physics.dir/src/graphics/Renderer.cpp.o \
   CMakeFiles/2d_Physics.dir/src/main.cpp.o \
   CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o \
+  CMakeFiles/2d_Physics.dir/src/utility/Utility.cpp.o \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/libsfml-graphics.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/libsfml-window.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/libsfml-system.so \
@@ -76,6 +77,8 @@ CMakeFiles/2d_Physics.dir/src/graphics/Renderer.cpp.o:
 CMakeFiles/2d_Physics.dir/src/main.cpp.o:
 
 CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o:
+
+CMakeFiles/2d_Physics.dir/src/utility/Utility.cpp.o:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/libsfml-graphics.so:
 

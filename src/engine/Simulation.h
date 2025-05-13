@@ -1,6 +1,6 @@
 #pragma once
+#include "../utility/Utility.h"
 #include "ECS.h"
-#include "MemoryArena.h"
 #include <glm/glm.hpp>
 #include <vector>
 
@@ -18,7 +18,7 @@ enum class RigidBody
 struct context
 {
     EntityManager<ENTITY_CAP>* entity_manager;
-    arena frame_data;
+    utl::ScopedArena frame_data;
     std::vector<glm::vec2> convex_verticy_pool;
 };
 
@@ -31,6 +31,11 @@ void addConvexCollider(context* cntx, unsigned int id, const std::vector<glm::ve
 void addCircleCollider(context* cntx, unsigned int id, float radius);
 
 void killEntity(context* cntx, unsigned int id);
+
+[[nodiscard]] glm::vec2 getPosition(context* cntx, unsigned int id);
+[[nodiscard]] float getRotation(context* cntx, unsigned int id);
+[[nodiscard]] float getCircleRadius(context* cntx, unsigned int id);
+[[nodiscard]] std::vector<glm::vec2> getConvexShape(context* cntx, unsigned int id);
 
 // Simulation
 void step(context* cntx);

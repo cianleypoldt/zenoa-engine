@@ -12,6 +12,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/2d_Physics.dir/src/main.cpp.o.d"
   "CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o"
   "CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o.d"
+  "CMakeFiles/2d_Physics.dir/src/utility/Utility.cpp.o"
+  "CMakeFiles/2d_Physics.dir/src/utility/Utility.cpp.o.d"
 )
 
 # Per-language clean rules from dependency scanning.

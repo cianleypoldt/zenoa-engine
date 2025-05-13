@@ -6,7 +6,6 @@ enum EntityFlag : uint8_t
 {
     ALIVE = 0b10000000,
     CONVEX = 0b01000000,
-    CIRCLE = 0b00100000,
     MOVEABLE = 0b00000001
 };
 
@@ -42,16 +41,13 @@ struct EntityManager
     {
         collider[id].convex_collider = convex_collider;
         flag[id] |= EntityFlag::CONVEX;
-        flag[id] &= ~EntityFlag::CIRCLE;
     }
     void setCircleCollider(unsigned int id, const CircleCollider& circle_collider)
     {
         collider[id].circle_collider = circle_collider;
-        flag[id] |= EntityFlag::CIRCLE;
         flag[id] &= ~EntityFlag::CONVEX;
     }
     [[nodiscard]] bool isConvex(unsigned int id) { return (flag[id] & EntityFlag::CONVEX) != 0; }
-    [[nodiscard]] bool isCircle(unsigned int id) { return (flag[id] & EntityFlag::CIRCLE) != 0; }
     [[nodiscard]] bool isAlive(unsigned int id) { return (flag[id] & EntityFlag::ALIVE) != 0; }
     [[nodiscard]] bool isMoveable(unsigned int id) { return (flag[id] & EntityFlag::MOVEABLE) != 0; }
 };
