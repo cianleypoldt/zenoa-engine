@@ -129,53 +129,149 @@ depend:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/build
 .PHONY : 2d_Physics/fast
 
-src/engine/Simulation.o: src/engine/Simulation.cpp.o
-.PHONY : src/engine/Simulation.o
+src/engine/EntityManager.o: src/engine/EntityManager.cpp.o
+.PHONY : src/engine/EntityManager.o
 
 # target to build an object file
-src/engine/Simulation.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/Simulation.cpp.o
-.PHONY : src/engine/Simulation.cpp.o
+src/engine/EntityManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/EntityManager.cpp.o
+.PHONY : src/engine/EntityManager.cpp.o
 
-src/engine/Simulation.i: src/engine/Simulation.cpp.i
-.PHONY : src/engine/Simulation.i
+src/engine/EntityManager.i: src/engine/EntityManager.cpp.i
+.PHONY : src/engine/EntityManager.i
 
 # target to preprocess a source file
-src/engine/Simulation.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/Simulation.cpp.i
-.PHONY : src/engine/Simulation.cpp.i
+src/engine/EntityManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/EntityManager.cpp.i
+.PHONY : src/engine/EntityManager.cpp.i
 
-src/engine/Simulation.s: src/engine/Simulation.cpp.s
-.PHONY : src/engine/Simulation.s
+src/engine/EntityManager.s: src/engine/EntityManager.cpp.s
+.PHONY : src/engine/EntityManager.s
 
 # target to generate assembly for a file
-src/engine/Simulation.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/Simulation.cpp.s
-.PHONY : src/engine/Simulation.cpp.s
+src/engine/EntityManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/EntityManager.cpp.s
+.PHONY : src/engine/EntityManager.cpp.s
 
-src/engine/SimulationLifecycle.o: src/engine/SimulationLifecycle.cpp.o
-.PHONY : src/engine/SimulationLifecycle.o
+src/engine/PhysicsSystem/BorderSystem.o: src/engine/PhysicsSystem/BorderSystem.cpp.o
+.PHONY : src/engine/PhysicsSystem/BorderSystem.o
 
 # target to build an object file
-src/engine/SimulationLifecycle.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.o
-.PHONY : src/engine/SimulationLifecycle.cpp.o
+src/engine/PhysicsSystem/BorderSystem.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/PhysicsSystem/BorderSystem.cpp.o
+.PHONY : src/engine/PhysicsSystem/BorderSystem.cpp.o
 
-src/engine/SimulationLifecycle.i: src/engine/SimulationLifecycle.cpp.i
-.PHONY : src/engine/SimulationLifecycle.i
+src/engine/PhysicsSystem/BorderSystem.i: src/engine/PhysicsSystem/BorderSystem.cpp.i
+.PHONY : src/engine/PhysicsSystem/BorderSystem.i
 
 # target to preprocess a source file
-src/engine/SimulationLifecycle.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.i
-.PHONY : src/engine/SimulationLifecycle.cpp.i
+src/engine/PhysicsSystem/BorderSystem.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/PhysicsSystem/BorderSystem.cpp.i
+.PHONY : src/engine/PhysicsSystem/BorderSystem.cpp.i
 
-src/engine/SimulationLifecycle.s: src/engine/SimulationLifecycle.cpp.s
-.PHONY : src/engine/SimulationLifecycle.s
+src/engine/PhysicsSystem/BorderSystem.s: src/engine/PhysicsSystem/BorderSystem.cpp.s
+.PHONY : src/engine/PhysicsSystem/BorderSystem.s
 
 # target to generate assembly for a file
-src/engine/SimulationLifecycle.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.s
-.PHONY : src/engine/SimulationLifecycle.cpp.s
+src/engine/PhysicsSystem/BorderSystem.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/PhysicsSystem/BorderSystem.cpp.s
+.PHONY : src/engine/PhysicsSystem/BorderSystem.cpp.s
+
+src/engine/PhysicsSystem/CollisionSystem.o: src/engine/PhysicsSystem/CollisionSystem.cpp.o
+.PHONY : src/engine/PhysicsSystem/CollisionSystem.o
+
+# target to build an object file
+src/engine/PhysicsSystem/CollisionSystem.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/PhysicsSystem/CollisionSystem.cpp.o
+.PHONY : src/engine/PhysicsSystem/CollisionSystem.cpp.o
+
+src/engine/PhysicsSystem/CollisionSystem.i: src/engine/PhysicsSystem/CollisionSystem.cpp.i
+.PHONY : src/engine/PhysicsSystem/CollisionSystem.i
+
+# target to preprocess a source file
+src/engine/PhysicsSystem/CollisionSystem.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/PhysicsSystem/CollisionSystem.cpp.i
+.PHONY : src/engine/PhysicsSystem/CollisionSystem.cpp.i
+
+src/engine/PhysicsSystem/CollisionSystem.s: src/engine/PhysicsSystem/CollisionSystem.cpp.s
+.PHONY : src/engine/PhysicsSystem/CollisionSystem.s
+
+# target to generate assembly for a file
+src/engine/PhysicsSystem/CollisionSystem.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/PhysicsSystem/CollisionSystem.cpp.s
+.PHONY : src/engine/PhysicsSystem/CollisionSystem.cpp.s
+
+src/engine/PhysicsSystem/IntegrationSystem.o: src/engine/PhysicsSystem/IntegrationSystem.cpp.o
+.PHONY : src/engine/PhysicsSystem/IntegrationSystem.o
+
+# target to build an object file
+src/engine/PhysicsSystem/IntegrationSystem.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.o
+.PHONY : src/engine/PhysicsSystem/IntegrationSystem.cpp.o
+
+src/engine/PhysicsSystem/IntegrationSystem.i: src/engine/PhysicsSystem/IntegrationSystem.cpp.i
+.PHONY : src/engine/PhysicsSystem/IntegrationSystem.i
+
+# target to preprocess a source file
+src/engine/PhysicsSystem/IntegrationSystem.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.i
+.PHONY : src/engine/PhysicsSystem/IntegrationSystem.cpp.i
+
+src/engine/PhysicsSystem/IntegrationSystem.s: src/engine/PhysicsSystem/IntegrationSystem.cpp.s
+.PHONY : src/engine/PhysicsSystem/IntegrationSystem.s
+
+# target to generate assembly for a file
+src/engine/PhysicsSystem/IntegrationSystem.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.s
+.PHONY : src/engine/PhysicsSystem/IntegrationSystem.cpp.s
+
+src/engine/PhysicsSystem/PhysicsSystem.o: src/engine/PhysicsSystem/PhysicsSystem.cpp.o
+.PHONY : src/engine/PhysicsSystem/PhysicsSystem.o
+
+# target to build an object file
+src/engine/PhysicsSystem/PhysicsSystem.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/PhysicsSystem/PhysicsSystem.cpp.o
+.PHONY : src/engine/PhysicsSystem/PhysicsSystem.cpp.o
+
+src/engine/PhysicsSystem/PhysicsSystem.i: src/engine/PhysicsSystem/PhysicsSystem.cpp.i
+.PHONY : src/engine/PhysicsSystem/PhysicsSystem.i
+
+# target to preprocess a source file
+src/engine/PhysicsSystem/PhysicsSystem.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/PhysicsSystem/PhysicsSystem.cpp.i
+.PHONY : src/engine/PhysicsSystem/PhysicsSystem.cpp.i
+
+src/engine/PhysicsSystem/PhysicsSystem.s: src/engine/PhysicsSystem/PhysicsSystem.cpp.s
+.PHONY : src/engine/PhysicsSystem/PhysicsSystem.s
+
+# target to generate assembly for a file
+src/engine/PhysicsSystem/PhysicsSystem.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/PhysicsSystem/PhysicsSystem.cpp.s
+.PHONY : src/engine/PhysicsSystem/PhysicsSystem.cpp.s
+
+src/engine/interface.o: src/engine/interface.cpp.o
+.PHONY : src/engine/interface.o
+
+# target to build an object file
+src/engine/interface.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/interface.cpp.o
+.PHONY : src/engine/interface.cpp.o
+
+src/engine/interface.i: src/engine/interface.cpp.i
+.PHONY : src/engine/interface.i
+
+# target to preprocess a source file
+src/engine/interface.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/interface.cpp.i
+.PHONY : src/engine/interface.cpp.i
+
+src/engine/interface.s: src/engine/interface.cpp.s
+.PHONY : src/engine/interface.s
+
+# target to generate assembly for a file
+src/engine/interface.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2d_Physics.dir/build.make CMakeFiles/2d_Physics.dir/src/engine/interface.cpp.s
+.PHONY : src/engine/interface.cpp.s
 
 src/graphics/Renderer.o: src/graphics/Renderer.cpp.o
 .PHONY : src/graphics/Renderer.o
@@ -282,12 +378,24 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... 2d_Physics"
-	@echo "... src/engine/Simulation.o"
-	@echo "... src/engine/Simulation.i"
-	@echo "... src/engine/Simulation.s"
-	@echo "... src/engine/SimulationLifecycle.o"
-	@echo "... src/engine/SimulationLifecycle.i"
-	@echo "... src/engine/SimulationLifecycle.s"
+	@echo "... src/engine/EntityManager.o"
+	@echo "... src/engine/EntityManager.i"
+	@echo "... src/engine/EntityManager.s"
+	@echo "... src/engine/PhysicsSystem/BorderSystem.o"
+	@echo "... src/engine/PhysicsSystem/BorderSystem.i"
+	@echo "... src/engine/PhysicsSystem/BorderSystem.s"
+	@echo "... src/engine/PhysicsSystem/CollisionSystem.o"
+	@echo "... src/engine/PhysicsSystem/CollisionSystem.i"
+	@echo "... src/engine/PhysicsSystem/CollisionSystem.s"
+	@echo "... src/engine/PhysicsSystem/IntegrationSystem.o"
+	@echo "... src/engine/PhysicsSystem/IntegrationSystem.i"
+	@echo "... src/engine/PhysicsSystem/IntegrationSystem.s"
+	@echo "... src/engine/PhysicsSystem/PhysicsSystem.o"
+	@echo "... src/engine/PhysicsSystem/PhysicsSystem.i"
+	@echo "... src/engine/PhysicsSystem/PhysicsSystem.s"
+	@echo "... src/engine/interface.o"
+	@echo "... src/engine/interface.i"
+	@echo "... src/engine/interface.s"
 	@echo "... src/graphics/Renderer.o"
 	@echo "... src/graphics/Renderer.i"
 	@echo "... src/graphics/Renderer.s"

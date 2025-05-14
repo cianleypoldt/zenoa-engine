@@ -8,8 +8,12 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/Simulation.cpp" "CMakeFiles/2d_Physics.dir/src/engine/Simulation.cpp.o" "gcc" "CMakeFiles/2d_Physics.dir/src/engine/Simulation.cpp.o.d"
-  "/home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/SimulationLifecycle.cpp" "CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.o" "gcc" "CMakeFiles/2d_Physics.dir/src/engine/SimulationLifecycle.cpp.o.d"
+  "/home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/EntityManager.cpp" "CMakeFiles/2d_Physics.dir/src/engine/EntityManager.cpp.o" "gcc" "CMakeFiles/2d_Physics.dir/src/engine/EntityManager.cpp.o.d"
+  "/home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/PhysicsSystem/BorderSystem.cpp" "CMakeFiles/2d_Physics.dir/src/engine/PhysicsSystem/BorderSystem.cpp.o" "gcc" "CMakeFiles/2d_Physics.dir/src/engine/PhysicsSystem/BorderSystem.cpp.o.d"
+  "/home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/PhysicsSystem/CollisionSystem.cpp" "CMakeFiles/2d_Physics.dir/src/engine/PhysicsSystem/CollisionSystem.cpp.o" "gcc" "CMakeFiles/2d_Physics.dir/src/engine/PhysicsSystem/CollisionSystem.cpp.o.d"
+  "/home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/PhysicsSystem/IntegrationSystem.cpp" "CMakeFiles/2d_Physics.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.o" "gcc" "CMakeFiles/2d_Physics.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.o.d"
+  "/home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/PhysicsSystem/PhysicsSystem.cpp" "CMakeFiles/2d_Physics.dir/src/engine/PhysicsSystem/PhysicsSystem.cpp.o" "gcc" "CMakeFiles/2d_Physics.dir/src/engine/PhysicsSystem/PhysicsSystem.cpp.o.d"
+  "/home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/interface.cpp" "CMakeFiles/2d_Physics.dir/src/engine/interface.cpp.o" "gcc" "CMakeFiles/2d_Physics.dir/src/engine/interface.cpp.o.d"
   "/home/cianleypoldt/Documents/cpp/2d_Physics/src/graphics/Renderer.cpp" "CMakeFiles/2d_Physics.dir/src/graphics/Renderer.cpp.o" "gcc" "CMakeFiles/2d_Physics.dir/src/graphics/Renderer.cpp.o.d"
   "/home/cianleypoldt/Documents/cpp/2d_Physics/src/main.cpp" "CMakeFiles/2d_Physics.dir/src/main.cpp.o" "gcc" "CMakeFiles/2d_Physics.dir/src/main.cpp.o.d"
   "/home/cianleypoldt/Documents/cpp/2d_Physics/src/utility/Time.cpp" "CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o" "gcc" "CMakeFiles/2d_Physics.dir/src/utility/Time.cpp.o.d"

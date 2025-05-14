@@ -1,4 +1,4 @@
-#include "engine/Simulation.h"
+#include "engine/interface.h"
 #include "utility/Utility.h"
 #include <SFML/Graphics.hpp>
 
@@ -10,9 +10,9 @@ float random(float min, float max)
 {
     return min + static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * (max - min);
 }
+
 int main()
 {
-
     utl::initLogger(utl::LogLevel::Debug, "physics_engine.log");
     UTL_INFO("2D Physics Engine Starting...");
 
@@ -21,10 +21,9 @@ int main()
     window.display();
 
     auto simulation = rbs::make_context();
-    simulation->simulation_timestep = 0.01;
-    simulation->gravity = -0.005;
-    simulation->simulation_bounds[0] = {-500, -250};
-    simulation->simulation_bounds[1] = {500, 250};
+    rbs::setBounds(simulation, {-240, -470}, {240, 470});
+    rbs::setGravity(simulation, -0.005);
+    simulation->fixed_timestep = 0.01;
     simulation->bounded = true;
 
     unsigned int id[100];
@@ -48,6 +47,7 @@ int main()
 
         for (int i = 0; i < 100; i++)
         {
+            UTL_INFO("ID = %i", i);
             float radius_a = rbs::getCircleRadius(simulation, id[i]);
             circle_a.setRadius(radius_a);
             circle_a.setOrigin({radius_a, radius_a});

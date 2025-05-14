@@ -14,3 +14,11 @@ int main()
 }
 
 ```
+1. Broad Phase: Dynamic AABB Tree
+2. Narrow Phase: GJK + EPA + SAT + Voxel BVH
+3. Contact Manifolds: Persistent
+4. Constraints: MLCP Formulation
+5. Solver: Projected Gauss-Seidel (warm-started, block)
+6. Position Fix: Nonlinear Gauss-Seidel (split solvers)
+7. Integration: Symplectic Euler
+8. CCD: Conservative Advancement
