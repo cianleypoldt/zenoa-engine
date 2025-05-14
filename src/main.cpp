@@ -11,7 +11,8 @@ float random(float min, float max)
     return min + static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * (max - min);
 }
 
-int main()
+constexpr int count = 1000;
+void ain()
 {
     utl::initLogger(utl::LogLevel::Debug, "physics_engine.log");
     UTL_INFO("2D Physics Engine Starting...");
@@ -21,18 +22,20 @@ int main()
     window.display();
 
     auto simulation = rbs::make_context();
-    rbs::setBounds(simulation, {-240, -470}, {240, 470});
-    rbs::setGravity(simulation, -0.005);
-    simulation->fixed_timestep = 0.01;
+    rbs::setBounds(simulation, {-500, -250}, {500, 250});
+    rbs::setGravity(simulation, -0.1);
+    simulation->fixed_timestep = 0.1;
     simulation->bounded = true;
 
-    unsigned int id[100];
+    unsigned int id[count];
 
     // populate Physicsworld
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < count; i++)
     {
         id[i] = rbs::addEntity(simulation, {random(-450, 450), random(-230, 230)});
-        rbs::addCircleCollider(simulation, id[i], random(5, 15));
+        rbs::addCircleCollider(simulation, id[i], random(3, 15));
+        rbs::applyForce(simulation, id[i], {100, 0});
+        simulation->entity_manager.bodies.elasticity[id[i]] = 0.8;
     }
 
     sf::CircleShape circle_a;
@@ -45,9 +48,8 @@ int main()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
             window.close();
 
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < count; i++)
         {
-            UTL_INFO("ID = %i", i);
             float radius_a = rbs::getCircleRadius(simulation, id[i]);
             circle_a.setRadius(radius_a);
             circle_a.setOrigin({radius_a, radius_a});

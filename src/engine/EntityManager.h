@@ -7,7 +7,7 @@
 
 struct EntityManager
 {
-    static constexpr uint32_t MAX_ENTITY_COUNT = 1024;
+    static constexpr uint32_t MAX_ENTITY_COUNT = 5000;
 
     enum FlagBytes : uint8_t
     {
@@ -20,7 +20,7 @@ struct EntityManager
 
     Bodies<MAX_ENTITY_COUNT> bodies;
 
-    uint32_t highest_id = 0;
+    uint32_t occupied_slot_count = 0;
     std::vector<uint32_t> free_list;
 
     EntityIDList<MAX_ENTITY_COUNT> gravity_entities;
@@ -32,6 +32,8 @@ struct EntityManager
 
     uint32_t addEntity();
     void removeEntity(uint32_t id);
+
+    bool verifyID(uint32_t id);
 
     void enableGravity(uint32_t id);
     void disableGravity(uint32_t id);

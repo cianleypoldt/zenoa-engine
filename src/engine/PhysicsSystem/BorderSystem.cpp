@@ -1,13 +1,14 @@
 #include "BorderSystem.h"
+#include "../../utility/Utility.h"
 #include "../SystemContext.h"
-
+#include "../interface.h"
 void BorderSystem::apply(SystemContext* cntx)
 {
-    for (int i = 0; i < cntx->entity_manager.circle_colliders.count; i++)
+    for (uint32_t i = 0; i < cntx->entity_manager.circle_colliders.count; i++)
     {
         sphereBorderCollision(cntx, cntx->entity_manager.circle_colliders.id[i]);
     }
-    for (int i = 0; i < cntx->entity_manager.convex_colliders.count; i++)
+    for (uint32_t i = 0; i < cntx->entity_manager.convex_colliders.count; i++)
     {
         convexBorderCollision(cntx, cntx->entity_manager.convex_colliders.id[i]);
     }
@@ -33,6 +34,7 @@ void BorderSystem::sphereBorderCollision(SystemContext* cntx, uint32_t id)
     {
         bodies.position[id].y = bottom_left_corner.y + radius;
         bodies.velocity[id].y *= -bodies.elasticity[id];
+        rbs::killEntity(cntx, id);
     }
     else if (bodies.position[id].y + radius >= top_right_corner.y)
     {

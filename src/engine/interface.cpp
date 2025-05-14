@@ -1,5 +1,6 @@
 #pragma once
 #include "interface.h"
+// #include "../utility/Utility.h"
 
 SystemContext* rbs::make_context()
 {
@@ -34,6 +35,8 @@ void rbs::step(SystemContext* cntx)
 
 [[nodiscard]] unsigned int rbs::addEntity(SystemContext* cntx, glm::vec2 pos, float mass)
 {
+    if (cntx->entity_manager.occupied_slot_count == cntx->entity_manager.MAX_ENTITY_COUNT)
+        return -1;
     uint32_t id = cntx->entity_manager.addEntity();
     cntx->entity_manager.bodies.position[id] = pos;
     cntx->entity_manager.bodies.mass[id] = mass;
@@ -43,47 +46,67 @@ void rbs::step(SystemContext* cntx)
 }
 void rbs::addCircleCollider(SystemContext* cntx, unsigned int id, float radius)
 {
+    if (!cntx->entity_manager.verifyID(id))
+        return;
     cntx->entity_manager.useCircleCollider(id);
     cntx->entity_manager.bodies.collider[id].circle.radius = radius;
 }
 void rbs::addConvexCollider(SystemContext* cntx, unsigned int id, const std::vector<glm::vec2>& verticies)
 {
-    cntx->entity_manager.useCircleCollider(id);
+    if (!cntx->entity_manager.verifyID(id))
+        return;
+    cntx->entity_manager.useConvexCollider(id);
     cntx->entity_manager.bodies.collider[id].convex.begin = cntx->vertex_pool.size();
     cntx->vertex_pool.insert(cntx->vertex_pool.begin(), verticies.begin(), verticies.end());
     cntx->entity_manager.bodies.collider[id].convex.end = cntx->vertex_pool.size() - 1;
 }
 void rbs::killEntity(SystemContext* cntx, uint32_t id)
 {
+    if (!cntx->entity_manager.verifyID(id))
+        return;
     cntx->entity_manager.removeEntity(id);
 }
 void rbs::setPosition(SystemContext* cntx, uint32_t id, glm::vec2 pos)
 {
+    if (!cntx->entity_manager.verifyID(id))
+        return;
     cntx->entity_manager.bodies.position[id] = pos;
 }
 void rbs::setVelocity(SystemContext* cntx, uint32_t id, glm::vec2 vel)
 {
+    if (!cntx->entity_manager.verifyID(id))
+        return;
     cntx->entity_manager.bodies.velocity[id] = vel;
 }
 void rbs::applyForce(SystemContext* cntx, uint32_t id, glm::vec2 force)
 {
+    if (!cntx->entity_manager.verifyID(id))
+        return;
     cntx->entity_manager.bodies.force[id] = force;
 }
 
 [[nodiscard]] glm::vec2 rbs::getPosition(SystemContext* cntx, uint32_t id)
 {
+    if (!cntx->entity_manager.verifyID(id))
+        return {};
     return cntx->entity_manager.bodies.position[id];
 }
 [[nodiscard]] float rbs::getRotation(SystemContext* cntx, uint32_t id)
 {
+    if (!cntx->entity_manager.verifyID(id))
+        return -1;
     return cntx->entity_manager.bodies.rotation[id];
 }
 [[nodiscard]] float rbs::getCircleRadius(SystemContext* cntx, uint32_t id)
 {
+    if (!cntx->entity_manager.verifyID(id))
+        return -1;
     return cntx->entity_manager.bodies.collider[id].circle.radius;
 }
 [[nodiscard]] const std::vector<glm::vec2> rbs::getConvexVerticies(SystemContext* cntx, uint32_t id)
 {
+    if (!cntx->entity_manager.verifyID(id))
+        return {};
     return std::vector<glm::vec2>(
         cntx->vertex_pool.begin() + cntx->entity_manager.bodies.collider[id].convex.begin,
         cntx->vertex_pool.begin() + cntx->entity_manager.bodies.collider[id].convex.end);

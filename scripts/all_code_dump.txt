@@ -1,0 +1,1021 @@
+
+// FILE: src/main.cpp
+#include "engine/interface.h"
+#include "utility/Utility.h"
+#include <SFML/Graphics.hpp>
+
+sf::Vector2f translate(glm::vec2 pos)
+{
+    return sf::Vector2f(pos.x + 500, -pos.y + 250);
+}
+float random(float min, float max)
+{
+    return min + static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * (max - min);
+}
+
+int main()
+{
+    utl::initLogger(utl::LogLevel::Debug, "physics_engine.log");
+    UTL_INFO("2D Physics Engine Starting...");
+
+    sf::RenderWindow window(sf::VideoMode({1000, 500}), "Debug View", sf::Style::None, sf::State::Windowed);
+    window.setPosition({0, 0});
+    window.display();
+
+    auto simulation = rbs::make_context();
+    rbs::setBounds(simulation, {-240, -470}, {240, 470});
+    rbs::setGravity(simulation, -0.005);
+    simulation->fixed_timestep = 0.01;
+    simulation->bounded = true;
+
+    unsigned int id[100];
+
+    // populate Physicsworld
+    for (int i = 0; i < 100; i++)
+    {
+        id[i] = rbs::addEntity(simulation, {random(-450, 450), random(-230, 230)});
+        rbs::addCircleCollider(simulation, id[i], random(5, 15));
+    }
+
+    sf::CircleShape circle_a;
+    circle_a.setOutlineColor(sf::Color::White);
+    circle_a.setOutlineThickness(1);
+    circle_a.setFillColor(sf::Color::Transparent);
+
+    while (window.isOpen())
+    {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+            window.close();
+
+        for (int i = 0; i < 100; i++)
+        {
+            UTL_INFO("ID = %i", i);
+            float radius_a = rbs::getCircleRadius(simulation, id[i]);
+            circle_a.setRadius(radius_a);
+            circle_a.setOrigin({radius_a, radius_a});
+            circle_a.setPosition(translate(rbs::getPosition(simulation, id[i])));
+            window.draw(circle_a);
+        }
+
+        window.display();
+        rbs::step(simulation);
+        window.clear();
+    }
+
+    rbs::drop(simulation);
+}
+
+// FILE: src/graphics/Renderer.cpp
+
+// FILE: src/graphics/Renderer.h
+#pragma once
+
+class Renderer
+{
+};
+
+// FILE: src/engine/Bodies.h
+#pragma once
+#include <glm/glm.hpp>
+
+struct Circle
+{
+    float radius = 0;
+};
+struct Convex
+{
+    uint32_t begin;
+    uint32_t end;
+};
+
+union Collider {
+    Circle circle{0};
+    Convex convex;
+};
+
+template <uint32_t max_entity_count>
+struct Bodies
+{
+    uint16_t flag[max_entity_count];
+
+    glm::vec2 position[max_entity_count];
+    glm::vec2 velocity[max_entity_count];
+    glm::vec2 force[max_entity_count];
+
+    float rotation[max_entity_count];
+    float angular_velocity[max_entity_count];
+    float torque[max_entity_count];
+
+    float mass[max_entity_count];
+    float invMass[max_entity_count];
+    float inertia[max_entity_count];
+    float invInertia[max_entity_count];
+    float elasticity[max_entity_count];
+
+    Collider collider[max_entity_count];
+};
+
+// FILE: src/engine/interface.cpp
+#pragma once
+#include "interface.h"
+
+SystemContext* rbs::make_context()
+{
+    return new SystemContext{};
+}
+void rbs::drop(SystemContext* cntx)
+{
+    delete cntx;
+}
+
+uint32_t rbs::getMaxEntityCount(SystemContext* cntx)
+{
+    return cntx->entity_manager.MAX_ENTITY_COUNT;
+}
+
+void rbs::setBounds(SystemContext* cntx, glm::vec2 bottom_left, glm::vec2 top_right)
+{
+    cntx->bounded = true;
+    cntx->physics_system.m_border_system.bottom_left_corner = bottom_left;
+    cntx->physics_system.m_border_system.top_right_corner = top_right;
+}
+
+void rbs::setGravity(SystemContext* cntx, float gravity)
+{
+    cntx->physics_system.m_integration_system.gravity = gravity;
+}
+
+void rbs::step(SystemContext* cntx)
+{
+    cntx->physics_system.step(cntx);
+}
+
+[[nodiscard]] unsigned int rbs::addEntity(SystemContext* cntx, glm::vec2 pos, float mass)
+{
+    uint32_t id = cntx->entity_manager.addEntity();
+    cntx->entity_manager.bodies.position[id] = pos;
+    cntx->entity_manager.bodies.mass[id] = mass;
+    cntx->entity_manager.makeMoveable(id);
+    cntx->entity_manager.enableGravity(id);
+    return id;
+}
+void rbs::addCircleCollider(SystemContext* cntx, unsigned int id, float radius)
+{
+    cntx->entity_manager.useCircleCollider(id);
+    cntx->entity_manager.bodies.collider[id].circle.radius = radius;
+}
+void rbs::addConvexCollider(SystemContext* cntx, unsigned int id, const std::vector<glm::vec2>& verticies)
+{
+    cntx->entity_manager.useConvexCollider(id);
+    cntx->entity_manager.bodies.collider[id].convex.begin = cntx->vertex_pool.size();
+    cntx->vertex_pool.insert(cntx->vertex_pool.begin(), verticies.begin(), verticies.end());
+    cntx->entity_manager.bodies.collider[id].convex.end = cntx->vertex_pool.size() - 1;
+}
+void rbs::killEntity(SystemContext* cntx, uint32_t id)
+{
+    cntx->entity_manager.removeEntity(id);
+}
+void rbs::setPosition(SystemContext* cntx, uint32_t id, glm::vec2 pos)
+{
+    cntx->entity_manager.bodies.position[id] = pos;
+}
+void rbs::setVelocity(SystemContext* cntx, uint32_t id, glm::vec2 vel)
+{
+    cntx->entity_manager.bodies.velocity[id] = vel;
+}
+void rbs::applyForce(SystemContext* cntx, uint32_t id, glm::vec2 force)
+{
+    cntx->entity_manager.bodies.force[id] = force;
+}
+
+[[nodiscard]] glm::vec2 rbs::getPosition(SystemContext* cntx, uint32_t id)
+{
+    return cntx->entity_manager.bodies.position[id];
+}
+[[nodiscard]] float rbs::getRotation(SystemContext* cntx, uint32_t id)
+{
+    return cntx->entity_manager.bodies.rotation[id];
+}
+[[nodiscard]] float rbs::getCircleRadius(SystemContext* cntx, uint32_t id)
+{
+    return cntx->entity_manager.bodies.collider[id].circle.radius;
+}
+[[nodiscard]] const std::vector<glm::vec2> rbs::getConvexVerticies(SystemContext* cntx, uint32_t id)
+{
+    return std::vector<glm::vec2>(
+        cntx->vertex_pool.begin() + cntx->entity_manager.bodies.collider[id].convex.begin,
+        cntx->vertex_pool.begin() + cntx->entity_manager.bodies.collider[id].convex.end);
+}
+
+// FILE: src/engine/EntityManager.cpp
+#include "EntityManager.h"
+
+EntityManager::EntityManager()
+{
+    for (int i = 0; i < MAX_ENTITY_COUNT; i++)
+    {
+        bodies.flag[i] = 0;
+    }
+}
+
+uint32_t EntityManager::addEntity()
+{
+    uint32_t id = -1;
+    if (free_list.size() > 0)
+    {
+        id = free_list[free_list.size() - 1];
+        free_list.pop_back();
+    }
+    else
+        id = ++highest_id;
+
+    bodies.flag[id] = ALIVE;
+
+    bodies.position[id] = {0, 0};
+    bodies.velocity[id] = {0, 0};
+    bodies.force[id] = {0, 0};
+    bodies.rotation[id] = 0;
+    bodies.angular_velocity[id] = 0;
+    bodies.torque[id] = 0;
+    bodies.mass[id] = 0;
+    bodies.invMass[id] = 0;
+    bodies.inertia[id] = 0;
+    bodies.invInertia[id] = 0;
+    bodies.elasticity[id] = 0.8f;
+
+    return id;
+}
+void EntityManager::removeEntity(uint32_t id)
+{
+    gravity_entities.remove(id);
+    moveable_entities.remove(id);
+    circle_colliders.remove(id);
+    convex_colliders.remove(id);
+
+    bodies.flag[id] = 0;
+
+    free_list.push_back(id);
+}
+
+void EntityManager::enableGravity(uint32_t id)
+{
+    gravity_entities.add(id);
+    bodies.flag[id] |= HAS_GRAVITY;
+}
+void EntityManager::disableGravity(uint32_t id)
+{
+    gravity_entities.remove(id);
+    bodies.flag[id] &= ~HAS_GRAVITY;
+}
+void EntityManager::makeMoveable(uint32_t id)
+{
+    moveable_entities.add(id);
+    bodies.flag[id] |= MOVEABLE;
+}
+void EntityManager::makeImmoveable(uint32_t id)
+{
+    moveable_entities.remove(id);
+    bodies.flag[id] &= ~MOVEABLE;
+}
+void EntityManager::useCircleCollider(uint32_t id)
+{
+    circle_colliders.add(id);
+    bodies.flag[id] |= COLLIDER;
+    convex_colliders.remove(id);
+    bodies.flag[id] &= ~CONVEX;
+    bodies.collider[id].circle.radius = 0.0f;
+}
+void EntityManager::useConvexCollider(uint32_t id)
+{
+    convex_colliders.add(id);
+    bodies.flag[id] |= COLLIDER;
+    circle_colliders.remove(id);
+    bodies.flag[id] |= CONVEX;
+    bodies.collider[id].convex.begin = 0;
+    bodies.collider[id].convex.end = 0;
+}
+
+// FILE: src/engine/interface.h
+#pragma once
+#include "SystemContext.h"
+
+namespace rbs
+{
+SystemContext* make_context();
+void drop(SystemContext* cntx);
+
+void step(SystemContext* cntx);
+uint32_t getMaxEntityCount(SystemContext* cntx);
+void setBounds(SystemContext* cntx, glm::vec2 bottom_left, glm::vec2 top_right);
+void setGravity(SystemContext* cntx, float gravity);
+
+[[nodiscard]] unsigned int addEntity(SystemContext* cntx, glm::vec2 pos = {0, 0}, float mass = 1);
+void addConvexCollider(SystemContext* cntx, unsigned int id, const std::vector<glm::vec2>& points);
+void addCircleCollider(SystemContext* cntx, unsigned int id, float radius);
+
+void killEntity(SystemContext* cntx, uint32_t id);
+
+void setPosition(SystemContext* cntx, uint32_t id, glm::vec2 pos);
+void setVelocity(SystemContext* cntx, uint32_t id, glm::vec2 vel);
+void applyForce(SystemContext* cntx, uint32_t id, glm::vec2 force);
+
+void setCircleCollider(SystemContext* cntx, uint32_t id, float radius);
+// void setCircleCollider(SystemContext* cntx, uint32_t id, std::vector<glm::vec2>& verticies);
+
+[[nodiscard]] glm::vec2 getPosition(SystemContext* cntx, uint32_t id);
+[[nodiscard]] float getRotation(SystemContext* cntx, uint32_t id);
+
+[[nodiscard]] float getCircleRadius(SystemContext* cntx, uint32_t id);
+[[nodiscard]] const std::vector<glm::vec2> getConvexVerticies(SystemContext* cntx, uint32_t id);
+
+} // namespace rbs
+
+// FILE: src/engine/EntityManager.h
+#pragma once
+#include "Bodies.h"
+#include "EntityList.h"
+#include <glm/glm.hpp>
+#include <stdio.h>
+#include <vector>
+
+struct EntityManager
+{
+    static constexpr uint32_t MAX_ENTITY_COUNT = 1024;
+
+    enum FlagBytes : uint8_t
+    {
+        ALIVE = 1 << 0,
+        MOVEABLE = 1 << 1,
+        HAS_GRAVITY = 1 << 2,
+        COLLIDER = 1 << 3,
+        CONVEX = 1 << 4
+    };
+
+    Bodies<MAX_ENTITY_COUNT> bodies;
+
+    uint32_t highest_id = 0;
+    std::vector<uint32_t> free_list;
+
+    EntityIDList<MAX_ENTITY_COUNT> gravity_entities;
+    EntityIDList<MAX_ENTITY_COUNT> moveable_entities;
+    EntityIDList<MAX_ENTITY_COUNT> circle_colliders;
+    EntityIDList<MAX_ENTITY_COUNT> convex_colliders;
+
+    EntityManager();
+
+    uint32_t addEntity();
+    void removeEntity(uint32_t id);
+
+    void enableGravity(uint32_t id);
+    void disableGravity(uint32_t id);
+    void makeMoveable(uint32_t id);
+    void makeImmoveable(uint32_t id);
+    void useCircleCollider(uint32_t id);
+    void useConvexCollider(uint32_t id);
+
+    void addConvexCollider();
+
+    bool isAlive(uint32_t id);
+};
+
+// FILE: src/engine/SystemContext.h
+#pragma once
+#include "EntityManager.h"
+#include "PhysicsSystem/PhysicsSystem.h"
+
+struct SystemContext
+{
+    PhysicsSystem physics_system;
+    EntityManager entity_manager;
+    std::vector<glm::vec2> vertex_pool;
+
+    bool bounded = false;
+    float fixed_timestep = 0.1;
+    unsigned int iterations = 0;
+};
+
+// FILE: src/engine/EntityList.h
+#pragma once
+#include <glm/glm.hpp>
+
+template <uint32_t max_entity_capacity>
+struct EntityIDList
+{
+    uint32_t count = 0;
+    uint32_t id[max_entity_capacity];
+
+    EntityIDList()
+    {
+        for (int i = 0; i < max_entity_capacity; i++)
+            id[i] = -1;
+    }
+
+    void add(uint32_t added_id)
+    {
+        // check if already in list
+        for (int i = 0; i < count; i++)
+        {
+            if (id[i] == added_id)
+                return;
+        }
+        // assign to back, increment count
+        id[count++] = added_id;
+    }
+
+    void remove(uint32_t removed_id)
+    {
+        // search list for corresponding id
+        for (int i = 0; i < count; i++)
+        {
+            if (id[i] == removed_id)
+            {
+                // overwrite corresponding id with last item in list and shrink list by one
+                id[i] = id[--count];
+                id[count] = -1;
+                return;
+            }
+        }
+    }
+};
+
+// FILE: src/engine/PhysicsSystem/CollisionSystem.h
+#include <glm/glm.hpp>
+#pragma once
+
+class SystemContext;
+
+class CollisionSystem
+{
+  public:
+    void apply(SystemContext* cntx);
+    void circleCircleCollision(SystemContext* cntx, uint32_t id_a, uint32_t id_b);
+    void circleConvexCollision(SystemContext* cntx, uint32_t id_a, uint32_t id_b);
+    void convexConvexCollision(SystemContext* cntx, uint32_t id_a, uint32_t id_b);
+};
+
+// FILE: src/engine/PhysicsSystem/IntegrationSystem.h
+#pragma once
+#include <glm/glm.hpp>
+
+class SystemContext;
+
+class IntegrationSystem
+{
+  public:
+    float gravity = -1;
+    void apply(SystemContext* cntx);
+    void integrate(SystemContext* cntx, uint32_t id);
+
+    void applyGravity(SystemContext* cntx);
+};
+
+// FILE: src/engine/PhysicsSystem/BorderSystem.cpp
+#include "BorderSystem.h"
+#include "../SystemContext.h"
+
+void BorderSystem::apply(SystemContext* cntx)
+{
+    for (int i = 0; i < cntx->entity_manager.circle_colliders.count; i++)
+    {
+        sphereBorderCollision(cntx, cntx->entity_manager.circle_colliders.id[i]);
+    }
+    for (int i = 0; i < cntx->entity_manager.convex_colliders.count; i++)
+    {
+        convexBorderCollision(cntx, cntx->entity_manager.convex_colliders.id[i]);
+    }
+}
+
+void BorderSystem::sphereBorderCollision(SystemContext* cntx, uint32_t id)
+{
+    auto& bodies = cntx->entity_manager.bodies;
+    float radius = bodies.collider[id].circle.radius;
+
+    if (bodies.position[id].x - radius <= bottom_left_corner.x)
+    {
+        bodies.position[id].x = bottom_left_corner.x + radius;
+        bodies.velocity[id].x *= -bodies.elasticity[id];
+    }
+    else if (bodies.position[id].x + radius >= top_right_corner.x)
+    {
+        bodies.position[id].x = top_right_corner.x - radius;
+        bodies.velocity[id].x *= -bodies.elasticity[id];
+    }
+
+    if (bodies.position[id].y - radius <= bottom_left_corner.y)
+    {
+        bodies.position[id].y = bottom_left_corner.y + radius;
+        bodies.velocity[id].y *= -bodies.elasticity[id];
+    }
+    else if (bodies.position[id].y + radius >= top_right_corner.y)
+    {
+        bodies.position[id].y = top_right_corner.y - radius;
+        bodies.velocity[id].y *= -bodies.elasticity[id];
+    }
+}
+void BorderSystem::convexBorderCollision(SystemContext* cntx, uint32_t id)
+{
+}
+
+// FILE: src/engine/PhysicsSystem/PhysicsSystem.cpp
+#include "PhysicsSystem.h"
+#include "../SystemContext.h"
+
+void PhysicsSystem::step(SystemContext* cntx)
+{
+    m_collision_system.apply(cntx);
+    m_border_system.apply(cntx);
+    m_integration_system.applyGravity(cntx);
+    m_integration_system.apply(cntx);
+}
+
+// FILE: src/engine/PhysicsSystem/IntegrationSystem.cpp
+#include "IntegrationSystem.h"
+#include "../SystemContext.h"
+
+void IntegrationSystem::apply(SystemContext* cntx)
+{
+    for (uint32_t id : cntx->entity_manager.gravity_entities.id)
+        integrate(cntx, id);
+}
+
+void IntegrationSystem::integrate(SystemContext* cntx, uint32_t id)
+{
+    auto& bodies = cntx->entity_manager.bodies;
+    bodies.velocity[id] += (bodies.force[id] / bodies.mass[id]) * cntx->fixed_timestep;
+    bodies.position[id] += bodies.velocity[id] * cntx->fixed_timestep;
+    bodies.force[id] = {0, 0};
+}
+
+void IntegrationSystem::applyGravity(SystemContext* cntx)
+{
+    for (uint32_t id : cntx->entity_manager.gravity_entities.id)
+        cntx->entity_manager.bodies.velocity[id].y += gravity;
+}
+
+// FILE: src/engine/PhysicsSystem/BorderSystem.h
+#pragma once
+#include <glm/glm.hpp>
+
+class SystemContext;
+
+class BorderSystem
+{
+  public:
+    glm::vec2 bottom_left_corner = {-250, 500};
+    glm::vec2 top_right_corner = {250, 500};
+
+    void apply(SystemContext* cntx);
+
+    void sphereBorderCollision(SystemContext* cntx, uint32_t id);
+
+    void convexBorderCollision(SystemContext* cntx, uint32_t id);
+};
+
+// FILE: src/engine/PhysicsSystem/CollisionSystem.cpp
+#include "CollisionSystem.h"
+#include "../SystemContext.h"
+
+void CollisionSystem::apply(SystemContext* cntx)
+{
+    for (uint32_t circle_a : cntx->entity_manager.circle_colliders.id)
+    {
+        for (uint32_t circle_b : cntx->entity_manager.circle_colliders.id)
+        {
+            if (!(circle_a == circle_b)) [[likely]]
+                circleCircleCollision(cntx, circle_a, circle_b);
+        }
+    }
+    for (uint32_t circle : cntx->entity_manager.circle_colliders.id)
+    {
+        for (uint32_t convex : cntx->entity_manager.convex_colliders.id)
+        {
+            circleCircleCollision(cntx, circle, convex);
+        }
+    }
+    for (uint32_t convex_a : cntx->entity_manager.convex_colliders.id)
+    {
+        for (uint32_t convex_b : cntx->entity_manager.convex_colliders.id)
+        {
+            if (!(convex_a == convex_b)) [[likely]]
+                convexConvexCollision(cntx, convex_a, convex_b);
+        }
+    }
+}
+void CollisionSystem::circleCircleCollision(SystemContext* cntx, uint32_t id_a, uint32_t id_b)
+{
+    auto& bodies = cntx->entity_manager.bodies;
+
+    float radius_a = bodies.collider[id_a].circle.radius;
+    float radius_b = bodies.collider[id_b].circle.radius;
+
+    glm::vec2 diff = bodies.position[id_a] - bodies.position[id_b];
+    float dist = glm::length(diff);
+    float overlap = radius_a + radius_b - dist;
+
+    if (overlap < 0)
+        return;
+
+    // Avoid division by zero
+    glm::vec2 normal = (dist > 0) ? diff / dist : glm::vec2(1, 0);
+
+    // Separate circles
+    bodies.position[id_a] += normal * (overlap / 2.0f);
+    bodies.position[id_b] -= normal * (overlap / 2.0f);
+
+    // Calculate impulse for collision response
+    glm::vec2 relativeVelocity = bodies.velocity[id_a] - bodies.velocity[id_b];
+    float velAlongNormal = glm::dot(relativeVelocity, normal);
+
+    // Only resolve if objects are moving toward each other
+    if (velAlongNormal > 0)
+        return;
+
+    // Calculate restitution (elasticity)
+    float e = std::min(bodies.elasticity[id_a], bodies.elasticity[id_b]);
+
+    // Calculate impulse scalar
+    float j = -(1.0f + e) * velAlongNormal;
+    j /= (1.0f / bodies.mass[id_a]) + (1.0f / bodies.mass[id_b]);
+
+    // Apply impulse
+    glm::vec2 impulse = j * normal;
+    bodies.velocity[id_a] += impulse / bodies.mass[id_a];
+    bodies.velocity[id_b] -= impulse / bodies.mass[id_b];
+}
+void CollisionSystem::circleConvexCollision(SystemContext* cntx, uint32_t id_a, uint32_t id_b)
+{
+}
+void CollisionSystem::convexConvexCollision(SystemContext* cntx, uint32_t id_a, uint32_t id_b)
+{
+}
+
+// FILE: src/engine/PhysicsSystem/PhysicsSystem.h
+#pragma once
+#include "BorderSystem.h"
+#include "CollisionSystem.h"
+#include "IntegrationSystem.h"
+#include <vector>
+
+class SystemContext;
+
+class PhysicsSystem
+{
+  public:
+    void step(SystemContext* cntx);
+
+    [[nodiscard]] glm::vec2 getPosition(SystemContext* cntx, unsigned int id);
+    [[nodiscard]] float getRotation(SystemContext* cntx, unsigned int id);
+    [[nodiscard]] float getCircleRadius(SystemContext* cntx, unsigned int id);
+    [[nodiscard]] std::vector<glm::vec2> getConvexShape(SystemContext* cntx, unsigned int id);
+
+    IntegrationSystem m_integration_system;
+    BorderSystem m_border_system;
+    CollisionSystem m_collision_system;
+};
+
+// FILE: src/utility/Utility.cpp
+#include "Utility.h"
+#include <cstdio>
+#include <ctime>
+#include <iostream>
+
+namespace utl
+{
+
+//==============================================================================
+// Logger implementation
+//==============================================================================
+static LogLevel g_logLevel = LogLevel::Info;
+static std::ofstream g_logFile;
+
+void initLogger(LogLevel minLevel, const char* logFile)
+{
+    g_logLevel = minLevel;
+}
+static std::string getCurrentTimestamp()
+{
+    char buffer[64];
+    time_t now = time(nullptr);
+    strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", localtime(&now));
+    return buffer;
+}
+// Internal function to get level name
+static const char* getLevelName(LogLevel level)
+{
+    switch (level)
+    {
+    case LogLevel::Debug:
+        return "DEBUG";
+    case LogLevel::Info:
+        return "INFO";
+    case LogLevel::Warning:
+        return "WARNING";
+    case LogLevel::Error:
+        return "ERROR";
+    default:
+        return "UNKNOWN";
+    }
+}
+static void log(LogLevel level, const char* format, va_list args)
+{
+    if (level < g_logLevel)
+        return;
+
+    char message[1024];
+    vsnprintf(message, sizeof(message), format, args);
+
+    std::string timestamp = getCurrentTimestamp();
+    std::string output = timestamp + " [" + getLevelName(level) + "] " + message;
+
+    std::cout << output << std::endl;
+}
+
+void logDebug(const char* format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    log(LogLevel::Debug, format, args);
+    va_end(args);
+}
+
+void logInfo(const char* format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    log(LogLevel::Info, format, args);
+    va_end(args);
+}
+
+void logWarning(const char* format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    log(LogLevel::Warning, format, args);
+    va_end(args);
+}
+
+void logError(const char* format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    log(LogLevel::Error, format, args);
+    va_end(args);
+}
+
+//==============================================================================
+// Memory arena implementation
+//==============================================================================
+MemoryArena MemoryArena::create(size_t capacity)
+{
+    MemoryArena arena;
+    arena.buffer = static_cast<char*>(malloc(capacity));
+    arena.capacity = capacity;
+    arena.used = 0;
+
+    if (!arena.buffer)
+    {
+        UTL_ERROR("Failed to allocate memory arena of size %zu", capacity);
+        arena.capacity = 0;
+    }
+
+    return arena;
+}
+
+void MemoryArena::destroy()
+{
+    free(buffer);
+    buffer = nullptr;
+    capacity = 0;
+    used = 0;
+}
+
+void MemoryArena::reset()
+{
+    used = 0;
+}
+
+void* MemoryArena::alloc(size_t size, size_t alignment)
+{
+    if (!buffer)
+        return nullptr;
+
+    // Calculate aligned address
+    size_t current = reinterpret_cast<size_t>(buffer + used);
+    size_t aligned = (current + alignment - 1) & ~(alignment - 1);
+    size_t padding = aligned - current;
+
+    // Check if there's enough space
+    if (used + padding + size > capacity)
+    {
+        UTL_ERROR("Memory arena out of space: %zu requested, %zu available",
+                  size, capacity - used);
+        return nullptr;
+    }
+
+    // Update used amount and return pointer
+    used += padding + size;
+    return buffer + aligned - reinterpret_cast<size_t>(buffer);
+}
+
+bool MemoryArena::canFit(size_t size, size_t alignment) const
+{
+    size_t current = reinterpret_cast<size_t>(buffer + used);
+    size_t aligned = (current + alignment - 1) & ~(alignment - 1);
+    size_t padding = aligned - current;
+
+    return (used + padding + size <= capacity);
+}
+
+//==============================================================================
+// Profiling implementation
+//==============================================================================
+ScopedTimer::ScopedTimer(const char* name)
+    : name(name)
+{
+    startTime = std::chrono::high_resolution_clock::now();
+}
+
+ScopedTimer::~ScopedTimer()
+{
+    auto endTime = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration<float, std::milli>(endTime - startTime).count();
+    UTL_DEBUG("%s: %.3f ms", name, duration);
+}
+
+} // namespace utl
+
+// FILE: src/utility/Utility.h
+#pragma once
+#include <cassert>
+#include <chrono>
+#include <cstdarg>
+#include <cstddef>
+#include <cstdlib>
+#include <cstring>
+#include <fstream>
+#include <functional>
+#include <iostream>
+#include <string>
+
+namespace utl
+{
+
+//==============================================================================
+// Simple logging system
+//==============================================================================
+enum class LogLevel
+{
+    Debug,
+    Info,
+    Warning,
+    Error,
+    None // Use to disable logging
+};
+
+// Initialize the logger - call once at program start
+void initLogger(LogLevel minLevel = LogLevel::Info, const char* logFile = nullptr);
+
+// Core logging functions
+void logDebug(const char* format, ...);
+void logInfo(const char* format, ...);
+void logWarning(const char* format, ...);
+void logError(const char* format, ...);
+
+// Convenience macros
+#ifdef NDEBUG
+#define UTL_DEBUG(...)
+#else
+#define UTL_DEBUG(...) utl::logDebug(__VA_ARGS__)
+#endif
+
+#define UTL_INFO(...) utl::logInfo(__VA_ARGS__)
+#define UTL_WARNING(...) utl::logWarning(__VA_ARGS__)
+#define UTL_ERROR(...) utl::logError(__VA_ARGS__)
+
+//==============================================================================
+// Simple assertions
+//==============================================================================
+#ifdef NDEBUG
+#define UTL_ASSERT(condition, message) ((void)0)
+#else
+#define UTL_ASSERT(condition, message)                                                  \
+    do                                                                                  \
+    {                                                                                   \
+        if (!(condition))                                                               \
+        {                                                                               \
+            utl::logError("Assertion failed: %s (%s:%d)", message, __FILE__, __LINE__); \
+            assert(condition);                                                          \
+        }                                                                               \
+    } while (0)
+#endif
+
+//==============================================================================
+// Memory arena allocator
+//==============================================================================
+struct MemoryArena
+{
+    char* buffer;
+    size_t capacity;
+    size_t used;
+
+    // Create a new memory arena with the given capacity
+    static MemoryArena create(size_t capacity);
+
+    void destroy();
+    void reset();
+
+    void* alloc(size_t size, size_t alignment = alignof(std::max_align_t));
+
+    template <typename T>
+    T* allocArray(size_t count)
+    {
+        return static_cast<T*>(alloc(sizeof(T) * count, alignof(T)));
+    }
+
+    template <typename T>
+    T* alloc()
+    {
+        return static_cast<T*>(alloc(sizeof(T), alignof(T)));
+    }
+
+    bool canFit(size_t size, size_t alignment = alignof(std::max_align_t)) const;
+};
+
+//==============================================================================
+// RAII Memory arena scope helper
+//==============================================================================
+class ScopedArena
+{
+  public:
+    explicit ScopedArena(size_t capacity)
+    {
+        arena = MemoryArena::create(capacity);
+    }
+
+    ~ScopedArena()
+    {
+        arena.destroy();
+    }
+
+    MemoryArena& get() { return arena; }
+
+    // Disallow copying
+    ScopedArena(const ScopedArena&) = delete;
+    ScopedArena& operator=(const ScopedArena&) = delete;
+
+  private:
+    MemoryArena arena;
+};
+
+//==============================================================================
+// Simple profiling utilities
+//==============================================================================
+class ScopedTimer
+{
+  public:
+    explicit ScopedTimer(const char* name);
+    ~ScopedTimer();
+
+  private:
+    const char* name;
+    std::chrono::high_resolution_clock::time_point startTime;
+};
+
+// Measure execution time of a function
+template <typename Func>
+float measureExecutionTime(Func&& func)
+{
+    auto start = std::chrono::high_resolution_clock::now();
+    std::forward<Func>(func)();
+    auto end = std::chrono::high_resolution_clock::now();
+
+    return std::chrono::duration<float, std::milli>(end - start).count();
+}
+
+#ifdef ENABLE_PROFILING
+#define UTL_PROFILE_SCOPE(name) utl::ScopedTimer timer##__LINE__(name)
+#else
+#define UTL_PROFILE_SCOPE(name) ((void)0)
+#endif
+
+//==============================================================================
+// Error checking helpers
+//==============================================================================
+// Check if an index is within bounds
+template <typename T>
+bool isInBounds(T index, T size)
+{
+    return index >= 0 && index < size;
+}
+
+// Safe array access with bounds checking
+template <typename T>
+T& safeAccess(T* array, size_t index, size_t size, const char* errorMsg = "Array index out of bounds")
+{
+    UTL_ASSERT(index < size, errorMsg);
+    return array[index];
+}
+
+} // namespace utl
+
+// FILE: src/utility/Time.cpp

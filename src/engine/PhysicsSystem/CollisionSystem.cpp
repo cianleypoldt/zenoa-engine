@@ -3,25 +3,31 @@
 
 void CollisionSystem::apply(SystemContext* cntx)
 {
-    for (uint32_t circle_a : cntx->entity_manager.circle_colliders.id)
+    for (uint32_t i = 0; i < cntx->entity_manager.circle_colliders.count; i++)
     {
-        for (uint32_t circle_b : cntx->entity_manager.circle_colliders.id)
+        uint32_t circle_a = cntx->entity_manager.circle_colliders.id[i];
+        for (uint32_t j = 0; j < cntx->entity_manager.circle_colliders.count; j++)
         {
+            uint32_t circle_b = cntx->entity_manager.circle_colliders.id[j];
             if (!(circle_a == circle_b)) [[likely]]
                 circleCircleCollision(cntx, circle_a, circle_b);
         }
     }
-    for (uint32_t circle : cntx->entity_manager.circle_colliders.id)
+    for (uint32_t i = 0; i < cntx->entity_manager.circle_colliders.count; i++)
     {
-        for (uint32_t convex : cntx->entity_manager.convex_colliders.id)
+        uint32_t circle = cntx->entity_manager.circle_colliders.id[i];
+        for (uint32_t j = 0; j < cntx->entity_manager.convex_colliders.count; j++)
         {
+            uint32_t convex = cntx->entity_manager.convex_colliders.id[j];
             circleCircleCollision(cntx, circle, convex);
         }
     }
-    for (uint32_t convex_a : cntx->entity_manager.convex_colliders.id)
+    for (uint32_t i = 0; i < cntx->entity_manager.convex_colliders.count; i++)
     {
-        for (uint32_t convex_b : cntx->entity_manager.convex_colliders.id)
+        uint32_t convex_a = cntx->entity_manager.convex_colliders.id[i];
+        for (uint32_t j = 0; j < cntx->entity_manager.convex_colliders.count; j++)
         {
+            uint32_t convex_b = cntx->entity_manager.convex_colliders.id[j];
             if (!(convex_a == convex_b)) [[likely]]
                 convexConvexCollision(cntx, convex_a, convex_b);
         }

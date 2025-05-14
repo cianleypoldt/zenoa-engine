@@ -2,7 +2,7 @@
 
 EntityManager::EntityManager()
 {
-    for (int i = 0; i < MAX_ENTITY_COUNT; i++)
+    for (uint32_t i = 0; i < MAX_ENTITY_COUNT; i++)
     {
         bodies.flag[i] = 0;
     }
@@ -17,7 +17,7 @@ uint32_t EntityManager::addEntity()
         free_list.pop_back();
     }
     else
-        id = ++highest_id;
+        id = occupied_slot_count++;
 
     bodies.flag[id] = ALIVE;
 
@@ -47,6 +47,10 @@ void EntityManager::removeEntity(uint32_t id)
     free_list.push_back(id);
 }
 
+bool EntityManager::verifyID(uint32_t id)
+{
+    return (isAlive(id) && (id >= 0) && (id < occupied_slot_count));
+}
 void EntityManager::enableGravity(uint32_t id)
 {
     gravity_entities.add(id);
@@ -83,4 +87,8 @@ void EntityManager::useConvexCollider(uint32_t id)
     bodies.flag[id] |= CONVEX;
     bodies.collider[id].convex.begin = 0;
     bodies.collider[id].convex.end = 0;
+}
+bool EntityManager::isAlive(uint32_t id)
+{
+    return bodies.flag[id] & ALIVE;
 }

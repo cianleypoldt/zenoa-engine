@@ -9,14 +9,14 @@ struct EntityIDList
 
     EntityIDList()
     {
-        for (int i = 0; i < max_entity_capacity; i++)
+        for (uint32_t i = 0; i < max_entity_capacity; i++)
             id[i] = -1;
     }
 
     void add(uint32_t added_id)
     {
         // check if already in list
-        for (int i = 0; i < count; i++)
+        for (uint32_t i = 0; i < count; i++)
         {
             if (id[i] == added_id)
                 return;
@@ -28,15 +28,18 @@ struct EntityIDList
     void remove(uint32_t removed_id)
     {
         // search list for corresponding id
-        for (int i = 0; i < count; i++)
+        uint32_t index = 0;
+        while (index < count)
         {
-            if (id[i] == removed_id)
+            if (id[index++] == removed_id)
             {
-                // overwrite corresponding id with last item in list and shrink list by one
-                id[i] = id[--count];
-                id[count] = -1;
-                return;
+                break;
             }
         }
+        while (index < count) // shift eveything to the left
+        {
+            id[index - 1] = id[index++];
+        }
+        id[--count] = -1;
     }
 };
