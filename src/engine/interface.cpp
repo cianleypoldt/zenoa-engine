@@ -35,8 +35,6 @@ void rbs::step(SystemContext* cntx)
 
 [[nodiscard]] unsigned int rbs::addEntity(SystemContext* cntx, glm::vec2 pos, float mass)
 {
-    if (cntx->entity_manager.occupied_slot_count == cntx->entity_manager.MAX_ENTITY_COUNT)
-        return -1;
     uint32_t id = cntx->entity_manager.addEntity();
     cntx->entity_manager.bodies.position[id] = pos;
     cntx->entity_manager.bodies.mass[id] = mass;

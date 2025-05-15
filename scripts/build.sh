@@ -1,6 +1,7 @@
 mkdir build
 cd build
-cmake -DCMAKE_BUILD_TYPE=Release ..
+#-DCMAKE_BUILD_TYPE=Release
+cmake  ..
 if [ $? -ne 0 ]; then
     echo "cmake failed"
     exit 1

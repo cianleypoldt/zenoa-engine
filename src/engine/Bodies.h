@@ -1,5 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
+#include <vector>
 
 struct Circle
 {
@@ -16,24 +17,44 @@ union Collider {
     Convex convex;
 };
 
-template <uint32_t max_entity_count>
 struct Bodies
 {
-    uint16_t flag[max_entity_count];
+    std::vector<uint16_t> flag;
 
-    glm::vec2 position[max_entity_count];
-    glm::vec2 velocity[max_entity_count];
-    glm::vec2 force[max_entity_count];
+    std::vector<glm::vec2> position;
+    std::vector<glm::vec2> velocity;
+    std::vector<glm::vec2> force;
 
-    float rotation[max_entity_count];
-    float angular_velocity[max_entity_count];
-    float torque[max_entity_count];
+    std::vector<float> rotation;
+    std::vector<float> angular_velocity;
+    std::vector<float> torque;
 
-    float mass[max_entity_count];
-    float invMass[max_entity_count];
-    float inertia[max_entity_count];
-    float invInertia[max_entity_count];
-    float elasticity[max_entity_count];
+    std::vector<float> mass;
+    std::vector<float> invMass;
+    std::vector<float> inertia;
+    std::vector<float> invInertia;
+    std::vector<float> elasticity;
 
-    Collider collider[max_entity_count];
+    std::vector<Collider> collider;
+
+    void resize(size_t size)
+    {
+        flag.resize(size);
+        position.resize(size);
+        velocity.resize(size);
+        force.resize(size);
+        rotation.resize(size);
+        angular_velocity.resize(size);
+        torque.resize(size);
+        mass.resize(size);
+        invMass.resize(size);
+        inertia.resize(size);
+        invInertia.resize(size);
+        elasticity.resize(size);
+        collider.resize(size);
+    }
+    uint32_t size()
+    {
+        return flag.size();
+    }
 };

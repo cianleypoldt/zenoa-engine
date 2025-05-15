@@ -1,7 +1,6 @@
 #include "BorderSystem.h"
-#include "../../utility/Utility.h"
 #include "../SystemContext.h"
-#include "../interface.h"
+
 void BorderSystem::apply(SystemContext* cntx)
 {
     for (uint32_t i = 0; i < cntx->entity_manager.circle_colliders.count; i++)
@@ -34,7 +33,9 @@ void BorderSystem::sphereBorderCollision(SystemContext* cntx, uint32_t id)
     {
         bodies.position[id].y = bottom_left_corner.y + radius;
         bodies.velocity[id].y *= -bodies.elasticity[id];
-        rbs::killEntity(cntx, id);
+        // rbs::killEntity(cntx, id);
+        // uint32_t id = rbs::addEntity(cntx);
+        // rbs::addCircleCollider(cntx, id, 3);
     }
     else if (bodies.position[id].y + radius >= top_right_corner.y)
     {

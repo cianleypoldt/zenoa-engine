@@ -1,11 +1,9 @@
 #include "EntityManager.h"
+#include <algorithm>
 
 EntityManager::EntityManager()
 {
-    for (uint32_t i = 0; i < MAX_ENTITY_COUNT; i++)
-    {
-        bodies.flag[i] = 0;
-    }
+    bodies.resize(40);
 }
 
 uint32_t EntityManager::addEntity()
@@ -17,7 +15,11 @@ uint32_t EntityManager::addEntity()
         free_list.pop_back();
     }
     else
+    {
+        if (bodies.size() <= occupied_slot_count)
+            bodies.resize(std::max<size_t>(static_cast<size_t>(occupied_slot_count * 1.5), occupied_slot_count + 40));
         id = occupied_slot_count++;
+    }
 
     bodies.flag[id] = ALIVE;
 
@@ -31,7 +33,7 @@ uint32_t EntityManager::addEntity()
     bodies.invMass[id] = 0;
     bodies.inertia[id] = 0;
     bodies.invInertia[id] = 0;
-    bodies.elasticity[id] = 0.8f;
+    bodies.elasticity[id] = 0.8;
 
     return id;
 }
@@ -49,7 +51,7 @@ void EntityManager::removeEntity(uint32_t id)
 
 bool EntityManager::verifyID(uint32_t id)
 {
-    return (isAlive(id) && (id >= 0) && (id < occupied_slot_count));
+    return ((id < occupied_slot_count) && (id >= 0) && isAlive(id));
 }
 void EntityManager::enableGravity(uint32_t id)
 {
@@ -90,5 +92,5 @@ void EntityManager::useConvexCollider(uint32_t id)
 }
 bool EntityManager::isAlive(uint32_t id)
 {
-    return bodies.flag[id] & ALIVE;
+    return (bodies.flag[id] & ALIVE);
 }

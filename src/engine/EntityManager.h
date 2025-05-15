@@ -18,7 +18,7 @@ struct EntityManager
         CONVEX = 1 << 4
     };
 
-    Bodies<MAX_ENTITY_COUNT> bodies;
+    Bodies bodies;
 
     uint32_t occupied_slot_count = 0;
     std::vector<uint32_t> free_list;
@@ -45,4 +45,6 @@ struct EntityManager
     void addConvexCollider();
 
     bool isAlive(uint32_t id);
+
+  private:
 };

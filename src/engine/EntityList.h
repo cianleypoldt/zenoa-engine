@@ -1,5 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
+#include <stdio.h>
 
 template <uint32_t max_entity_capacity>
 struct EntityIDList
@@ -27,7 +28,8 @@ struct EntityIDList
 
     void remove(uint32_t removed_id)
     {
-        // search list for corresponding id
+        if (count == 0)
+            return;
         uint32_t index = 0;
         while (index < count)
         {
@@ -36,9 +38,10 @@ struct EntityIDList
                 break;
             }
         }
-        while (index < count) // shift eveything to the left
+        while (index < count)
         {
-            id[index - 1] = id[index++];
+            id[index - 1] = id[index];
+            index++;
         }
         id[--count] = -1;
     }
