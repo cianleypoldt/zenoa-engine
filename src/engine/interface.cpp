@@ -49,14 +49,31 @@ void rbs::addCircleCollider(SystemContext* cntx, unsigned int id, float radius)
     cntx->entity_manager.useCircleCollider(id);
     cntx->entity_manager.bodies.collider[id].circle.radius = radius;
 }
-void rbs::addConvexCollider(SystemContext* cntx, unsigned int id, const std::vector<glm::vec2>& verticies)
+void rbs::addConvexCollider(SystemContext* cntx, unsigned int id, std::vector<glm::vec2> verticies)
 {
+    // To Calclate the bounding radius:
+    // 1. Get center:
+    glm::vec2 sum;
+    for (auto& verticy : verticies)
+        sum += verticy;
+    sum /= verticies.size();
+
+    // store verticies relative to center
+    for (auto& verticy : verticies)
+        verticy -= sum;
+
+    // find the bounding radius
+    float radius = 0;
+    for (auto& verticy : verticies)
+        radius = std::max(radius, glm::length(verticy));
+
     if (!cntx->entity_manager.verifyID(id))
         return;
     cntx->entity_manager.useConvexCollider(id);
     cntx->entity_manager.bodies.collider[id].convex.begin = cntx->vertex_pool.size();
-    cntx->vertex_pool.insert(cntx->vertex_pool.begin(), verticies.begin(), verticies.end());
-    cntx->entity_manager.bodies.collider[id].convex.end = cntx->vertex_pool.size() - 1;
+    cntx->vertex_pool.insert(cntx->vertex_pool.end(), verticies.begin(), verticies.end());
+    cntx->entity_manager.bodies.collider[id].convex.end = cntx->vertex_pool.size();
+    cntx->entity_manager.bodies.collider[id].convex.bounding_radius = radius;
 }
 void rbs::killEntity(SystemContext* cntx, uint32_t id)
 {

@@ -274,30 +274,6 @@ src/engine/interface.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/engine/interface.cpp.s
 .PHONY : src/engine/interface.cpp.s
 
-src/graphics/Renderer.o: src/graphics/Renderer.cpp.o
-.PHONY : src/graphics/Renderer.o
-
-# target to build an object file
-src/graphics/Renderer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/graphics/Renderer.cpp.o
-.PHONY : src/graphics/Renderer.cpp.o
-
-src/graphics/Renderer.i: src/graphics/Renderer.cpp.i
-.PHONY : src/graphics/Renderer.i
-
-# target to preprocess a source file
-src/graphics/Renderer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/graphics/Renderer.cpp.i
-.PHONY : src/graphics/Renderer.cpp.i
-
-src/graphics/Renderer.s: src/graphics/Renderer.cpp.s
-.PHONY : src/graphics/Renderer.s
-
-# target to generate assembly for a file
-src/graphics/Renderer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/graphics/Renderer.cpp.s
-.PHONY : src/graphics/Renderer.cpp.s
-
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -421,9 +397,6 @@ help:
 	@echo "... src/engine/interface.o"
 	@echo "... src/engine/interface.i"
 	@echo "... src/engine/interface.s"
-	@echo "... src/graphics/Renderer.o"
-	@echo "... src/graphics/Renderer.i"
-	@echo "... src/graphics/Renderer.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

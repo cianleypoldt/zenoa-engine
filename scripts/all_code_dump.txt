@@ -2,101 +2,209 @@
 // FILE: src/test.cpp
 #include "engine/interface.h"
 
-int main()
+int ain()
 {
-    EntityIDList<10> list;
 
-    for (uint32_t i = 0; i < 10; i++)
-        list.add(10 * i);
-    list.remove(10);
-    list.remove(10);
-    list.add(15);
-    for (int i = 0; i < 10; i++)
-    {
-        printf("list item %i = %i\n", i, list.id[i]);
-    }
+    return 0;
 }
 
 // FILE: src/main.cpp
 #include "engine/interface.h"
+#include "graphics/Renderer.h"
 #include "utility/Utility.h"
 #include <SFML/Graphics.hpp>
 
-sf::Vector2f translate(glm::vec2 pos)
-{
-    return sf::Vector2f(pos.x + 500, -pos.y + 250);
-}
 float random(float min, float max)
 {
     return min + static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * (max - min);
 }
 
-constexpr int count = 1000;
-void ain()
+constexpr int count = 2;
+int main()
 {
     utl::initLogger(utl::LogLevel::Debug, "physics_engine.log");
     UTL_INFO("2D Physics Engine Starting...");
 
-    sf::RenderWindow window(sf::VideoMode({1000, 500}), "Debug View", sf::Style::None, sf::State::Windowed);
-    window.setPosition({0, 0});
-    window.display();
-
     auto simulation = rbs::make_context();
+    Renderer renderer(simulation);
     rbs::setBounds(simulation, {-500, -250}, {500, 250});
-    rbs::setGravity(simulation, -0.1);
-    simulation->fixed_timestep = 0.1;
+    rbs::setGravity(simulation, -9.81);
+    simulation->fixed_timestep = 0.00001;
     simulation->bounded = true;
+    unsigned int id[count + 1];
 
-    unsigned int id[count];
+    std::vector<glm::vec2> points;
+    points = {{0, 0}, {47.5, -34.5}, {29.4, -90.5}, {-29.4, -90.5}, {-47.5, -34.5}};
 
     // populate Physicsworld
     for (int i = 0; i < count; i++)
     {
         id[i] = rbs::addEntity(simulation, {random(-450, 450), random(-230, 230)});
-        rbs::addCircleCollider(simulation, id[i], random(3, 15));
-        rbs::applyForce(simulation, id[i], {100, 0});
-        simulation->entity_manager.bodies.elasticity[id[i]] = 0.8;
+
+        // rbs::addConvexCollider(simulation, id[i], {{1, 1}, {2, 2}});
+        rbs::addConvexCollider(simulation, id[i], points);
+        rbs::applyForce(simulation, id[i], {rbs::getPosition(simulation, id[i]).y * 1000, 0});
+        renderer.addConvex(id[i]);
+        simulation->entity_manager.disableGravity(id[i]);
     }
-
-    sf::CircleShape circle_a;
-    circle_a.setOutlineColor(sf::Color::White);
-    circle_a.setOutlineThickness(1);
-    circle_a.setFillColor(sf::Color::Transparent);
-
-    while (window.isOpen())
+    // Number of simulation steps per frame
+    const int STEPS_PER_FRAME = 30; // Adjust as needed for desired simulation speed
+    while (renderer.active())
     {
+        // Movement controls for entity 0
+        // Define movement speeds as variables
+        float player1Speed = 5.0f;
+        float player2Speed = 5.0f;
+
+        // Movement controls for entity 0
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+            simulation->entity_manager.bodies.position[id[0]] = simulation->entity_manager.bodies.position[id[0]] + glm::vec2{0, player1Speed};
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+            simulation->entity_manager.bodies.position[id[0]] = simulation->entity_manager.bodies.position[id[0]] + glm::vec2{0, -player1Speed};
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-            window.close();
+            simulation->entity_manager.bodies.position[id[0]] = simulation->entity_manager.bodies.position[id[0]] + glm::vec2{-player1Speed, 0};
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+            simulation->entity_manager.bodies.position[id[0]] = simulation->entity_manager.bodies.position[id[0]] + glm::vec2{player1Speed, 0};
 
-        for (int i = 0; i < count; i++)
+        // Movement controls for entity 1
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
+            simulation->entity_manager.bodies.position[id[1]] = simulation->entity_manager.bodies.position[id[1]] + glm::vec2{0, player2Speed};
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
+            simulation->entity_manager.bodies.position[id[1]] = simulation->entity_manager.bodies.position[id[1]] + glm::vec2{0, -player2Speed};
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+            simulation->entity_manager.bodies.position[id[1]] = simulation->entity_manager.bodies.position[id[1]] + glm::vec2{-player2Speed, 0};
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+            simulation->entity_manager.bodies.position[id[1]] = simulation->entity_manager.bodies.position[id[1]] + glm::vec2{player2Speed, 0};
+        for (int step = 0; step < STEPS_PER_FRAME; step++)
         {
-            float radius_a = rbs::getCircleRadius(simulation, id[i]);
-            circle_a.setRadius(radius_a);
-            circle_a.setOrigin({radius_a, radius_a});
-            circle_a.setPosition(translate(rbs::getPosition(simulation, id[i])));
-            window.draw(circle_a);
+            rbs::step(simulation);
         }
-
-        window.display();
-        rbs::step(simulation);
-        window.clear();
+        renderer.refresh();
     }
-
+    /**/
     rbs::drop(simulation);
+    return 0;
 }
-
-// FILE: src/graphics/Renderer.cpp
 
 // FILE: src/graphics/Renderer.h
 #pragma once
+#include "../engine/SystemContext.h"
+#include <SFML/Graphics.hpp>
+#include <glm/glm.hpp>
+#include <vector>
 
 class Renderer
 {
+  public:
+    sf::RenderWindow& window;
+    std::vector<uint32_t> circle;
+    std::vector<uint32_t> convex;
+    std::vector<sf::ConvexShape> convex_shapes;
+    Bodies& bodies;
+    SystemContext* cntx;
+    bool fullscreen;
+    sf::Clock clock;
+    sf::Time frameTime;
+
+    static sf::Vector2f translate(glm::vec2 pos)
+    {
+        return sf::Vector2f(pos.x + 500, -pos.y + 250);
+    }
+
+    bool active()
+    {
+        return window.isOpen();
+    }
+
+    Renderer(SystemContext* _cntx, bool Fullscreen = false, uint32_t fps = 60)
+        : window(_cntx->window), cntx(_cntx), bodies(_cntx->entity_manager.bodies), fullscreen(Fullscreen), frameTime(sf::seconds(1.0f / fps))
+    {
+        sf::ContextSettings settings;
+        settings.antiAliasingLevel = 16;
+        if (Fullscreen)
+            window.create(sf::VideoMode({1000, 500}), "Debug View", sf::Style::None, sf::State::Windowed, settings);
+        else
+            window.create(sf::VideoMode({1000, 500}), "Debug View", sf::Style::None, sf::State::Windowed, settings);
+        window.setPosition({0, 0});
+        window.display();
+    }
+
+    void addCircle(uint32_t id)
+    {
+        circle.push_back(id);
+    }
+    void addConvex(uint32_t id)
+    {
+        uint32_t verticy_count = bodies.collider[id].convex.end - bodies.collider[id].convex.begin;
+        sf::ConvexShape shape(bodies.collider[id].convex.end - bodies.collider[id].convex.begin);
+        shape.setOutlineColor(sf::Color::White);
+        shape.setOutlineThickness(1);
+        shape.setFillColor(sf::Color::Transparent);
+        for (int i = 0; i < verticy_count; i++)
+            shape.setPoint(i,
+                           {cntx->vertex_pool[bodies.collider[id].convex.begin + i].x,
+                            cntx->vertex_pool[bodies.collider[id].convex.begin + i].y});
+        convex_shapes.push_back(shape);
+        convex.push_back(id);
+    }
+
+    void refresh()
+    {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
+            window.close();
+
+        sf::Time elapsed = clock.restart(); // Only restart once per frame
+
+        sf::RectangleShape line;
+        line.setFillColor(sf::Color::White);
+
+        sf::CircleShape circleshape;
+        circleshape.setRadius(10);
+        circleshape.setOrigin({circleshape.getRadius(), circleshape.getRadius()});
+        circleshape.setFillColor(sf::Color::Transparent);
+        circleshape.setOutlineColor(sf::Color::White);
+        circleshape.setOutlineThickness(1);
+
+        // Draw circles
+        for (int i = 0; i < circle.size(); i++)
+        {
+            circleshape.setPosition(translate(bodies.position[circle[i]]));
+            line.setPosition(translate(bodies.position[circle[i]]));
+            line.setSize({circleshape.getRadius(), 0.5});
+            line.setRotation(sf::radians(bodies.collider[circle[i]].circle.radius));
+            window.draw(line);
+            window.draw(circleshape);
+        }
+
+        // Draw convex shapes - fixed to use the correct data
+        for (int i = 0; i < convex.size(); i++)
+        {
+            circleshape.setRadius(bodies.collider[i].convex.bounding_radius);
+            circleshape.setPosition(translate(bodies.position[convex[i]]));
+            circleshape.setOrigin({circleshape.getRadius(), circleshape.getRadius()});
+            convex_shapes[i].setPosition(translate(bodies.position[convex[i]]));
+            convex_shapes[i].setRotation(sf::radians(bodies.rotation[convex[i]]));
+            window.draw(convex_shapes[i]);
+            window.draw(circleshape);
+        }
+
+        window.display();
+        window.clear();
+
+        // Sleep to maintain 60 FPS
+
+        sf::Time sleepTime = frameTime - clock.getElapsedTime();
+        if (sleepTime > sf::Time::Zero)
+        {
+            sf::sleep(sleepTime);
+        }
+    }
 };
 
 // FILE: src/engine/Bodies.h
 #pragma once
 #include <glm/glm.hpp>
+#include <vector>
 
 struct Circle
 {
@@ -106,6 +214,7 @@ struct Convex
 {
     uint32_t begin;
     uint32_t end;
+    float bounding_radius;
 };
 
 union Collider {
@@ -113,26 +222,56 @@ union Collider {
     Convex convex;
 };
 
-template <uint32_t max_entity_count>
 struct Bodies
 {
-    uint16_t flag[max_entity_count];
+    std::vector<uint16_t> flag;
 
-    glm::vec2 position[max_entity_count];
-    glm::vec2 velocity[max_entity_count];
-    glm::vec2 force[max_entity_count];
+    std::vector<glm::vec2> position;
+    std::vector<glm::vec2> velocity;
+    std::vector<glm::vec2> force;
 
-    float rotation[max_entity_count];
-    float angular_velocity[max_entity_count];
-    float torque[max_entity_count];
+    std::vector<float> rotation;
+    std::vector<float> angular_velocity;
+    std::vector<float> torque;
 
-    float mass[max_entity_count];
-    float invMass[max_entity_count];
-    float inertia[max_entity_count];
-    float invInertia[max_entity_count];
-    float elasticity[max_entity_count];
+    std::vector<float> mass;
+    std::vector<float> invMass;
+    std::vector<float> inertia;
+    std::vector<float> invInertia;
+    std::vector<float> elasticity;
 
-    Collider collider[max_entity_count];
+    std::vector<Collider> collider;
+
+    void resize(size_t size)
+    {
+        flag.resize(size);
+        position.resize(size);
+        velocity.resize(size);
+        force.resize(size);
+        rotation.resize(size);
+        angular_velocity.resize(size);
+        torque.resize(size);
+        mass.resize(size);
+        invMass.resize(size);
+        inertia.resize(size);
+        invInertia.resize(size);
+        elasticity.resize(size);
+        collider.resize(size);
+    }
+    uint32_t size()
+    {
+        return flag.size();
+    }
+};
+
+// FILE: src/engine/DynamicList.h
+#include <glm/glm.hpp>
+
+template <uint32_t max_entity_count>
+class DynamicList
+{
+    uint32_t count;
+    uint32_t id[max_entity_count];
 };
 
 // FILE: src/engine/interface.cpp
@@ -173,8 +312,6 @@ void rbs::step(SystemContext* cntx)
 
 [[nodiscard]] unsigned int rbs::addEntity(SystemContext* cntx, glm::vec2 pos, float mass)
 {
-    if (cntx->entity_manager.occupied_slot_count == cntx->entity_manager.MAX_ENTITY_COUNT)
-        return -1;
     uint32_t id = cntx->entity_manager.addEntity();
     cntx->entity_manager.bodies.position[id] = pos;
     cntx->entity_manager.bodies.mass[id] = mass;
@@ -189,14 +326,31 @@ void rbs::addCircleCollider(SystemContext* cntx, unsigned int id, float radius)
     cntx->entity_manager.useCircleCollider(id);
     cntx->entity_manager.bodies.collider[id].circle.radius = radius;
 }
-void rbs::addConvexCollider(SystemContext* cntx, unsigned int id, const std::vector<glm::vec2>& verticies)
+void rbs::addConvexCollider(SystemContext* cntx, unsigned int id, std::vector<glm::vec2> verticies)
 {
+    // To Calclate the bounding radius:
+    // 1. Get center:
+    glm::vec2 sum;
+    for (auto& verticy : verticies)
+        sum += verticy;
+    sum /= verticies.size();
+
+    // store verticies relative to center
+    for (auto& verticy : verticies)
+        verticy -= sum;
+
+    // find the bounding radius
+    float radius = 0;
+    for (auto& verticy : verticies)
+        radius = std::max(radius, glm::length(verticy));
+
     if (!cntx->entity_manager.verifyID(id))
         return;
     cntx->entity_manager.useConvexCollider(id);
     cntx->entity_manager.bodies.collider[id].convex.begin = cntx->vertex_pool.size();
-    cntx->vertex_pool.insert(cntx->vertex_pool.begin(), verticies.begin(), verticies.end());
-    cntx->entity_manager.bodies.collider[id].convex.end = cntx->vertex_pool.size() - 1;
+    cntx->vertex_pool.insert(cntx->vertex_pool.end(), verticies.begin(), verticies.end());
+    cntx->entity_manager.bodies.collider[id].convex.end = cntx->vertex_pool.size();
+    cntx->entity_manager.bodies.collider[id].convex.bounding_radius = radius;
 }
 void rbs::killEntity(SystemContext* cntx, uint32_t id)
 {
@@ -252,13 +406,11 @@ void rbs::applyForce(SystemContext* cntx, uint32_t id, glm::vec2 force)
 
 // FILE: src/engine/EntityManager.cpp
 #include "EntityManager.h"
+#include <algorithm>
 
 EntityManager::EntityManager()
 {
-    for (uint32_t i = 0; i < MAX_ENTITY_COUNT; i++)
-    {
-        bodies.flag[i] = 0;
-    }
+    bodies.resize(40);
 }
 
 uint32_t EntityManager::addEntity()
@@ -270,7 +422,11 @@ uint32_t EntityManager::addEntity()
         free_list.pop_back();
     }
     else
+    {
+        if (bodies.size() <= occupied_slot_count)
+            bodies.resize(std::max<size_t>(static_cast<size_t>(occupied_slot_count * 1.5), occupied_slot_count + 40));
         id = occupied_slot_count++;
+    }
 
     bodies.flag[id] = ALIVE;
 
@@ -284,7 +440,7 @@ uint32_t EntityManager::addEntity()
     bodies.invMass[id] = 0;
     bodies.inertia[id] = 0;
     bodies.invInertia[id] = 0;
-    bodies.elasticity[id] = 0.8f;
+    bodies.elasticity[id] = 0.8;
 
     return id;
 }
@@ -302,7 +458,7 @@ void EntityManager::removeEntity(uint32_t id)
 
 bool EntityManager::verifyID(uint32_t id)
 {
-    return (isAlive(id) && (id >= 0) && (id < occupied_slot_count));
+    return ((id < occupied_slot_count) && (id >= 0) && isAlive(id));
 }
 void EntityManager::enableGravity(uint32_t id)
 {
@@ -343,7 +499,7 @@ void EntityManager::useConvexCollider(uint32_t id)
 }
 bool EntityManager::isAlive(uint32_t id)
 {
-    return bodies.flag[id] & ALIVE;
+    return (bodies.flag[id] & ALIVE);
 }
 
 // FILE: src/engine/interface.h
@@ -361,7 +517,7 @@ void setBounds(SystemContext* cntx, glm::vec2 bottom_left, glm::vec2 top_right);
 void setGravity(SystemContext* cntx, float gravity);
 
 [[nodiscard]] unsigned int addEntity(SystemContext* cntx, glm::vec2 pos = {0, 0}, float mass = 1);
-void addConvexCollider(SystemContext* cntx, unsigned int id, const std::vector<glm::vec2>& points);
+void addConvexCollider(SystemContext* cntx, unsigned int id, std::vector<glm::vec2> points);
 void addCircleCollider(SystemContext* cntx, unsigned int id, float radius);
 
 void killEntity(SystemContext* cntx, uint32_t id);
@@ -402,7 +558,7 @@ struct EntityManager
         CONVEX = 1 << 4
     };
 
-    Bodies<MAX_ENTITY_COUNT> bodies;
+    Bodies bodies;
 
     uint32_t occupied_slot_count = 0;
     std::vector<uint32_t> free_list;
@@ -429,19 +585,22 @@ struct EntityManager
     void addConvexCollider();
 
     bool isAlive(uint32_t id);
+
+  private:
 };
 
 // FILE: src/engine/SystemContext.h
 #pragma once
 #include "EntityManager.h"
 #include "PhysicsSystem/PhysicsSystem.h"
+#include <SFML/Graphics.hpp>
 
 struct SystemContext
 {
     PhysicsSystem physics_system;
     EntityManager entity_manager;
     std::vector<glm::vec2> vertex_pool;
-
+    sf::RenderWindow window;
     bool bounded = false;
     float fixed_timestep = 0.1;
     unsigned int iterations = 0;
@@ -450,6 +609,7 @@ struct SystemContext
 // FILE: src/engine/EntityList.h
 #pragma once
 #include <glm/glm.hpp>
+#include <stdio.h>
 
 template <uint32_t max_entity_capacity>
 struct EntityIDList
@@ -477,7 +637,8 @@ struct EntityIDList
 
     void remove(uint32_t removed_id)
     {
-        // search list for corresponding id
+        if (count == 0)
+            return;
         uint32_t index = 0;
         while (index < count)
         {
@@ -486,9 +647,10 @@ struct EntityIDList
                 break;
             }
         }
-        while (index < count) // shift eveything to the left
+        while (index < count)
         {
-            id[index - 1] = id[index++];
+            id[index - 1] = id[index];
+            index++;
         }
         id[--count] = -1;
     }
@@ -523,13 +685,15 @@ class IntegrationSystem
     void integrate(SystemContext* cntx, uint32_t id);
 
     void applyGravity(SystemContext* cntx);
+    void updateConvexVerticies(SystemContext* cntx);
 };
 
 // FILE: src/engine/PhysicsSystem/BorderSystem.cpp
 #include "BorderSystem.h"
-#include "../../utility/Utility.h"
+#include "../../graphics/Renderer.h"
 #include "../SystemContext.h"
-#include "../interface.h"
+#include <SFML/Graphics.hpp>
+
 void BorderSystem::apply(SystemContext* cntx)
 {
     for (uint32_t i = 0; i < cntx->entity_manager.circle_colliders.count; i++)
@@ -562,7 +726,9 @@ void BorderSystem::sphereBorderCollision(SystemContext* cntx, uint32_t id)
     {
         bodies.position[id].y = bottom_left_corner.y + radius;
         bodies.velocity[id].y *= -bodies.elasticity[id];
-        rbs::killEntity(cntx, id);
+        // rbs::killEntity(cntx, id);
+        // uint32_t id = rbs::addEntity(cntx);
+        // rbs::addCircleCollider(cntx, id, 3);
     }
     else if (bodies.position[id].y + radius >= top_right_corner.y)
     {
@@ -572,6 +738,42 @@ void BorderSystem::sphereBorderCollision(SystemContext* cntx, uint32_t id)
 }
 void BorderSystem::convexBorderCollision(SystemContext* cntx, uint32_t id)
 {
+    sf::CircleShape circle(5, 6);
+    circle.setOrigin({3, 3});
+    circle.setFillColor(sf::Color::Transparent);
+    circle.setOutlineColor(sf::Color::White);
+    circle.setOutlineThickness(1);
+
+    Bodies& bodies = cntx->entity_manager.bodies;
+    float radius = bodies.collider[id].convex.bounding_radius;
+    if (bodies.position[id].x - radius <= bottom_left_corner.x)
+    {
+        float max = 0;
+        uint32_t index = -1;
+
+        for (int i = bodies.collider[i].convex.begin; i < bodies.collider[i].convex.end; i++)
+        {
+            if (cntx->vertex_pool[i].x <= max)
+            {
+                index = i;
+                max = cntx->vertex_pool[i].x;
+            }
+        }
+        bodies.rotation[id] += 0.001;
+        circle.setPosition(Renderer::translate(cntx->vertex_pool[index] + bodies.position[id]));
+    }
+    else if (bodies.position[id].x + radius >= top_right_corner.x)
+    {
+    }
+
+    if (bodies.position[id].y - radius <= bottom_left_corner.y)
+    {
+    }
+    else if (bodies.position[id].y + radius >= top_right_corner.y)
+    {
+    }
+    // circle.setPosition({500, 250});
+    cntx->window.draw(circle);
 }
 
 // FILE: src/engine/PhysicsSystem/PhysicsSystem.cpp
@@ -594,9 +796,8 @@ void PhysicsSystem::step(SystemContext* cntx)
 
 void IntegrationSystem::apply(SystemContext* cntx)
 {
-    for (uint32_t i = 0; i < cntx->entity_manager.gravity_entities.count; i++)
+    for (uint32_t i = 0; i < cntx->entity_manager.moveable_entities.count; i++)
     {
-
         integrate(cntx, cntx->entity_manager.gravity_entities.id[i]);
     }
 }
@@ -613,6 +814,13 @@ void IntegrationSystem::applyGravity(SystemContext* cntx)
 {
     for (int id = 0; id < cntx->entity_manager.gravity_entities.count; id++)
         cntx->entity_manager.bodies.velocity[id].y += gravity;
+}
+
+void updateConvexVerticies(SystemContext* cntx)
+{
+    for (int id = 0; id < cntx->entity_manager.convex_colliders.count; id++)
+    {
+    }
 }
 
 // FILE: src/engine/PhysicsSystem/BorderSystem.h

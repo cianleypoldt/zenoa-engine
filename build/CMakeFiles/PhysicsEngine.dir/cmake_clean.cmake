@@ -12,8 +12,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/PhysicsSystem.cpp.o.d"
   "CMakeFiles/PhysicsEngine.dir/src/engine/interface.cpp.o"
   "CMakeFiles/PhysicsEngine.dir/src/engine/interface.cpp.o.d"
-  "CMakeFiles/PhysicsEngine.dir/src/graphics/Renderer.cpp.o"
-  "CMakeFiles/PhysicsEngine.dir/src/graphics/Renderer.cpp.o.d"
   "CMakeFiles/PhysicsEngine.dir/src/main.cpp.o"
   "CMakeFiles/PhysicsEngine.dir/src/main.cpp.o.d"
   "CMakeFiles/PhysicsEngine.dir/src/test.cpp.o"

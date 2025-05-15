@@ -10,6 +10,7 @@ struct Convex
 {
     uint32_t begin;
     uint32_t end;
+    float bounding_radius;
 };
 
 union Collider {

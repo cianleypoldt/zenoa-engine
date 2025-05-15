@@ -12,7 +12,7 @@ void setBounds(SystemContext* cntx, glm::vec2 bottom_left, glm::vec2 top_right);
 void setGravity(SystemContext* cntx, float gravity);
 
 [[nodiscard]] unsigned int addEntity(SystemContext* cntx, glm::vec2 pos = {0, 0}, float mass = 1);
-void addConvexCollider(SystemContext* cntx, unsigned int id, const std::vector<glm::vec2>& points);
+void addConvexCollider(SystemContext* cntx, unsigned int id, std::vector<glm::vec2> points);
 void addCircleCollider(SystemContext* cntx, unsigned int id, float radius);
 
 void killEntity(SystemContext* cntx, uint32_t id);

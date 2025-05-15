@@ -8,7 +8,6 @@ PhysicsEngine: \
   CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.o \
   CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/PhysicsSystem.cpp.o \
   CMakeFiles/PhysicsEngine.dir/src/engine/interface.cpp.o \
-  CMakeFiles/PhysicsEngine.dir/src/graphics/Renderer.cpp.o \
   CMakeFiles/PhysicsEngine.dir/src/main.cpp.o \
   CMakeFiles/PhysicsEngine.dir/src/test.cpp.o \
   CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.o \
@@ -90,8 +89,6 @@ CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.o:
 CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/PhysicsSystem.cpp.o:
 
 CMakeFiles/PhysicsEngine.dir/src/engine/interface.cpp.o:
-
-CMakeFiles/PhysicsEngine.dir/src/graphics/Renderer.cpp.o:
 
 CMakeFiles/PhysicsEngine.dir/src/main.cpp.o:
 

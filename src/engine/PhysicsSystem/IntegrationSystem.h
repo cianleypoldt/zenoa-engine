@@ -11,4 +11,5 @@ class IntegrationSystem
     void integrate(SystemContext* cntx, uint32_t id);
 
     void applyGravity(SystemContext* cntx);
+    void updateConvexVerticies(SystemContext* cntx);
 };

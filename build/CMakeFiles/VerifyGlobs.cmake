@@ -10,7 +10,6 @@ set(OLD_GLOB
   "/home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/PhysicsSystem/IntegrationSystem.cpp"
   "/home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/PhysicsSystem/PhysicsSystem.cpp"
   "/home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/interface.cpp"
-  "/home/cianleypoldt/Documents/cpp/2d_Physics/src/graphics/Renderer.cpp"
   "/home/cianleypoldt/Documents/cpp/2d_Physics/src/main.cpp"
   "/home/cianleypoldt/Documents/cpp/2d_Physics/src/test.cpp"
   "/home/cianleypoldt/Documents/cpp/2d_Physics/src/utility/Time.cpp"
