@@ -31,7 +31,7 @@ uint32_t EntityManager::addEntity()
     bodies.torque[id] = 0;
     bodies.mass[id] = 0;
     bodies.invMass[id] = 0;
-    bodies.inertia[id] = 0;
+    bodies.inertia[id] = 1;
     bodies.invInertia[id] = 0;
     bodies.elasticity[id] = 0.8;
 

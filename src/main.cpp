@@ -13,7 +13,6 @@ int main()
 {
     utl::initLogger(utl::LogLevel::Debug, "physics_engine.log");
     UTL_INFO("2D Physics Engine Starting...");
-
     auto simulation = rbs::make_context();
     Renderer renderer(simulation);
     rbs::setBounds(simulation, {-500, -250}, {500, 250});
@@ -36,6 +35,7 @@ int main()
         renderer.addConvex(id[i]);
         simulation->entity_manager.disableGravity(id[i]);
     }
+
     // Number of simulation steps per frame
     const int STEPS_PER_FRAME = 30; // Adjust as needed for desired simulation speed
     while (renderer.active())
@@ -54,12 +54,12 @@ int main()
             simulation->entity_manager.bodies.position[id[0]] = simulation->entity_manager.bodies.position[id[0]] + glm::vec2{-player1Speed, 0};
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
             simulation->entity_manager.bodies.position[id[0]] = simulation->entity_manager.bodies.position[id[0]] + glm::vec2{player1Speed, 0};
-
-        // Movement controls for entity 1
+        // Movement controls for entity 1 - controlling angular velocity
+        float angularAcceleration = 0.05f; // Adjust this value as needed for rotation speed
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
-            simulation->entity_manager.bodies.position[id[1]] = simulation->entity_manager.bodies.position[id[1]] + glm::vec2{0, player2Speed};
+            simulation->entity_manager.bodies.angular_velocity[id[1]] += angularAcceleration;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
-            simulation->entity_manager.bodies.position[id[1]] = simulation->entity_manager.bodies.position[id[1]] + glm::vec2{0, -player2Speed};
+            simulation->entity_manager.bodies.angular_velocity[id[1]] -= angularAcceleration;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
             simulation->entity_manager.bodies.position[id[1]] = simulation->entity_manager.bodies.position[id[1]] + glm::vec2{-player2Speed, 0};
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))

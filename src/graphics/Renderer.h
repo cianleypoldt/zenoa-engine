@@ -40,6 +40,18 @@ class Renderer
         window.display();
     }
 
+    static void degugCircle(SystemContext* cntx, glm::vec2 position)
+    {
+        sf::CircleShape circleshape;
+        circleshape.setRadius(6);
+        circleshape.setOrigin({circleshape.getRadius(), circleshape.getRadius()});
+        circleshape.setFillColor(sf::Color::Transparent);
+        circleshape.setOutlineColor(sf::Color::White);
+        circleshape.setOutlineThickness(1);
+        circleshape.setPosition(translate(position));
+        cntx->window.draw(circleshape);
+    }
+
     void addCircle(uint32_t id)
     {
         circle.push_back(id);
@@ -54,7 +66,7 @@ class Renderer
         for (int i = 0; i < verticy_count; i++)
             shape.setPoint(i,
                            {cntx->vertex_pool[bodies.collider[id].convex.begin + i].x,
-                            cntx->vertex_pool[bodies.collider[id].convex.begin + i].y});
+                            -cntx->vertex_pool[bodies.collider[id].convex.begin + i].y});
         convex_shapes.push_back(shape);
         convex.push_back(id);
     }
@@ -90,13 +102,9 @@ class Renderer
         // Draw convex shapes - fixed to use the correct data
         for (int i = 0; i < convex.size(); i++)
         {
-            circleshape.setRadius(bodies.collider[i].convex.bounding_radius);
-            circleshape.setPosition(translate(bodies.position[convex[i]]));
-            circleshape.setOrigin({circleshape.getRadius(), circleshape.getRadius()});
             convex_shapes[i].setPosition(translate(bodies.position[convex[i]]));
-            convex_shapes[i].setRotation(sf::radians(bodies.rotation[convex[i]]));
+            convex_shapes[i].setRotation(sf::radians(-bodies.rotation[convex[i]]));
             window.draw(convex_shapes[i]);
-            window.draw(circleshape);
         }
 
         window.display();
