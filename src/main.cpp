@@ -47,23 +47,29 @@ int main()
 
         // Movement controls for entity 0
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-            simulation->entity_manager.bodies.position[id[0]] = simulation->entity_manager.bodies.position[id[0]] + glm::vec2{0, player1Speed};
+            simulation->entity_manager.bodies.position[id[0]] =
+                simulation->entity_manager.bodies.position[id[0]] + glm::vec2{0, player1Speed};
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-            simulation->entity_manager.bodies.position[id[0]] = simulation->entity_manager.bodies.position[id[0]] + glm::vec2{0, -player1Speed};
+            simulation->entity_manager.bodies.position[id[0]] =
+                simulation->entity_manager.bodies.position[id[0]] + glm::vec2{0, -player1Speed};
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-            simulation->entity_manager.bodies.position[id[0]] = simulation->entity_manager.bodies.position[id[0]] + glm::vec2{-player1Speed, 0};
+            simulation->entity_manager.bodies.position[id[0]] =
+                simulation->entity_manager.bodies.position[id[0]] + glm::vec2{-player1Speed, 0};
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-            simulation->entity_manager.bodies.position[id[0]] = simulation->entity_manager.bodies.position[id[0]] + glm::vec2{player1Speed, 0};
+            simulation->entity_manager.bodies.position[id[0]] =
+                simulation->entity_manager.bodies.position[id[0]] + glm::vec2{player1Speed, 0};
         // Movement controls for entity 1 - controlling angular velocity
-        float angularAcceleration = 0.05f; // Adjust this value as needed for rotation speed
+        float angularAcceleration = 5; // Adjust this value as needed for rotation speed
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
             simulation->entity_manager.bodies.angular_velocity[id[1]] += angularAcceleration;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
             simulation->entity_manager.bodies.angular_velocity[id[1]] -= angularAcceleration;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
-            simulation->entity_manager.bodies.position[id[1]] = simulation->entity_manager.bodies.position[id[1]] + glm::vec2{-player2Speed, 0};
+            simulation->entity_manager.bodies.position[id[1]] =
+                simulation->entity_manager.bodies.position[id[1]] + glm::vec2{-player2Speed, 0};
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
-            simulation->entity_manager.bodies.position[id[1]] = simulation->entity_manager.bodies.position[id[1]] + glm::vec2{player2Speed, 0};
+            simulation->entity_manager.bodies.position[id[1]] =
+                simulation->entity_manager.bodies.position[id[1]] + glm::vec2{player2Speed, 0};
         for (int step = 0; step < STEPS_PER_FRAME; step++)
         {
             rbs::step(simulation);

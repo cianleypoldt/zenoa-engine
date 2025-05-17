@@ -51,4 +51,33 @@ void BorderSystem::sphereBorderCollision(SystemContext* cntx, uint32_t id)
 
 void BorderSystem::convexBorderCollision(SystemContext* cntx, uint32_t id)
 {
+    Bodies& bodies = cntx->entity_manager.bodies;
+    float radius = bodies.collider[id].convex.bounding_radius;
+
+    if (bodies.position[id].x - radius <= bottom_left_corner.x)
+    {
+        // Find the leftmost point after rotation
+        glm::vec2 leftmost_point = {std::numeric_limits<float>::max(), 0};
+
+        for (int index = bodies.collider[id].convex.begin;
+             index < bodies.collider[id].convex.end; index++)
+        {
+            if (leftmost_point.x > cntx->vertex_pool_worldspace[index].x)
+            {
+                leftmost_point = cntx->vertex_pool_worldspace[index];
+            }
+        }
+
+        Renderer::degugCircle(cntx, leftmost_point);
+    }
+    else if (bodies.position[id].x + radius >= top_right_corner.x)
+    {
+    }
+
+    if (bodies.position[id].y - radius <= bottom_left_corner.y)
+    {
+    }
+    else if (bodies.position[id].y + radius >= top_right_corner.y)
+    {
+    }
 }

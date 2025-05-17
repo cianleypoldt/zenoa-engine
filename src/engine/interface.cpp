@@ -72,6 +72,8 @@ void rbs::addConvexCollider(SystemContext* cntx, unsigned int id, std::vector<gl
     cntx->entity_manager.useConvexCollider(id);
     cntx->entity_manager.bodies.collider[id].convex.begin = cntx->vertex_pool.size();
     cntx->vertex_pool.insert(cntx->vertex_pool.end(), verticies.begin(), verticies.end());
+    cntx->vertex_pool_worldspace.insert(cntx->vertex_pool_worldspace.end(), verticies.begin(),
+                                        verticies.end());
     cntx->entity_manager.bodies.collider[id].convex.end = cntx->vertex_pool.size();
     cntx->entity_manager.bodies.collider[id].convex.bounding_radius = radius;
 }
