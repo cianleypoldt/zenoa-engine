@@ -17,7 +17,8 @@ uint32_t EntityManager::addEntity()
     else
     {
         if (bodies.size() <= occupied_slot_count)
-            bodies.resize(std::max<size_t>(static_cast<size_t>(occupied_slot_count * 1.5), occupied_slot_count + 40));
+            bodies.resize(std::max<size_t>(static_cast<size_t>(occupied_slot_count * 1.5),
+                                           occupied_slot_count + 40));
         id = occupied_slot_count++;
     }
 
@@ -31,7 +32,7 @@ uint32_t EntityManager::addEntity()
     bodies.torque[id] = 0;
     bodies.mass[id] = 0;
     bodies.invMass[id] = 0;
-    bodies.inertia[id] = 1;
+    bodies.inertia[id] = 10;
     bodies.invInertia[id] = 0;
     bodies.elasticity[id] = 0.8;
 

@@ -2,7 +2,6 @@
 #include <glm/glm.hpp>
 
 class SystemContext;
-
 class BorderSystem
 {
   public:

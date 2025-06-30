@@ -54,30 +54,83 @@ void BorderSystem::convexBorderCollision(SystemContext* cntx, uint32_t id)
     Bodies& bodies = cntx->entity_manager.bodies;
     float radius = bodies.collider[id].convex.bounding_radius;
 
+    // Bounding radius out of bounds check
     if (bodies.position[id].x - radius <= bottom_left_corner.x)
     {
-        // Find the leftmost point after rotation
-        glm::vec2 leftmost_point = {std::numeric_limits<float>::max(), 0};
-
         for (int index = bodies.collider[id].convex.begin;
              index < bodies.collider[id].convex.end; index++)
         {
-            if (leftmost_point.x > cntx->vertex_pool_worldspace[index].x)
+            // for every object vertex that is out of bounds
+            if (cntx->vertex_pool_worldspace[index].x < bottom_left_corner.x)
             {
-                leftmost_point = cntx->vertex_pool_worldspace[index];
+                float overlap =
+                    bottom_left_corner.x - cntx->vertex_pool_worldspace[index].x;
+
+                bodies.position[id].x += overlap;
             }
         }
-
-        Renderer::degugCircle(cntx, leftmost_point);
     }
+
     else if (bodies.position[id].x + radius >= top_right_corner.x)
     {
+        for (int index = bodies.collider[id].convex.begin;
+             index < bodies.collider[id].convex.end; index++)
+        {
+            // for every object vertex that is out of bounds
+            if (cntx->vertex_pool_worldspace[index].x > top_right_corner.x)
+            {
+
+                float overlap =
+                    cntx->vertex_pool_worldspace[index].x - top_right_corner.x;
+                glm::vec2 point_rel_to_convex =
+                    cntx->vertex_pool_worldspace[index] - bodies.position[id];
+                // points velocity = convex_vel + convex_angular_vel * vec(convex->point)
+                glm::vec2 point_vel =
+                    bodies.angular_velocity[id] *
+                        glm::vec2(-point_rel_to_convex.y, point_rel_to_convex.x) +
+                    bodies.velocity[id];
+
+                bodies.position[id].x -= overlap;
+
+                // Apply collision response
+                bodies.velocity[id].x *= -bodies.elasticity[id];
+
+                // Apply angular impulse based on contact point
+                float impulse = -point_vel.x * (1.0f + bodies.elasticity[id]);
+                bodies.angular_velocity[id] +=
+                    impulse * (point_rel_to_convex.y / bodies.inertia[id]);
+            }
+        }
     }
 
     if (bodies.position[id].y - radius <= bottom_left_corner.y)
     {
+        float overlap = 0;
+        for (int index = bodies.collider[id].convex.begin;
+             index < bodies.collider[id].convex.end; index++)
+        {
+            // for every object vertex that is out of bounds
+            if (cntx->vertex_pool_worldspace[index].y < bottom_left_corner.y)
+            {
+                float overlap =
+                    std::max(overlap, bottom_left_corner.y -
+                                          cntx->vertex_pool_worldspace[index].y);
+            }
+        }
+        bodies.position[id].y += overlap;
     }
     else if (bodies.position[id].y + radius >= top_right_corner.y)
     {
+        for (int index = bodies.collider[id].convex.begin;
+             index < bodies.collider[id].convex.end; index++)
+        {
+            // for every object vertex that is out of bounds
+            if (cntx->vertex_pool_worldspace[index].y > top_right_corner.y)
+            {
+                float overlap =
+                    cntx->vertex_pool_worldspace[index].y - top_right_corner.y;
+                bodies.position[id].y -= overlap;
+            }
+        }
     }
 }
