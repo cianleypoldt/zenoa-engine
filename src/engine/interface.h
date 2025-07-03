@@ -1,8 +1,7 @@
 #pragma once
 #include "SystemContext.h"
 
-namespace rbs
-{
+namespace rbs {
 SystemContext* make_context();
 void drop(SystemContext* cntx);
 
@@ -20,6 +19,7 @@ void killEntity(SystemContext* cntx, uint32_t id);
 void setPosition(SystemContext* cntx, uint32_t id, glm::vec2 pos);
 void setVelocity(SystemContext* cntx, uint32_t id, glm::vec2 vel);
 void applyForce(SystemContext* cntx, uint32_t id, glm::vec2 force);
+void applyTorque(SystemContext* cntx, uint32_t id, float torque);
 
 void setCircleCollider(SystemContext* cntx, uint32_t id, float radius);
 // void setCircleCollider(SystemContext* cntx, uint32_t id, std::vector<glm::vec2>& verticies);

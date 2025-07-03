@@ -4,8 +4,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-class Renderer
-{
+class Renderer {
   public:
     sf::RenderWindow& window;
     std::vector<uint32_t> circle;
@@ -17,19 +16,16 @@ class Renderer
     sf::Clock clock;
     sf::Time frameTime;
 
-    static sf::Vector2f translate(glm::vec2 pos)
-    {
-        return sf::Vector2f(pos.x + 500, -pos.y + 250);
+    static sf::Vector2f translate(glm::vec2 pos) {
+        return sf::Vector2f((pos.x + 500) * 1, (-pos.y + 250) * 1);
     }
 
-    bool active()
-    {
+    bool active() {
         return window.isOpen();
     }
 
     Renderer(SystemContext* _cntx, bool Fullscreen = false, uint32_t fps = 60)
-        : window(_cntx->window), cntx(_cntx), bodies(_cntx->entity_manager.bodies), fullscreen(Fullscreen), frameTime(sf::seconds(1.0f / fps))
-    {
+        : window(_cntx->window), cntx(_cntx), bodies(_cntx->entity_manager.bodies), fullscreen(Fullscreen), frameTime(sf::seconds(1.0f / fps)) {
         sf::ContextSettings settings;
         settings.antiAliasingLevel = 16;
         if (Fullscreen)
@@ -40,8 +36,7 @@ class Renderer
         window.display();
     }
 
-    static void degugCircle(SystemContext* cntx, glm::vec2 position)
-    {
+    static void degugCircle(SystemContext* cntx, glm::vec2 position) {
         sf::CircleShape circleshape;
         circleshape.setRadius(6);
         circleshape.setOrigin({circleshape.getRadius(), circleshape.getRadius()});
@@ -52,12 +47,10 @@ class Renderer
         cntx->window.draw(circleshape);
     }
 
-    void addCircle(uint32_t id)
-    {
+    void addCircle(uint32_t id) {
         circle.push_back(id);
     }
-    void addConvex(uint32_t id)
-    {
+    void addConvex(uint32_t id) {
         uint32_t verticy_count = bodies.collider[id].convex.end - bodies.collider[id].convex.begin;
         sf::ConvexShape shape(bodies.collider[id].convex.end - bodies.collider[id].convex.begin);
         shape.setOutlineColor(sf::Color::White);
@@ -71,8 +64,7 @@ class Renderer
         convex.push_back(id);
     }
 
-    void refresh()
-    {
+    void refresh() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
             window.close();
 
@@ -89,19 +81,20 @@ class Renderer
         circleshape.setOutlineThickness(1);
 
         // Draw circles
-        for (int i = 0; i < circle.size(); i++)
-        {
+        for (int i = 0; i < circle.size(); i++) {
+            circleshape.setRadius(bodies.collider[circle[i]].circle.radius);
+            circleshape.setOrigin({circleshape.getRadius(), circleshape.getRadius()});
             circleshape.setPosition(translate(bodies.position[circle[i]]));
             line.setPosition(translate(bodies.position[circle[i]]));
-            line.setSize({circleshape.getRadius(), 0.5});
-            line.setRotation(sf::radians(bodies.collider[circle[i]].circle.radius));
+            // line.setOrigin({circleshape.getRadius() / 2, -circleshape.getRadius() / 2});
+            line.setSize({circleshape.getRadius(), 1});
+            line.setRotation(-sf::radians(bodies.rotation[circle[i]] + 3.14 / 2));
             window.draw(line);
             window.draw(circleshape);
         }
 
         // Draw convex shapes - fixed to use the correct data
-        for (int i = 0; i < convex.size(); i++)
-        {
+        for (int i = 0; i < convex.size(); i++) {
             convex_shapes[i].setPosition(translate(bodies.position[convex[i]]));
             convex_shapes[i].setRotation(sf::radians(-bodies.rotation[convex[i]]));
             window.draw(convex_shapes[i]);
@@ -113,8 +106,7 @@ class Renderer
         // Sleep to maintain 60 FPS
 
         sf::Time sleepTime = frameTime - clock.getElapsedTime();
-        if (sleepTime > sf::Time::Zero)
-        {
+        if (sleepTime > sf::Time::Zero) {
             sf::sleep(sleepTime);
         }
     }

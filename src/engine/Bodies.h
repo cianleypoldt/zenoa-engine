@@ -2,12 +2,10 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-struct Circle
-{
+struct Circle {
     float radius = 0;
 };
-struct Convex
-{
+struct Convex {
     uint32_t begin;
     uint32_t end;
     float bounding_radius;
@@ -18,8 +16,7 @@ union Collider {
     Convex convex;
 };
 
-struct Bodies
-{
+struct Bodies {
     std::vector<uint16_t> flag;
 
     std::vector<glm::vec2> position;
@@ -35,11 +32,11 @@ struct Bodies
     std::vector<float> inertia;
     std::vector<float> invInertia;
     std::vector<float> elasticity;
+    std::vector<float> friction;
 
     std::vector<Collider> collider;
 
-    void resize(size_t size)
-    {
+    void resize(size_t size) {
         flag.resize(size);
         position.resize(size);
         velocity.resize(size);
@@ -52,10 +49,10 @@ struct Bodies
         inertia.resize(size);
         invInertia.resize(size);
         elasticity.resize(size);
+        friction.resize(size);
         collider.resize(size);
     }
-    uint32_t size()
-    {
+    uint32_t size() {
         return flag.size();
     }
 };

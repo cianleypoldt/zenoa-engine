@@ -5,12 +5,10 @@
 #include <stdio.h>
 #include <vector>
 
-struct EntityManager
-{
+struct EntityManager {
     static constexpr uint32_t MAX_ENTITY_COUNT = 5000;
 
-    enum FlagBytes : uint8_t
-    {
+    enum FlagBytes : uint8_t {
         ALIVE = 1 << 0,
         MOVEABLE = 1 << 1,
         HAS_GRAVITY = 1 << 2,
@@ -41,8 +39,6 @@ struct EntityManager
     void makeImmoveable(uint32_t id);
     void useCircleCollider(uint32_t id);
     void useConvexCollider(uint32_t id);
-
-    void addConvexCollider();
 
     bool isAlive(uint32_t id);
 

@@ -308,6 +308,7 @@ CMakeFiles/PhysicsEngine.dir/src/engine/EntityManager.cpp.o: /home/cianleypoldt/
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/syslimits.h
 
 CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/BorderSystem.cpp.o: /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/PhysicsSystem/BorderSystem.cpp \
+  /home/cianleypoldt/Documents/cpp/2d_Physics/src/utility/Utility.h \
   /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/Bodies.h \
   /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/EntityList.h \
   /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/EntityManager.h \
@@ -315,7 +316,6 @@ CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/BorderSystem.cpp.o: /home/
   /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/PhysicsSystem/IntegrationSystem.h \
   /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/PhysicsSystem/PhysicsSystem.h \
   /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/SystemContext.h \
-  /home/cianleypoldt/Documents/cpp/2d_Physics/src/graphics/Renderer.h \
   /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/PhysicsSystem/BorderSystem.h \
   /usr/include/SFML/Config.hpp \
   /usr/include/SFML/Graphics.hpp \
@@ -517,6 +517,7 @@ CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/BorderSystem.cpp.o: /home/
   /usr/include/c++/14.2.1/bits/fs_fwd.h \
   /usr/include/c++/14.2.1/bits/fs_ops.h \
   /usr/include/c++/14.2.1/bits/fs_path.h \
+  /usr/include/c++/14.2.1/bits/fstream.tcc \
   /usr/include/c++/14.2.1/bits/functexcept.h \
   /usr/include/c++/14.2.1/bits/functional_hash.h \
   /usr/include/c++/14.2.1/bits/hash_bytes.h \
@@ -555,6 +556,7 @@ CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/BorderSystem.cpp.o: /home/
   /usr/include/c++/14.2.1/bits/specfun.h \
   /usr/include/c++/14.2.1/bits/sstream.tcc \
   /usr/include/c++/14.2.1/bits/std_abs.h \
+  /usr/include/c++/14.2.1/bits/std_function.h \
   /usr/include/c++/14.2.1/bits/stl_algobase.h \
   /usr/include/c++/14.2.1/bits/stl_bvector.h \
   /usr/include/c++/14.2.1/bits/stl_construct.h \
@@ -591,10 +593,12 @@ CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/BorderSystem.cpp.o: /home/
   /usr/include/c++/14.2.1/codecvt \
   /usr/include/c++/14.2.1/compare \
   /usr/include/c++/14.2.1/concepts \
+  /usr/include/c++/14.2.1/cstdarg \
   /usr/include/c++/14.2.1/cstddef \
   /usr/include/c++/14.2.1/cstdint \
   /usr/include/c++/14.2.1/cstdio \
   /usr/include/c++/14.2.1/cstdlib \
+  /usr/include/c++/14.2.1/cstring \
   /usr/include/c++/14.2.1/ctime \
   /usr/include/c++/14.2.1/cwchar \
   /usr/include/c++/14.2.1/cwctype \
@@ -609,10 +613,13 @@ CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/BorderSystem.cpp.o: /home/
   /usr/include/c++/14.2.1/ext/string_conversions.h \
   /usr/include/c++/14.2.1/ext/type_traits.h \
   /usr/include/c++/14.2.1/filesystem \
+  /usr/include/c++/14.2.1/fstream \
+  /usr/include/c++/14.2.1/functional \
   /usr/include/c++/14.2.1/initializer_list \
   /usr/include/c++/14.2.1/iomanip \
   /usr/include/c++/14.2.1/ios \
   /usr/include/c++/14.2.1/iosfwd \
+  /usr/include/c++/14.2.1/iostream \
   /usr/include/c++/14.2.1/istream \
   /usr/include/c++/14.2.1/iterator \
   /usr/include/c++/14.2.1/limits \
@@ -651,8 +658,10 @@ CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/BorderSystem.cpp.o: /home/
   /usr/include/c++/14.2.1/variant \
   /usr/include/c++/14.2.1/vector \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
+  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/basic_file.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++allocator.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
+  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++io.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++locale.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/ctype_base.h \
@@ -840,6 +849,8 @@ CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/BorderSystem.cpp.o: /home/
   /usr/include/stdint.h \
   /usr/include/stdio.h \
   /usr/include/stdlib.h \
+  /usr/include/string.h \
+  /usr/include/strings.h \
   /usr/include/sys/cdefs.h \
   /usr/include/sys/select.h \
   /usr/include/sys/single_threaded.h \
@@ -1380,6 +1391,7 @@ CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/CollisionSystem.cpp.o: /ho
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/syslimits.h
 
 CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.o: /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/PhysicsSystem/IntegrationSystem.cpp \
+  /home/cianleypoldt/Documents/cpp/2d_Physics/src/utility/Utility.h \
   /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/Bodies.h \
   /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/EntityList.h \
   /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/EntityManager.h \
@@ -1387,8 +1399,6 @@ CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.o: /
   /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/PhysicsSystem/CollisionSystem.h \
   /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/PhysicsSystem/PhysicsSystem.h \
   /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/SystemContext.h \
-  /home/cianleypoldt/Documents/cpp/2d_Physics/src/graphics/Renderer.h \
-  /home/cianleypoldt/Documents/cpp/2d_Physics/src/utility/Utility.h \
   /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/PhysicsSystem/IntegrationSystem.h \
   /usr/include/SFML/Config.hpp \
   /usr/include/SFML/Graphics.hpp \
@@ -4442,20 +4452,6 @@ CMakeFiles/PhysicsEngine.dir/src/engine/EntityManager.cpp.o:
 
 /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/interface.h:
 
-/usr/include/strings.h:
-
-/usr/include/string.h:
-
-/usr/include/c++/14.2.1/iostream:
-
-/usr/include/c++/14.2.1/functional:
-
-/usr/include/c++/14.2.1/cstring:
-
-/usr/include/c++/14.2.1/bits/fstream.tcc:
-
-/home/cianleypoldt/Documents/cpp/2d_Physics/src/utility/Utility.h:
-
 /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/PhysicsSystem/IntegrationSystem.cpp:
 
 /usr/include/wctype.h:
@@ -4464,11 +4460,31 @@ CMakeFiles/PhysicsEngine.dir/src/engine/EntityManager.cpp.o:
 
 /usr/include/time.h:
 
+/usr/include/strings.h:
+
+/usr/include/string.h:
+
 /usr/include/sched.h:
 
 /usr/include/locale.h:
 
 /usr/include/linux/types.h:
+
+/home/cianleypoldt/Documents/cpp/2d_Physics/src/graphics/Renderer.h:
+
+/usr/include/linux/sched/types.h:
+
+CMakeFiles/PhysicsEngine.dir/src/engine/interface.cpp.o:
+
+/usr/include/libintl.h:
+
+/usr/include/glm/gtx/transform.hpp:
+
+/usr/include/glm/gtx/rotate_vector.hpp:
+
+/usr/include/glm/gtc/matrix_transform.inl:
+
+/usr/include/glm/gtc/matrix_transform.hpp:
 
 /usr/include/glm/ext/vector_int2.hpp:
 
@@ -4491,8 +4507,6 @@ CMakeFiles/PhysicsEngine.dir/src/engine/EntityManager.cpp.o:
 /usr/include/glm/ext/vector_float2.hpp:
 
 /usr/include/c++/14.2.1/bits/exception.h:
-
-/usr/include/glm/gtx/transform.hpp:
 
 /usr/include/c++/14.2.1/ext/numeric_traits.h:
 
@@ -4542,12 +4556,6 @@ CMakeFiles/PhysicsEngine.dir/src/engine/EntityManager.cpp.o:
 
 /usr/include/bits/waitstatus.h:
 
-/usr/include/c++/14.2.1/fstream:
-
-/usr/include/c++/14.2.1/cstddef:
-
-/usr/include/bits/wchar.h:
-
 /usr/lib/libglm.a:
 
 /usr/include/asm-generic/bitsperlong.h:
@@ -4569,8 +4577,6 @@ CMakeFiles/PhysicsEngine.dir/src/engine/EntityManager.cpp.o:
 /usr/include/glm/detail/type_mat2x3.hpp:
 
 /usr/include/glm/detail/qualifier.hpp:
-
-/usr/include/glm/gtc/matrix_transform.inl:
 
 /usr/include/glm/detail/type_mat2x2.hpp:
 
@@ -4760,6 +4766,8 @@ CMakeFiles/PhysicsEngine.dir/src/engine/EntityManager.cpp.o:
 
 /usr/include/asm/errno.h:
 
+/usr/include/c++/14.2.1/iostream:
+
 /usr/include/glm/ext/vector_bool4.hpp:
 
 /usr/include/glm/ext/matrix_float3x2.hpp:
@@ -4858,10 +4866,6 @@ CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/PhysicsSystem.cpp.o:
 
 /usr/include/c++/14.2.1/typeinfo:
 
-CMakeFiles/PhysicsEngine.dir/src/engine/interface.cpp.o:
-
-/usr/include/libintl.h:
-
 /usr/include/glm/ext/matrix_float3x4_precision.hpp:
 
 /usr/include/bits/uio_lim.h:
@@ -4877,6 +4881,12 @@ CMakeFiles/PhysicsEngine.dir/src/engine/interface.cpp.o:
 /usr/include/SFML/Graphics/Transform.inl:
 
 /usr/include/bits/posix1_lim.h:
+
+/usr/lib/ld-linux-x86-64.so.2:
+
+/usr/include/glm/gtx/rotate_vector.inl:
+
+/usr/include/SFML/Window/WindowBase.inl:
 
 /usr/include/c++/14.2.1/clocale:
 
@@ -4950,8 +4960,6 @@ CMakeFiles/PhysicsEngine.dir/src/engine/interface.cpp.o:
 
 /usr/include/bits/pthreadtypes-arch.h:
 
-/usr/include/glm/gtx/rotate_vector.hpp:
-
 CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.o:
 
 /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/PhysicsSystem/PhysicsSystem.cpp:
@@ -5012,17 +5020,9 @@ CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.o:
 
 /usr/include/bits/timesize.h:
 
-/usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/basic_file.h:
-
-/usr/include/c++/14.2.1/bits/uses_allocator_args.h:
-
 /usr/include/bits/wordsize.h:
 
 /usr/include/stdio.h:
-
-/usr/include/linux/sched/types.h:
-
-/home/cianleypoldt/Documents/cpp/2d_Physics/src/graphics/Renderer.h:
 
 /usr/include/bits/xopen_lim.h:
 
@@ -5098,6 +5098,8 @@ CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.o:
 
 /usr/include/c++/14.2.1/tr1/hypergeometric.tcc:
 
+/usr/include/c++/14.2.1/bits/fstream.tcc:
+
 /usr/include/c++/14.2.1/bits/move.h:
 
 /usr/include/glm/detail/type_mat4x2.hpp:
@@ -5161,12 +5163,6 @@ CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.o:
 /usr/include/stdc-predef.h:
 
 /usr/include/c++/14.2.1/bits/invoke.h:
-
-/usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++io.h:
-
-/usr/include/bits/floatn-common.h:
-
-/usr/include/c++/14.2.1/codecvt:
 
 /usr/include/SFML/Graphics/RenderTexture.hpp:
 
@@ -5252,8 +5248,6 @@ CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.o:
 
 /usr/include/glm/packing.hpp:
 
-/usr/include/glm/gtc/matrix_transform.hpp:
-
 /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/EntityList.h:
 
 /usr/include/glm/trigonometric.hpp:
@@ -5289,6 +5283,10 @@ CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.o:
 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/syslimits.h:
 
 /home/cianleypoldt/Documents/cpp/2d_Physics/src/engine/PhysicsSystem/BorderSystem.cpp:
+
+/home/cianleypoldt/Documents/cpp/2d_Physics/src/utility/Utility.h:
+
+/usr/include/asm-generic/posix_types.h:
 
 /usr/include/c++/14.2.1/bits/stl_relops.h:
 
@@ -5329,10 +5327,6 @@ CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.o:
 /usr/include/SFML/Graphics/RenderTarget.hpp:
 
 /usr/include/c++/14.2.1/unordered_map:
-
-/usr/include/c++/14.2.1/bits/std_function.h:
-
-/usr/include/SFML/Graphics/RenderWindow.hpp:
 
 /usr/include/c++/14.2.1/bits/hash_bytes.h:
 
@@ -5456,8 +5450,6 @@ CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.o:
 
 /usr/include/c++/14.2.1/chrono:
 
-/usr/include/asm-generic/posix_types.h:
-
 /usr/include/bits/cpu-set.h:
 
 /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h:
@@ -5467,6 +5459,10 @@ CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.o:
 /usr/include/bits/locale.h:
 
 /usr/include/c++/14.2.1/bits/fs_fwd.h:
+
+/usr/include/glm/gtc/epsilon.inl:
+
+/usr/include/bits/types/error_t.h:
 
 /usr/include/bits/types/mbstate_t.h:
 
@@ -5501,12 +5497,6 @@ CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.o:
 /usr/include/glm/detail/type_mat3x3.hpp:
 
 /usr/include/c++/14.2.1/bits/exception_ptr.h:
-
-/usr/lib/ld-linux-x86-64.so.2:
-
-/usr/include/SFML/Window/WindowBase.inl:
-
-/usr/include/glm/gtx/rotate_vector.inl:
 
 /usr/include/c++/14.2.1/bits/ios_base.h:
 
@@ -5544,6 +5534,10 @@ CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.o:
 
 /usr/include/c++/14.2.1/bits/shared_ptr_atomic.h:
 
+/usr/include/SFML/Graphics/RenderWindow.hpp:
+
+/usr/include/c++/14.2.1/bits/std_function.h:
+
 /usr/include/glm/ext/matrix_float3x3_precision.hpp:
 
 /usr/include/c++/14.2.1/bits/streambuf_iterator.h:
@@ -5556,6 +5550,8 @@ CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.o:
 
 /usr/include/c++/14.2.1/cstdio:
 
+/usr/include/c++/14.2.1/cstring:
+
 /usr/include/c++/14.2.1/ctime:
 
 /usr/include/c++/14.2.1/cwctype:
@@ -5565,6 +5561,14 @@ CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.o:
 /usr/include/c++/14.2.1/ext/string_conversions.h:
 
 /usr/include/c++/14.2.1/filesystem:
+
+/usr/include/c++/14.2.1/cstddef:
+
+/usr/include/bits/wchar.h:
+
+/usr/include/c++/14.2.1/fstream:
+
+/usr/include/c++/14.2.1/functional:
 
 /usr/include/c++/14.2.1/bits/streambuf.tcc:
 
@@ -5596,6 +5600,16 @@ CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.o:
 
 /usr/include/c++/14.2.1/string_view:
 
+/usr/include/c++/14.2.1/bits/uses_allocator_args.h:
+
+/usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/basic_file.h:
+
+/usr/include/bits/floatn-common.h:
+
+/usr/include/c++/14.2.1/codecvt:
+
+/usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++io.h:
+
 /usr/include/glm/ext/matrix_double3x3.hpp:
 
 /usr/include/c++/14.2.1/bits/fs_dir.h:
@@ -5619,7 +5633,3 @@ CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.o:
 /usr/include/glm/ext/matrix_projection.inl:
 
 /usr/include/glm/gtc/constants.inl:
-
-/usr/include/bits/types/error_t.h:
-
-/usr/include/glm/gtc/epsilon.inl:
