@@ -30,7 +30,7 @@ uint32_t EntityManager::addEntity() {
     bodies.inertia[id] = 1;
     bodies.invInertia[id] = 1 / bodies.inertia[id];
     bodies.elasticity[id] = 1;
-    bodies.friction[id] = 0.8;
+    bodies.friction[id] = 1;
 
     return id;
 }

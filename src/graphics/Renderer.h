@@ -82,6 +82,10 @@ class Renderer {
 
         // Draw circles
         for (int i = 0; i < circle.size(); i++) {
+            if (i == 1)
+                circleshape.setOutlineColor(sf::Color::Green);
+            else
+                circleshape.setOutlineColor(sf::Color::White);
             circleshape.setRadius(bodies.collider[circle[i]].circle.radius);
             circleshape.setOrigin({circleshape.getRadius(), circleshape.getRadius()});
             circleshape.setPosition(translate(bodies.position[circle[i]]));

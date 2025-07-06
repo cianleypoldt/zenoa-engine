@@ -29,51 +29,70 @@ void CollisionSystem::apply(SystemContext* cntx) {
     }
 }
 
-void CollisionSystem::circleCircleCollision(SystemContext* cntx, uint32_t id_a,
-                                            uint32_t id_b) {
+void CollisionSystem::circleCircleCollision(SystemContext* cntx, uint32_t id_a, uint32_t id_b) {
     auto& bodies = cntx->entity_manager.bodies;
 
     float radius_a = bodies.collider[id_a].circle.radius;
     float radius_b = bodies.collider[id_b].circle.radius;
 
     glm::vec2 diff = bodies.position[id_b] - bodies.position[id_a];
-    if (glm::length(diff) > radius_a + radius_b)
-        return;
-    glm::vec2 collision_normal_ab =
-        glm::normalize(bodies.position[id_b] - bodies.position[id_a]);
+    float distance = glm::length(diff);
+    float overlap = (radius_a + radius_b) - distance;
+    if (overlap < 0) return;
+
+    glm::vec2 collision_normal_ab = diff / distance;
+
+    float total_inv_mass = bodies.invMass[id_a] + bodies.invMass[id_b];
+    if (total_inv_mass > 0) {
+        bodies.position[id_a] -= collision_normal_ab * overlap * (bodies.invMass[id_a] / total_inv_mass);
+        bodies.position[id_b] += collision_normal_ab * overlap * (bodies.invMass[id_b] / total_inv_mass);
+    }
 
     glm::vec2 relative_velocity = bodies.velocity[id_b] - bodies.velocity[id_a];
     float rv_along_normal = glm::dot(relative_velocity, collision_normal_ab);
+    if (rv_along_normal > 0) return;
 
-    if (rv_along_normal > 0)
-        return;
+    float elasticity_coefficient = (1 + std::min(bodies.elasticity[id_a], bodies.elasticity[id_b]));
+    float numerator = -elasticity_coefficient * rv_along_normal;
+    float denominator = bodies.invMass[id_a] + bodies.invMass[id_b];
+    float impulse = numerator / denominator;
 
-    float j = -(1 + std::min(bodies.elasticity[id_a], bodies.elasticity[id_b])) *
-              rv_along_normal / (bodies.invMass[id_a] + bodies.invMass[id_b]);
-    glm::vec2 impulse = j * collision_normal_ab;
-    bodies.velocity[id_a] -= impulse * bodies.invMass[id_a];
-    bodies.velocity[id_b] += impulse * bodies.invMass[id_b];
+    bodies.velocity[id_a] -= collision_normal_ab * impulse * bodies.invMass[id_a];
+    bodies.velocity[id_b] += collision_normal_ab * impulse * bodies.invMass[id_b];
 
-    glm::vec2 collision_tangent =
-        glm::vec2(-collision_normal_ab.y, collision_normal_ab.x);
-    float rv_along_surface = glm::dot(relative_velocity, collision_tangent) +
-                             radius_a * bodies.angular_velocity[id_a] -
-                             radius_b * bodies.angular_velocity[id_b];
+    relative_velocity = bodies.velocity[id_b] - bodies.velocity[id_a];
 
-    float mu = std::min(bodies.friction[id_a], bodies.friction[id_b]);
+    radius_a *= -1;
+    glm::vec2 collision_tangent = glm::vec2(-collision_normal_ab.y, collision_normal_ab.x);
 
-    float j_friction = -mu * rv_along_surface /
-                       (bodies.invMass[id_a] + bodies.invMass[id_b] +
-                        bodies.invInertia[id_a] * radius_a * radius_a +
-                        bodies.invInertia[id_b] * radius_b * radius_b);
+    glm::vec2 contact_vector_a = collision_normal_ab * radius_a;
+    glm::vec2 contact_vector_b = collision_normal_ab * -radius_b;
 
-    j_friction = glm::clamp(j_friction, -mu * j, mu * j);
+    float rot_a = bodies.angular_velocity[id_a] * radius_a;
+    float rot_b = bodies.angular_velocity[id_b] * radius_b;
 
-    glm::vec2 friction_impulse = j_friction * collision_tangent;
-    bodies.velocity[id_a] -= friction_impulse * bodies.invMass[id_a];
-    bodies.angular_velocity[id_a] -= j_friction * bodies.invInertia[id_a];
-    bodies.velocity[id_b] += friction_impulse * bodies.invMass[id_b];
-    bodies.angular_velocity[id_b] += j_friction * bodies.invInertia[id_b];
+    float rv_along_surface = glm::dot(relative_velocity, collision_tangent) + rot_a - rot_b;
+
+    float friction_coefficient = std::min(bodies.friction[id_a], bodies.friction[id_b]);
+
+    float friction_denominator = bodies.invMass[id_a] + bodies.invMass[id_b] +
+                                 bodies.invInertia[id_a] * radius_a * radius_a +
+                                 bodies.invInertia[id_b] * radius_b * radius_b;
+
+    float friction_impulse = -rv_along_surface / friction_denominator;
+
+    friction_impulse = glm::clamp(friction_impulse, -friction_coefficient * std::abs(impulse), friction_coefficient * std::abs(impulse));
+
+    glm::vec2 friction_force = collision_tangent * friction_impulse;
+
+    bodies.velocity[id_a] -= friction_force * bodies.invMass[id_a];
+    bodies.velocity[id_b] += friction_force * bodies.invMass[id_b];
+
+    float torque_a = contact_vector_a.x * friction_force.y - contact_vector_a.y * friction_force.x;
+    float torque_b = contact_vector_b.x * friction_force.y - contact_vector_b.y * friction_force.x;
+
+    bodies.angular_velocity[id_a] += torque_a * bodies.invInertia[id_a];
+    bodies.angular_velocity[id_b] += torque_b * bodies.invInertia[id_b];
 }
 
 void CollisionSystem::circleConvexCollision(SystemContext* cntx, uint32_t id_circle, uint32_t id_convex) {

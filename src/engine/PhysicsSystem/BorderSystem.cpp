@@ -20,16 +20,15 @@ void BorderSystem::sphereBorderCollision(SystemContext* cntx, uint32_t id) {
     if (bodies.position[id].x - radius <= bottom_left_corner.x) {
         if (bodies.velocity[id].x < 0) {
             bodies.position[id].x = bottom_left_corner.x + radius;
-            float elasticity_coefficient = -(1 + std::min(bodies.elasticity[id], border_elasticity));
-            float vel_change = bodies.velocity[id].x * elasticity_coefficient;
+            float elasticity_coefficient = (1 + std::min(bodies.elasticity[id], border_elasticity));
+            float vel_change = bodies.velocity[id].x * -elasticity_coefficient;
             float impulse = vel_change * bodies.mass[id];
             bodies.velocity[id].x += vel_change;
 
-            float point_vel_y = bodies.velocity[id].y;
-            bodies.angular_velocity[id] * radius;
+            float point_vel_y = bodies.velocity[id].y + bodies.angular_velocity[id] * -radius;
 
             float friction_coefficient = std::min(border_friction, bodies.friction[id]);
-            float friction_numerator = point_vel_y * friction_coefficient;
+            float friction_numerator = point_vel_y * -friction_coefficient;
             float friction_denominator = bodies.invMass[id] + bodies.invInertia[id] * radius * radius;
             float friction_impulse = friction_numerator / friction_denominator;
 
@@ -39,22 +38,22 @@ void BorderSystem::sphereBorderCollision(SystemContext* cntx, uint32_t id) {
 
             // Apply friction impulse
             bodies.velocity[id].y += friction_impulse * bodies.invMass[id];
-            bodies.angular_velocity[id] += (radius * friction_impulse) * bodies.invInertia[id];
+            bodies.angular_velocity[id] += (-radius * friction_impulse) * bodies.invInertia[id];
         }
     }
 
     else if (bodies.position[id].x + radius >= top_right_corner.x) {
         if (bodies.velocity[id].x > 0) {
             bodies.position[id].x = top_right_corner.x - radius;
-            float elasticity_coefficient = -(1 + std::min(bodies.elasticity[id], border_elasticity));
-            float vel_change = bodies.velocity[id].x * elasticity_coefficient;
+            float elasticity_coefficient = 1 + std::min(bodies.elasticity[id], border_elasticity);
+            float vel_change = bodies.velocity[id].x * -elasticity_coefficient;
             float impulse = vel_change * bodies.mass[id];
             bodies.velocity[id].x += vel_change;
 
             float point_vel_y = bodies.velocity[id].y + bodies.angular_velocity[id] * radius;
 
             float friction_coefficient = std::min(border_friction, bodies.friction[id]);
-            float friction_numerator = point_vel_y * friction_coefficient;
+            float friction_numerator = point_vel_y * -friction_coefficient;
             float friction_denominator = bodies.invMass[id] + bodies.invInertia[id] * radius * radius;
             float friction_impulse = friction_numerator / friction_denominator;
 
@@ -71,15 +70,15 @@ void BorderSystem::sphereBorderCollision(SystemContext* cntx, uint32_t id) {
     if (bodies.position[id].y - radius <= bottom_left_corner.y) {
         if (bodies.velocity[id].y < 0) {
             bodies.position[id].y = bottom_left_corner.y + radius;
-            float elasticity_coefficient = -(1 + std::min(bodies.elasticity[id], border_elasticity));
-            float vel_change = bodies.velocity[id].y * elasticity_coefficient;
+            float elasticity_coefficient = 1 + std::min(bodies.elasticity[id], border_elasticity);
+            float vel_change = bodies.velocity[id].y * -elasticity_coefficient;
             float impulse = vel_change * bodies.mass[id];
             bodies.velocity[id].y += vel_change;
 
             float point_vel_x = bodies.velocity[id].x + bodies.angular_velocity[id] * radius;
 
             float friction_coefficient = std::min(border_friction, bodies.friction[id]);
-            float friction_numerator = point_vel_x * friction_coefficient;
+            float friction_numerator = point_vel_x * -friction_coefficient;
             float friction_denominator = bodies.invMass[id] + bodies.invInertia[id] * radius * radius;
             float friction_impulse = friction_numerator / friction_denominator;
 
@@ -96,15 +95,15 @@ void BorderSystem::sphereBorderCollision(SystemContext* cntx, uint32_t id) {
     else if (bodies.position[id].y + radius >= top_right_corner.y) {
         if (bodies.velocity[id].y > 0) {
             bodies.position[id].y = top_right_corner.y - radius;
-            float elasticity_coefficient = -(1 + std::min(bodies.elasticity[id], border_elasticity));
-            float vel_change = bodies.velocity[id].y * elasticity_coefficient;
+            float elasticity_coefficient = 1 + std::min(bodies.elasticity[id], border_elasticity);
+            float vel_change = bodies.velocity[id].y * -elasticity_coefficient;
             float impulse = vel_change * bodies.mass[id];
             bodies.velocity[id].y += vel_change;
 
-            float point_vel_x = bodies.velocity[id].x + bodies.angular_velocity[id] * radius;
+            float point_vel_x = bodies.velocity[id].x + bodies.angular_velocity[id] * -radius;
 
             float friction_coefficient = std::min(border_friction, bodies.friction[id]);
-            float friction_numerator = point_vel_x * friction_coefficient;
+            float friction_numerator = point_vel_x * -friction_coefficient;
             float friction_denominator = bodies.invMass[id] + bodies.invInertia[id] * radius * radius;
             float friction_impulse = friction_numerator / friction_denominator;
 
@@ -114,7 +113,7 @@ void BorderSystem::sphereBorderCollision(SystemContext* cntx, uint32_t id) {
 
             // Apply friction impulse
             bodies.velocity[id].x += friction_impulse * bodies.invMass[id];
-            bodies.angular_velocity[id] += (radius * friction_impulse) * bodies.invInertia[id];
+            bodies.angular_velocity[id] += (-radius * friction_impulse) * bodies.invInertia[id];
         }
     }
 }
