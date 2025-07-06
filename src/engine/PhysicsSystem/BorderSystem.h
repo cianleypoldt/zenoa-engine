@@ -4,8 +4,8 @@
 class SystemContext;
 class BorderSystem {
   public:
-    float border_elasticity = 0.8;
-    float border_friction = 0.8;
+    float border_elasticity = 1;
+    float border_friction = 1;
     glm::vec2 bottom_left_corner = {-250, 500};
     glm::vec2 top_right_corner = {250, 500};
 

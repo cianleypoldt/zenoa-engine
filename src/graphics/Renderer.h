@@ -36,7 +36,7 @@ class Renderer {
         window.display();
     }
 
-    static void degugCircle(SystemContext* cntx, glm::vec2 position) {
+    static void debugCircle(SystemContext* cntx, glm::vec2 position) {
         sf::CircleShape circleshape;
         circleshape.setRadius(6);
         circleshape.setOrigin({circleshape.getRadius(), circleshape.getRadius()});
@@ -104,7 +104,6 @@ class Renderer {
         window.clear();
 
         // Sleep to maintain 60 FPS
-
         sf::Time sleepTime = frameTime - clock.getElapsedTime();
         if (sleepTime > sf::Time::Zero) {
             sf::sleep(sleepTime);

@@ -39,34 +39,66 @@ void rbs::addCircleCollider(SystemContext* cntx, unsigned int id, float radius) 
     if (!cntx->entity_manager.verifyID(id)) return;
     cntx->entity_manager.useCircleCollider(id);
     cntx->entity_manager.bodies.collider[id].circle.radius = radius;
+    cntx->entity_manager.bodies.mass[id] = 3.14 * radius * radius * (0.0001);
+    cntx->entity_manager.bodies.invMass[id] = 1 / cntx->entity_manager.bodies.mass[id];
+    cntx->entity_manager.bodies.inertia[id] = 0.5 * cntx->entity_manager.bodies.mass[id] * radius * radius;
+    cntx->entity_manager.bodies.invInertia[id] = 1 / cntx->entity_manager.bodies.inertia[id];
 }
-void rbs::addConvexCollider(SystemContext* cntx, unsigned int id, std::vector<glm::vec2> verticies) {
-    // To Calclate the bounding radius:
-    // 1. Get center:
-    glm::vec2 sum;
-    for (auto& verticy : verticies)
-        sum += verticy;
-    sum /= verticies.size();
+void rbs::addConvexCollider(SystemContext* cntx, unsigned int id, std::vector<glm::vec2> vertices, float density = 0.00000005) {
 
-    // store verticies relative to center
-    for (auto& verticy : verticies)
-        verticy -= sum;
+    if (!cntx->entity_manager.verifyID(id)) return;
 
-    // find the bounding radius
-    float radius = 0;
-    for (auto& verticy : verticies)
-        radius = std::max(radius, glm::length(verticy));
+    // 1) Compute centroid
+    glm::vec2 centroid{0.0f};
+    for (auto& v : vertices) centroid += v;
+    centroid /= vertices.size();
 
-    if (!cntx->entity_manager.verifyID(id))
-        return;
-    cntx->entity_manager.useConvexCollider(id);
-    cntx->entity_manager.bodies.collider[id].convex.begin = cntx->vertex_pool.size();
-    cntx->vertex_pool.insert(cntx->vertex_pool.end(), verticies.begin(), verticies.end());
-    cntx->vertex_pool_worldspace.insert(cntx->vertex_pool_worldspace.end(), verticies.begin(),
-                                        verticies.end());
-    cntx->entity_manager.bodies.collider[id].convex.end = cntx->vertex_pool.size();
-    cntx->entity_manager.bodies.collider[id].convex.bounding_radius = radius;
+    // 2) Translate verts to centroid
+    for (auto& v : vertices) v -= centroid;
+
+    // 3) Store in pool & compute bounding radius
+    auto& em = cntx->entity_manager;
+    em.useConvexCollider(id);
+    auto& cc = em.bodies.collider[id].convex;
+    cc.begin = cntx->vertex_pool.size();
+    cntx->vertex_pool.insert(cntx->vertex_pool.end(), vertices.begin(), vertices.end());
+    cntx->vertex_pool_worldspace.insert(
+        cntx->vertex_pool_worldspace.end(), vertices.begin(), vertices.end());
+    cc.end = cntx->vertex_pool.size();
+
+    float maxR2 = 0.0f;
+    for (auto& v : vertices)
+        maxR2 = std::max(maxR2, glm::dot(v, v));
+    cc.bounding_radius = std::sqrt(maxR2);
+
+    // 4) Compute signed area & polygon mass properties
+    float A2 = 0.0f;      // twice signed area
+    float I_accum = 0.0f; // accumulator for inertia integral
+
+    for (size_t i = cc.begin; i < cc.end; ++i) {
+        const auto& p1 = cntx->vertex_pool[i];
+        const auto& p2 = cntx->vertex_pool[(i + 1 < cc.end) ? i + 1 : cc.begin];
+
+        float cross = p1.x * p2.y - p2.x * p1.y;
+        A2 += cross;
+
+        // for inertia: (p1·p1 + p1·p2 + p2·p2) * cross
+        float term = glm::dot(p1, p1) + glm::dot(p1, p2) + glm::dot(p2, p2);
+        I_accum += cross * term;
+    }
+
+    float area = 0.5f * std::abs(A2);
+    float mass = density * area;
+    em.bodies.mass[id] = mass;
+    em.bodies.invMass[id] = (mass > 0.0f ? 1.0f / mass : 0.0f);
+
+    // Polygon moment of inertia about centroid:
+    // I = density/12 * ∑ (cross_ij * (||p_i||^2 + p_i·p_j + ||p_j||^2))
+    float inertia = (density / 12.0f) * std::abs(I_accum);
+    em.bodies.inertia[id] = inertia;
+    em.bodies.invInertia[id] = (inertia > 0.0f ? 1.0f / inertia : 0.0f);
 }
+
 void rbs::killEntity(SystemContext* cntx, uint32_t id) {
     if (!cntx->entity_manager.verifyID(id))
         return;

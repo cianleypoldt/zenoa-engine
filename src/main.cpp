@@ -7,8 +7,8 @@ float random(float min, float max) {
     return min + static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * (max - min);
 }
 
-constexpr int convex_count = 5;
-constexpr int circle_count = 3;
+constexpr int convex_count = 2;
+constexpr int circle_count = 0;
 int main() {
     utl::initLogger(utl::LogLevel::Debug, "physics_engine.log");
     UTL_INFO("2D Physics Engine Starting...");
@@ -19,20 +19,22 @@ int main() {
     simulation->fixed_timestep = 0.00001;
     simulation->bounded = true;
     unsigned int id[convex_count + circle_count];
-
-    std::vector<glm::vec2> points;
+    std::vector<glm::vec2>
+        points;
     points = {{0, 0}, {47.5, -34.5}, {29.4, -90.5}, {-29.4, -90.5}, {-47.5, -34.5}};
 
     // populate Physicsworld
     for (int i = 0; i < convex_count; i++) {
         id[i] = rbs::addEntity(simulation, {random(-450, 450), random(-230, 230)});
-        rbs::addConvexCollider(simulation, id[i], points);
+        rbs::addConvexCollider(simulation, id[i], points, 0.00005);
+        simulation->entity_manager.disableGravity(id[i]);
         renderer.addConvex(id[i]);
     }
     /**/
     for (int i = 0; i < circle_count; i++) {
         id[convex_count + i] = rbs::addEntity(simulation, {random(-450, 450), random(-230, 230)});
         rbs::addCircleCollider(simulation, id[convex_count + i], 20);
+        simulation->entity_manager.disableGravity(id[i]);
         renderer.addCircle(id[convex_count + i]);
     }
     /**/
@@ -61,9 +63,9 @@ int main() {
         // Movement controls for entity 1 - controlling angular velocity
         float angularAcceleration = 5; // Adjust this value as needed for rotation speed
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
-            rbs::applyTorque(simulation, 1, 10000000);
+            rbs::applyForce(simulation, 1, {0, 10000000});
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
-            rbs::applyTorque(simulation, 1, -10000000);
+            rbs::applyForce(simulation, 1, {0, -10000000});
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
             rbs::applyForce(simulation, 1, {-5000000, 0});
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))

@@ -25,11 +25,11 @@ uint32_t EntityManager::addEntity() {
     bodies.rotation[id] = 0;
     bodies.angular_velocity[id] = 0;
     bodies.torque[id] = 0;
-    bodies.mass[id] = 0.01;
+    bodies.mass[id] = 0.1;
     bodies.invMass[id] = 1 / bodies.mass[id];
-    bodies.inertia[id] = 10;
+    bodies.inertia[id] = 1;
     bodies.invInertia[id] = 1 / bodies.inertia[id];
-    bodies.elasticity[id] = 0.8;
+    bodies.elasticity[id] = 1;
     bodies.friction[id] = 0.8;
 
     return id;

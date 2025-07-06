@@ -1,5 +1,4 @@
 #include "BorderSystem.h"
-#include "../../utility/Utility.h"
 #include "../SystemContext.h"
 #include <SFML/Graphics.hpp>
 #include <glm/glm.hpp>
@@ -19,7 +18,6 @@ void BorderSystem::sphereBorderCollision(SystemContext* cntx, uint32_t id) {
     auto& bodies = cntx->entity_manager.bodies;
     float radius = bodies.collider[id].circle.radius;
     if (bodies.position[id].x - radius <= bottom_left_corner.x) {
-        float point_vel_y = bodies.velocity[id].y + bodies.angular_velocity[id] * radius;
         if (bodies.velocity[id].x < 0) {
             bodies.position[id].x = bottom_left_corner.x + radius;
             float elasticity_coefficient = -(1 + std::min(bodies.elasticity[id], border_elasticity));
@@ -27,7 +25,10 @@ void BorderSystem::sphereBorderCollision(SystemContext* cntx, uint32_t id) {
             float impulse = vel_change * bodies.mass[id];
             bodies.velocity[id].x += vel_change;
 
-            float friction_coefficient = -std::min(border_friction, bodies.friction[id]);
+            float point_vel_y = bodies.velocity[id].y;
+            bodies.angular_velocity[id] * radius;
+
+            float friction_coefficient = std::min(border_friction, bodies.friction[id]);
             float friction_numerator = point_vel_y * friction_coefficient;
             float friction_denominator = bodies.invMass[id] + bodies.invInertia[id] * radius * radius;
             float friction_impulse = friction_numerator / friction_denominator;
@@ -52,7 +53,7 @@ void BorderSystem::sphereBorderCollision(SystemContext* cntx, uint32_t id) {
 
             float point_vel_y = bodies.velocity[id].y + bodies.angular_velocity[id] * radius;
 
-            float friction_coefficient = -std::min(border_friction, bodies.friction[id]);
+            float friction_coefficient = std::min(border_friction, bodies.friction[id]);
             float friction_numerator = point_vel_y * friction_coefficient;
             float friction_denominator = bodies.invMass[id] + bodies.invInertia[id] * radius * radius;
             float friction_impulse = friction_numerator / friction_denominator;
@@ -77,7 +78,7 @@ void BorderSystem::sphereBorderCollision(SystemContext* cntx, uint32_t id) {
 
             float point_vel_x = bodies.velocity[id].x + bodies.angular_velocity[id] * radius;
 
-            float friction_coefficient = -std::min(border_friction, bodies.friction[id]);
+            float friction_coefficient = std::min(border_friction, bodies.friction[id]);
             float friction_numerator = point_vel_x * friction_coefficient;
             float friction_denominator = bodies.invMass[id] + bodies.invInertia[id] * radius * radius;
             float friction_impulse = friction_numerator / friction_denominator;
@@ -102,7 +103,7 @@ void BorderSystem::sphereBorderCollision(SystemContext* cntx, uint32_t id) {
 
             float point_vel_x = bodies.velocity[id].x + bodies.angular_velocity[id] * radius;
 
-            float friction_coefficient = -std::min(border_friction, bodies.friction[id]);
+            float friction_coefficient = std::min(border_friction, bodies.friction[id]);
             float friction_numerator = point_vel_x * friction_coefficient;
             float friction_denominator = bodies.invMass[id] + bodies.invInertia[id] * radius * radius;
             float friction_impulse = friction_numerator / friction_denominator;
