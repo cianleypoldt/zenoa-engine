@@ -21,18 +21,6 @@ void IntegrationSystem::integrate(SystemContext* cntx, uint32_t id) {
     bodies.angular_velocity[id] += (bodies.torque[id] * bodies.invInertia[id]) * cntx->fixed_timestep;
     bodies.rotation[id] += bodies.angular_velocity[id] * cntx->fixed_timestep;
     bodies.torque[id] = 0;
-
-    float max_angular_velocity = 10000.0f;
-    bodies.angular_velocity[id] = glm::clamp(bodies.angular_velocity[id], -max_angular_velocity, max_angular_velocity);
-
-    float rest_velocity_threshold = 0.01f;
-    float rest_angular_threshold = 0.01f;
-
-    if (glm::length(bodies.velocity[id]) < rest_velocity_threshold &&
-        std::abs(bodies.angular_velocity[id]) < rest_angular_threshold) {
-        bodies.velocity[id] = glm::vec2(0.0f);
-        bodies.angular_velocity[id] = 0.0f;
-    }
 }
 
 void IntegrationSystem::applyGravity(SystemContext* cntx) {

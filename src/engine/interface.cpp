@@ -35,11 +35,11 @@ void rbs::step(SystemContext* cntx) {
     cntx->entity_manager.enableGravity(id);
     return id;
 }
-void rbs::addCircleCollider(SystemContext* cntx, unsigned int id, float radius) {
+void rbs::addCircleCollider(SystemContext* cntx, unsigned int id, float radius, float density = 0.0005) {
     if (!cntx->entity_manager.verifyID(id)) return;
     cntx->entity_manager.useCircleCollider(id);
     cntx->entity_manager.bodies.collider[id].circle.radius = radius;
-    cntx->entity_manager.bodies.mass[id] = 3.14 * radius * radius * (0.0001);
+    cntx->entity_manager.bodies.mass[id] = 3.14 * radius * radius * (density);
     cntx->entity_manager.bodies.invMass[id] = 1 / cntx->entity_manager.bodies.mass[id];
     cntx->entity_manager.bodies.inertia[id] = 0.5 * cntx->entity_manager.bodies.mass[id] * radius * radius;
     cntx->entity_manager.bodies.invInertia[id] = 1 / cntx->entity_manager.bodies.inertia[id];

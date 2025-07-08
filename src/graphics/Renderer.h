@@ -29,7 +29,7 @@ class Renderer {
         sf::ContextSettings settings;
         settings.antiAliasingLevel = 16;
         if (Fullscreen)
-            window.create(sf::VideoMode({1000, 500}), "Debug View", sf::Style::None, sf::State::Windowed, settings);
+            window.create(sf::VideoMode({1000, 500}), "Debug View", sf::Style::None, sf::State::Fullscreen, settings);
         else
             window.create(sf::VideoMode({1000, 500}), "Debug View", sf::Style::None, sf::State::Windowed, settings);
         window.setPosition({0, 0});
