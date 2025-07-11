@@ -14,7 +14,6 @@ Zenoa engine spans exactly 1500 lines of code and was built over two months duri
 
 # Physical Models
 
-- Deterministic fixed time step
 - **Coulomb friction**
 - **Impulse-based solver** incorporating mass and inertia using the following equation:
 
@@ -25,9 +24,9 @@ $$
 
 ## Architecture
 
-- Custom SoA (Structure of Arrays) reduces cache misses
+- Custom **SoA (Structure of Arrays)** reduces cache misses
 - Reusable interface layer
-- Designed for deterministic simulation and compatibility with future physics-based reinforcement learning environments
+- Designed for **deterministic simulation** and compatibility with future physics-based reinforcement learning environments
 
 ---
 
