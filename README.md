@@ -1,19 +1,21 @@
 # 2D Physics Engine (C++)
 
 A deterministic, real-time 2D rigid-body physics engine built from scratch in modern C++.
-Supports convex polygon and circle collisions, accurate impulse resolution, and friction (static and dynamic).
+Supports convex polygon and circle-shape collisions, accurate impulse resolution, and friction (static and dynamic).
 
 ---
 
-## Features
+# Geometrical Models
 
-- SAT-based collision detection for convex polygons
-- Circle-circle and circle-polygon resolution
-- Border collision handling with restitution and friction
-- Impulse-based solver with mass, inertia, and Coulomb friction
+- Separating Axis Theorem (SAT) for convex collision detection
+- Face projection for circle-polygon collision detection
+- Simple deepest-point check for border collisions
+
+# Physical Models
+
+- Coulomb friction
+- Impulse-based solver with mass and inertia using $J = \frac{-(1+e) \cdot V_{rel} \cdot n}{\frac{1}{m_A} + \frac{1}{m_B} + \frac{(r_A \times n)^2}{I_A} + \frac{(r_B \times n)^2}{I_B}}$
 - Deterministic fixed time step
-- Clean C++ architecture (no external physics libs)
-
 ---
 
 ## Visual Demos
@@ -25,15 +27,6 @@ Supports convex polygon and circle collisions, accurate impulse resolution, and 
 **Real-time piling stability despite mass disparities**
 
 ![Piling stability under mass disparity](media/50convex_50circle.gif)
-
----
-
-## Notes
-
-- Performs well in typical 2D use cases
-- Deterministic under fixed timestep
-- Not optimized for extreme stacking or mass disparity
-- No positional correction or broadphase (by design)
 
 ---
 
