@@ -29,8 +29,8 @@ uint32_t EntityManager::addEntity() {
     bodies.invMass[id] = 1 / bodies.mass[id];
     bodies.inertia[id] = 1;
     bodies.invInertia[id] = 1 / bodies.inertia[id];
-    bodies.elasticity[id] = 0.8;
-    bodies.friction[id] = 1;
+    bodies.elasticity[id] = 0.5;
+    bodies.friction[id] = 0.9;
 
     return id;
 }

@@ -170,24 +170,10 @@ CMakeFiles/PhysicsEngine.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/PhysicsEngine.dir/src/main.cpp.s"
 	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cianleypoldt/Documents/cpp/2d_Physics/src/main.cpp -o CMakeFiles/PhysicsEngine.dir/src/main.cpp.s
 
-CMakeFiles/PhysicsEngine.dir/src/test.cpp.o: CMakeFiles/PhysicsEngine.dir/flags.make
-CMakeFiles/PhysicsEngine.dir/src/test.cpp.o: /home/cianleypoldt/Documents/cpp/2d_Physics/src/test.cpp
-CMakeFiles/PhysicsEngine.dir/src/test.cpp.o: CMakeFiles/PhysicsEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/PhysicsEngine.dir/src/test.cpp.o"
-	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PhysicsEngine.dir/src/test.cpp.o -MF CMakeFiles/PhysicsEngine.dir/src/test.cpp.o.d -o CMakeFiles/PhysicsEngine.dir/src/test.cpp.o -c /home/cianleypoldt/Documents/cpp/2d_Physics/src/test.cpp
-
-CMakeFiles/PhysicsEngine.dir/src/test.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/PhysicsEngine.dir/src/test.cpp.i"
-	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cianleypoldt/Documents/cpp/2d_Physics/src/test.cpp > CMakeFiles/PhysicsEngine.dir/src/test.cpp.i
-
-CMakeFiles/PhysicsEngine.dir/src/test.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/PhysicsEngine.dir/src/test.cpp.s"
-	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cianleypoldt/Documents/cpp/2d_Physics/src/test.cpp -o CMakeFiles/PhysicsEngine.dir/src/test.cpp.s
-
 CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.o: CMakeFiles/PhysicsEngine.dir/flags.make
 CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.o: /home/cianleypoldt/Documents/cpp/2d_Physics/src/utility/Time.cpp
 CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.o: CMakeFiles/PhysicsEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.o"
 	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.o -MF CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.o.d -o CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.o -c /home/cianleypoldt/Documents/cpp/2d_Physics/src/utility/Time.cpp
 
 CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.i: cmake_force
@@ -201,7 +187,7 @@ CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.s: cmake_force
 CMakeFiles/PhysicsEngine.dir/src/utility/Utility.cpp.o: CMakeFiles/PhysicsEngine.dir/flags.make
 CMakeFiles/PhysicsEngine.dir/src/utility/Utility.cpp.o: /home/cianleypoldt/Documents/cpp/2d_Physics/src/utility/Utility.cpp
 CMakeFiles/PhysicsEngine.dir/src/utility/Utility.cpp.o: CMakeFiles/PhysicsEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/PhysicsEngine.dir/src/utility/Utility.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/PhysicsEngine.dir/src/utility/Utility.cpp.o"
 	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PhysicsEngine.dir/src/utility/Utility.cpp.o -MF CMakeFiles/PhysicsEngine.dir/src/utility/Utility.cpp.o.d -o CMakeFiles/PhysicsEngine.dir/src/utility/Utility.cpp.o -c /home/cianleypoldt/Documents/cpp/2d_Physics/src/utility/Utility.cpp
 
 CMakeFiles/PhysicsEngine.dir/src/utility/Utility.cpp.i: cmake_force
@@ -221,7 +207,6 @@ PhysicsEngine_OBJECTS = \
 "CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/PhysicsSystem.cpp.o" \
 "CMakeFiles/PhysicsEngine.dir/src/engine/interface.cpp.o" \
 "CMakeFiles/PhysicsEngine.dir/src/main.cpp.o" \
-"CMakeFiles/PhysicsEngine.dir/src/test.cpp.o" \
 "CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.o" \
 "CMakeFiles/PhysicsEngine.dir/src/utility/Utility.cpp.o"
 
@@ -235,7 +220,6 @@ PhysicsEngine: CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/Integration
 PhysicsEngine: CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/PhysicsSystem.cpp.o
 PhysicsEngine: CMakeFiles/PhysicsEngine.dir/src/engine/interface.cpp.o
 PhysicsEngine: CMakeFiles/PhysicsEngine.dir/src/main.cpp.o
-PhysicsEngine: CMakeFiles/PhysicsEngine.dir/src/test.cpp.o
 PhysicsEngine: CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.o
 PhysicsEngine: CMakeFiles/PhysicsEngine.dir/src/utility/Utility.cpp.o
 PhysicsEngine: CMakeFiles/PhysicsEngine.dir/build.make
@@ -246,7 +230,7 @@ PhysicsEngine: /usr/lib/libsfml-audio.so.3.0.0
 PhysicsEngine: /usr/lib/libglm.a
 PhysicsEngine: /usr/lib/libsfml-system.so.3.0.0
 PhysicsEngine: CMakeFiles/PhysicsEngine.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable PhysicsEngine"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable PhysicsEngine"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/PhysicsEngine.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

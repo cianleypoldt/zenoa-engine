@@ -64,7 +64,7 @@ class Renderer {
         convex.push_back(id);
     }
 
-    void refresh() {
+    void refresh(int green = -1) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
             window.close();
 
@@ -82,13 +82,17 @@ class Renderer {
 
         // Draw circles
         for (int i = 0; i < circle.size(); i++) {
-            if (i == 1)
+            if (circle[i] == green) {
                 circleshape.setOutlineColor(sf::Color::Green);
-            else
+                line.setFillColor(sf::Color::Green);
+            } else {
                 circleshape.setOutlineColor(sf::Color::White);
+                line.setFillColor(sf::Color::White);
+            }
             circleshape.setRadius(bodies.collider[circle[i]].circle.radius);
             circleshape.setOrigin({circleshape.getRadius(), circleshape.getRadius()});
             circleshape.setPosition(translate(bodies.position[circle[i]]));
+            line.setPosition(translate(bodies.position[circle[i]]));
             line.setPosition(translate(bodies.position[circle[i]]));
             // line.setOrigin({circleshape.getRadius() / 2, -circleshape.getRadius() / 2});
             line.setSize({circleshape.getRadius(), 1});
@@ -99,6 +103,8 @@ class Renderer {
 
         // Draw convex shapes - fixed to use the correct data
         for (int i = 0; i < convex.size(); i++) {
+            if (convex[i] == green)
+                convex_shapes[i].setOutlineColor(sf::Color::Green);
             convex_shapes[i].setPosition(translate(bodies.position[convex[i]]));
             convex_shapes[i].setRotation(sf::radians(-bodies.rotation[convex[i]]));
             window.draw(convex_shapes[i]);

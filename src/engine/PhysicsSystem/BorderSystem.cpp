@@ -124,18 +124,29 @@ void BorderSystem::convexBorderCollision(SystemContext* cntx, uint32_t id) {
 
     // Bounding radius out of bounds check
     if (bodies.position[id].x - radius <= bottom_left_corner.x) {
+        float maxPenetration = 0.0f;
+        int maxPenetrationIndex = -1;
+
+        // Find the vertex with maximum penetration
         for (int index = bodies.collider[id].convex.begin;
              index < bodies.collider[id].convex.end; index++) {
-            // for every object vertex that is out of bounds
             if (cntx->vertex_pool_worldspace[index].x < bottom_left_corner.x) {
-                // Position correction
                 float penetration = bottom_left_corner.x - cntx->vertex_pool_worldspace[index].x;
-                bodies.position[id].x += penetration;
+                if (penetration > maxPenetration) {
+                    maxPenetration = penetration;
+                    maxPenetrationIndex = index;
+                }
+            }
+        }
 
-                glm::vec2 r = cntx->vertex_pool_worldspace[index] - bodies.position[id];
-                float point_vel_x = bodies.velocity[id].x + bodies.angular_velocity[id] * -r.y;
-                if (point_vel_x > 0) continue;
+        // Apply correction and impulse only for the deepest penetrating vertex
+        if (maxPenetrationIndex != -1) {
+            // Position correction
+            bodies.position[id].x += maxPenetration;
 
+            glm::vec2 r = cntx->vertex_pool_worldspace[maxPenetrationIndex] - bodies.position[id];
+            float point_vel_x = bodies.velocity[id].x + bodies.angular_velocity[id] * -r.y;
+            if (point_vel_x <= 0) {
                 float elasticity_coefficient = -(1 + std::min(bodies.elasticity[id], border_elasticity));
                 float numerator = elasticity_coefficient * point_vel_x;
                 float denominator = bodies.invMass[id] + bodies.invInertia[id] * r.y * r.y;
@@ -166,18 +177,29 @@ void BorderSystem::convexBorderCollision(SystemContext* cntx, uint32_t id) {
     }
 
     else if (bodies.position[id].x + radius >= top_right_corner.x) {
+        float maxPenetration = 0.0f;
+        int maxPenetrationIndex = -1;
+
+        // Find the vertex with maximum penetration
         for (int index = bodies.collider[id].convex.begin;
              index < bodies.collider[id].convex.end; index++) {
-            // for every object vertex that is out of bounds
             if (cntx->vertex_pool_worldspace[index].x > top_right_corner.x) {
-                // Position correction
                 float penetration = cntx->vertex_pool_worldspace[index].x - top_right_corner.x;
-                bodies.position[id].x -= penetration;
+                if (penetration > maxPenetration) {
+                    maxPenetration = penetration;
+                    maxPenetrationIndex = index;
+                }
+            }
+        }
 
-                glm::vec2 r = cntx->vertex_pool_worldspace[index] - bodies.position[id];
-                float point_vel_x = bodies.velocity[id].x + bodies.angular_velocity[id] * -r.y;
-                if (point_vel_x < 0) continue;
+        // Apply correction and impulse only for the deepest penetrating vertex
+        if (maxPenetrationIndex != -1) {
+            // Position correction
+            bodies.position[id].x -= maxPenetration;
 
+            glm::vec2 r = cntx->vertex_pool_worldspace[maxPenetrationIndex] - bodies.position[id];
+            float point_vel_x = bodies.velocity[id].x + bodies.angular_velocity[id] * -r.y;
+            if (point_vel_x >= 0) {
                 float elasticity_coefficient = -(1 + std::min(bodies.elasticity[id], border_elasticity));
                 float numerator = elasticity_coefficient * point_vel_x;
                 float denominator = bodies.invMass[id] + bodies.invInertia[id] * r.y * r.y;
@@ -209,18 +231,29 @@ void BorderSystem::convexBorderCollision(SystemContext* cntx, uint32_t id) {
     }
 
     if (bodies.position[id].y - radius <= bottom_left_corner.y) {
+        float maxPenetration = 0.0f;
+        int maxPenetrationIndex = -1;
+
+        // Find the vertex with maximum penetration
         for (int index = bodies.collider[id].convex.begin;
              index < bodies.collider[id].convex.end; index++) {
-            // for every object vertex that is out of bounds
             if (cntx->vertex_pool_worldspace[index].y < bottom_left_corner.y) {
-                // Position correction
                 float penetration = bottom_left_corner.y - cntx->vertex_pool_worldspace[index].y;
-                bodies.position[id].y += penetration;
+                if (penetration > maxPenetration) {
+                    maxPenetration = penetration;
+                    maxPenetrationIndex = index;
+                }
+            }
+        }
 
-                glm::vec2 r = cntx->vertex_pool_worldspace[index] - bodies.position[id];
-                float point_vel_y = bodies.velocity[id].y + bodies.angular_velocity[id] * r.x;
-                if (point_vel_y > 0) continue;
+        // Apply correction and impulse only for the deepest penetrating vertex
+        if (maxPenetrationIndex != -1) {
+            // Position correction
+            bodies.position[id].y += maxPenetration;
 
+            glm::vec2 r = cntx->vertex_pool_worldspace[maxPenetrationIndex] - bodies.position[id];
+            float point_vel_y = bodies.velocity[id].y + bodies.angular_velocity[id] * r.x;
+            if (point_vel_y <= 0) {
                 float elasticity_coefficient = -(1 + std::min(bodies.elasticity[id], border_elasticity));
                 float numerator = elasticity_coefficient * point_vel_y;
                 float denominator = bodies.invMass[id] + bodies.invInertia[id] * r.x * r.x;
@@ -252,18 +285,29 @@ void BorderSystem::convexBorderCollision(SystemContext* cntx, uint32_t id) {
     }
 
     else if (bodies.position[id].y + radius >= top_right_corner.y) {
+        float maxPenetration = 0.0f;
+        int maxPenetrationIndex = -1;
+
+        // Find the vertex with maximum penetration
         for (int index = bodies.collider[id].convex.begin;
              index < bodies.collider[id].convex.end; index++) {
-            // for every object vertex that is out of bounds
             if (cntx->vertex_pool_worldspace[index].y > top_right_corner.y) {
-                // Position correction
                 float penetration = cntx->vertex_pool_worldspace[index].y - top_right_corner.y;
-                bodies.position[id].y -= penetration;
+                if (penetration > maxPenetration) {
+                    maxPenetration = penetration;
+                    maxPenetrationIndex = index;
+                }
+            }
+        }
 
-                glm::vec2 r = cntx->vertex_pool_worldspace[index] - bodies.position[id];
-                float point_vel_y = bodies.velocity[id].y + bodies.angular_velocity[id] * r.x;
-                if (point_vel_y < 0) continue;
+        // Apply correction and impulse only for the deepest penetrating vertex
+        if (maxPenetrationIndex != -1) {
+            // Position correction
+            bodies.position[id].y -= maxPenetration;
 
+            glm::vec2 r = cntx->vertex_pool_worldspace[maxPenetrationIndex] - bodies.position[id];
+            float point_vel_y = bodies.velocity[id].y + bodies.angular_velocity[id] * r.x;
+            if (point_vel_y >= 0) {
                 float elasticity_coefficient = -(1 + std::min(bodies.elasticity[id], border_elasticity));
                 float numerator = elasticity_coefficient * point_vel_y;
                 float denominator = bodies.invMass[id] + bodies.invInertia[id] * r.x * r.x;

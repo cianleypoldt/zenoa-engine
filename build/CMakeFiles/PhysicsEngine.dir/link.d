@@ -9,7 +9,6 @@ PhysicsEngine: \
   CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/PhysicsSystem.cpp.o \
   CMakeFiles/PhysicsEngine.dir/src/engine/interface.cpp.o \
   CMakeFiles/PhysicsEngine.dir/src/main.cpp.o \
-  CMakeFiles/PhysicsEngine.dir/src/test.cpp.o \
   CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.o \
   CMakeFiles/PhysicsEngine.dir/src/utility/Utility.cpp.o \
   /usr/lib/libsfml-graphics.so.3.0.0 \
@@ -91,8 +90,6 @@ CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/PhysicsSystem.cpp.o:
 CMakeFiles/PhysicsEngine.dir/src/engine/interface.cpp.o:
 
 CMakeFiles/PhysicsEngine.dir/src/main.cpp.o:
-
-CMakeFiles/PhysicsEngine.dir/src/test.cpp.o:
 
 CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.o:
 
