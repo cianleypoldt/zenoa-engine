@@ -7,17 +7,21 @@ Supports convex polygon and circle-shape collisions, accurate impulse resolution
 
 # Geometrical Models
 
-- Separating Axis Theorem (SAT) for convex collision detection
-- Face projection for circle-polygon collision detection
+- **Separating Axis Theorem** (SAT) for convex collision detection
+- **Face projection** for circle-polygon collision detection
 - Simple deepest-point check for border collisions
 
 # Physical Models
 
 - Deterministic fixed time step
-- Coulomb friction
-- Impulse-based solver with mass and inertia
+- **Coulomb friction**
+- **Impulse-based solver** incorporating mass and inertia using the following equation:
 
-$$J = \frac{-(1+e) \cdot V_{rel} \cdot n}{\frac{1}{m_A} + \frac{1}{m_B} + \frac{(r_A \times n)^2}{I_A} + \frac{(r_B \times n)^2}{I_B}}$$
+$$
+J = \frac{-(1 + e) \cdot V_{rel} \cdot n}
+{\frac{1}{m_A} + \frac{1}{m_B} + \frac{(r_A \times n)^2}{I_A} + \frac{(r_B \times n)^2}{I_B}}
+$$
+
 ---
 
 ## Visual Demos
