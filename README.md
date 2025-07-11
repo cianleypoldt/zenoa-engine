@@ -18,11 +18,11 @@ Supports convex polygon and circle collisions, accurate impulse resolution, and 
 
 ## Visual Demos
 
-**Convex + Circle Impulse and Friction Resolution**
+**Convex + circle impulse and friction resolution**
 
 ![convexcircle](media/convex_circle_impulse.gif)
 
-**Piling Stability Despite Mass Disparity**
+**Real-time piling stability despite mass disparities**
 
 ![Piling stability under mass disparity](media/50convex_50circle.gif)
 
