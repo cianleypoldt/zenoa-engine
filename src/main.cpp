@@ -36,7 +36,7 @@ int main() {
     rbs::setPosition(simulation_context, circle_id, {300, 50});
     renderer.addCircle(circle_id);
 
-    rbs::applyTorque(simulation_context, convex_id, -1400);
+    rbs::applyTorque(simulation_context, convex_id, -2300);
     rbs::applyTorque(simulation_context, convex2_id, 5000);
 
     rbs::applyForce(simulation_context, circle_id, {-4, 0});

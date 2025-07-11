@@ -22,7 +22,7 @@ Supports convex polygon and circle collisions, accurate impulse resolution, and 
 ![convex_polygon_demo](media/convex_polygon_demo.mp4)
 
 **Convex Circle Impulse**
-![convexcircle](media/convex-circle-impulse.gif)
+![convexcircle](media/convex_circle_impulse.gif)
 
 **Piling Stability**
 ![Piling stability under mass disparity](media/50convex_50circle.gif)
