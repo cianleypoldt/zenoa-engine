@@ -25,7 +25,7 @@ Supports convex polygon and circle collisions, accurate impulse resolution, and 
 ![circle_collision_demo](media/circle_collision_demo.mp4)
 
 **Zenoa stress test**
-![Piling stability under mass disparity](media/50convex_50circle.mp4)
+![Piling stability under mass disparity](media/50convex_50circle.gif)
 
 ---
 
