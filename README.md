@@ -24,8 +24,8 @@ Supports convex polygon and circle collisions, accurate impulse resolution, and 
 **Mixed Shape Contact**
 ![circle_collision_demo](media/circle_collision_demo.mp4)
 
-**Border Response**
-![border_collision_demo](media/border_collision_demo.mp4)
+**Convex & Circle piling**
+![border_collision_demo](media/50_circle_050_convex.mp4)
 
 ---
 
