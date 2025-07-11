@@ -25,7 +25,7 @@ $$
 
 - Custom SoA (Structure of Arrays) reduces cache misses
 - Reusable interface layer
-- Designed for deterministic simulation with future RL interfacing in mind
+- Designed for deterministic simulation and compatibility with future physics-based reinforcement learning environments
 
 ---
 
