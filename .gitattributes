@@ -1,0 +1,6 @@
+Makefile linguist-vendored
+*.mk linguist-vendored
+/build/** linguist-vendored
+/media/** linguist-vendored
+
+/src/** linguist-language=C++
