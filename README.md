@@ -23,8 +23,9 @@ $$
 
 ## Architecture
 
-- Custom SoA (Structure of Arrays) framework for cache locality
-- Custom built entity containers to improve memory efficiency and reduce fragmentation
+- Custom SoA (Structure of Arrays) reduces cache misses
+- Reusable interface layer
+- Designed for deterministic simulation with future RL interfacing in mind
 
 ---
 
@@ -56,3 +57,7 @@ make
 
 - **GLM** for vector math
 - **SFML** for simple debug rendering
+
+## License
+
+Zenoa engine is released under the MIT License.
