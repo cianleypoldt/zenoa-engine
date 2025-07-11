@@ -4,13 +4,13 @@ A deterministic, real-time 2D rigid-body physics engine built from scratch in mo
 
 ---
 
-# Geometrical Models
+## Geometrical Models
 
 - **Separating Axis Theorem** (SAT) for convex collision detection
-- **Face projection** for circle-polygon collision detection
+- **Face projection** method for circle-polygon collisios
 - Simple deepest-point check for border collisions
 
-# Physical Models
+## Physical Models
 
 - **Coulomb friction**
 - **Impulse-based solver** incorporating mass and inertia using the following equation:
@@ -23,7 +23,7 @@ $$
 ## Architecture
 
 - Custom **SoA (Structure of Arrays)** reduces cache misses
-- Reusable interface layer
+- Reusable, abstracted interface layer with user owned context
 - Designed for **deterministic simulation** and compatibility with future physics-based reinforcement learning environments
 
 ---
