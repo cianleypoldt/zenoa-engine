@@ -1,7 +1,6 @@
 # Zenoa Engine (C++)
 
-A deterministic, real-time 2D rigid-body physics engine built from scratch in modern C++.
-Supports convex polygon and circle-shape collisions, accurate impulse resolution, and friction (static and dynamic).
+A deterministic, real-time 2D rigid-body physics engine built from scratch in modern C++ as a learning project at the age of 17.
 
 ---
 
@@ -21,6 +20,11 @@ $$
 J = \frac{-(1 + e) \cdot V_{rel} \cdot n}
 {\frac{1}{m_A} + \frac{1}{m_B} + \frac{(r_A \times n)^2}{I_A} + \frac{(r_B \times n)^2}{I_B}}
 $$
+
+## Architecture
+
+- Custom SoA (Structure of Arrays) framework for cache locality
+- Custom built entity containers to improve memory efficiency and reduce fragmentation
 
 ---
 
