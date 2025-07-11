@@ -48,19 +48,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/bin/cmake
+CMAKE_COMMAND = /bin/cmake
 
 # The command to remove a file.
-RM = /usr/bin/cmake -E rm -f
+RM = /bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/cianleypoldt/Documents/cpp/2d_Physics
+CMAKE_SOURCE_DIR = /home/cianleypoldt/Documents/cpp/Zenoa
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/cianleypoldt/Documents/cpp/2d_Physics/build
+CMAKE_BINARY_DIR = /home/cianleypoldt/Documents/cpp/Zenoa/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -68,7 +68,7 @@ CMAKE_BINARY_DIR = /home/cianleypoldt/Documents/cpp/2d_Physics/build
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running CMake cache editor..."
-	/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/usr/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -78,7 +78,7 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles /home/cianleypoldt/Documents/cpp/2d_Physics/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles /home/cianleypoldt/Documents/cpp/Zenoa/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -113,29 +113,53 @@ preinstall/fast:
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -P /home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles/VerifyGlobs.cmake
+	$(CMAKE_COMMAND) -P /home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles/VerifyGlobs.cmake
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named PhysicsEngine
+# Target rules for targets named Zenoa
 
 # Build rule for target.
-PhysicsEngine: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 PhysicsEngine
-.PHONY : PhysicsEngine
+Zenoa: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Zenoa
+.PHONY : Zenoa
 
 # fast build rule for target.
-PhysicsEngine/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/build
-.PHONY : PhysicsEngine/fast
+Zenoa/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/build
+.PHONY : Zenoa/fast
+
+src/convex_circle_scene.o: src/convex_circle_scene.cpp.o
+.PHONY : src/convex_circle_scene.o
+
+# target to build an object file
+src/convex_circle_scene.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.o
+.PHONY : src/convex_circle_scene.cpp.o
+
+src/convex_circle_scene.i: src/convex_circle_scene.cpp.i
+.PHONY : src/convex_circle_scene.i
+
+# target to preprocess a source file
+src/convex_circle_scene.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.i
+.PHONY : src/convex_circle_scene.cpp.i
+
+src/convex_circle_scene.s: src/convex_circle_scene.cpp.s
+.PHONY : src/convex_circle_scene.s
+
+# target to generate assembly for a file
+src/convex_circle_scene.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.s
+.PHONY : src/convex_circle_scene.cpp.s
 
 src/engine/EntityManager.o: src/engine/EntityManager.cpp.o
 .PHONY : src/engine/EntityManager.o
 
 # target to build an object file
 src/engine/EntityManager.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/engine/EntityManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/EntityManager.cpp.o
 .PHONY : src/engine/EntityManager.cpp.o
 
 src/engine/EntityManager.i: src/engine/EntityManager.cpp.i
@@ -143,7 +167,7 @@ src/engine/EntityManager.i: src/engine/EntityManager.cpp.i
 
 # target to preprocess a source file
 src/engine/EntityManager.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/engine/EntityManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/EntityManager.cpp.i
 .PHONY : src/engine/EntityManager.cpp.i
 
 src/engine/EntityManager.s: src/engine/EntityManager.cpp.s
@@ -151,7 +175,7 @@ src/engine/EntityManager.s: src/engine/EntityManager.cpp.s
 
 # target to generate assembly for a file
 src/engine/EntityManager.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/engine/EntityManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/EntityManager.cpp.s
 .PHONY : src/engine/EntityManager.cpp.s
 
 src/engine/PhysicsSystem/BorderSystem.o: src/engine/PhysicsSystem/BorderSystem.cpp.o
@@ -159,7 +183,7 @@ src/engine/PhysicsSystem/BorderSystem.o: src/engine/PhysicsSystem/BorderSystem.c
 
 # target to build an object file
 src/engine/PhysicsSystem/BorderSystem.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/BorderSystem.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/BorderSystem.cpp.o
 .PHONY : src/engine/PhysicsSystem/BorderSystem.cpp.o
 
 src/engine/PhysicsSystem/BorderSystem.i: src/engine/PhysicsSystem/BorderSystem.cpp.i
@@ -167,7 +191,7 @@ src/engine/PhysicsSystem/BorderSystem.i: src/engine/PhysicsSystem/BorderSystem.c
 
 # target to preprocess a source file
 src/engine/PhysicsSystem/BorderSystem.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/BorderSystem.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/BorderSystem.cpp.i
 .PHONY : src/engine/PhysicsSystem/BorderSystem.cpp.i
 
 src/engine/PhysicsSystem/BorderSystem.s: src/engine/PhysicsSystem/BorderSystem.cpp.s
@@ -175,7 +199,7 @@ src/engine/PhysicsSystem/BorderSystem.s: src/engine/PhysicsSystem/BorderSystem.c
 
 # target to generate assembly for a file
 src/engine/PhysicsSystem/BorderSystem.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/BorderSystem.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/BorderSystem.cpp.s
 .PHONY : src/engine/PhysicsSystem/BorderSystem.cpp.s
 
 src/engine/PhysicsSystem/CollisionSystem.o: src/engine/PhysicsSystem/CollisionSystem.cpp.o
@@ -183,7 +207,7 @@ src/engine/PhysicsSystem/CollisionSystem.o: src/engine/PhysicsSystem/CollisionSy
 
 # target to build an object file
 src/engine/PhysicsSystem/CollisionSystem.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/CollisionSystem.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/CollisionSystem.cpp.o
 .PHONY : src/engine/PhysicsSystem/CollisionSystem.cpp.o
 
 src/engine/PhysicsSystem/CollisionSystem.i: src/engine/PhysicsSystem/CollisionSystem.cpp.i
@@ -191,7 +215,7 @@ src/engine/PhysicsSystem/CollisionSystem.i: src/engine/PhysicsSystem/CollisionSy
 
 # target to preprocess a source file
 src/engine/PhysicsSystem/CollisionSystem.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/CollisionSystem.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/CollisionSystem.cpp.i
 .PHONY : src/engine/PhysicsSystem/CollisionSystem.cpp.i
 
 src/engine/PhysicsSystem/CollisionSystem.s: src/engine/PhysicsSystem/CollisionSystem.cpp.s
@@ -199,7 +223,7 @@ src/engine/PhysicsSystem/CollisionSystem.s: src/engine/PhysicsSystem/CollisionSy
 
 # target to generate assembly for a file
 src/engine/PhysicsSystem/CollisionSystem.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/CollisionSystem.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/CollisionSystem.cpp.s
 .PHONY : src/engine/PhysicsSystem/CollisionSystem.cpp.s
 
 src/engine/PhysicsSystem/IntegrationSystem.o: src/engine/PhysicsSystem/IntegrationSystem.cpp.o
@@ -207,7 +231,7 @@ src/engine/PhysicsSystem/IntegrationSystem.o: src/engine/PhysicsSystem/Integrati
 
 # target to build an object file
 src/engine/PhysicsSystem/IntegrationSystem.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.o
 .PHONY : src/engine/PhysicsSystem/IntegrationSystem.cpp.o
 
 src/engine/PhysicsSystem/IntegrationSystem.i: src/engine/PhysicsSystem/IntegrationSystem.cpp.i
@@ -215,7 +239,7 @@ src/engine/PhysicsSystem/IntegrationSystem.i: src/engine/PhysicsSystem/Integrati
 
 # target to preprocess a source file
 src/engine/PhysicsSystem/IntegrationSystem.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.i
 .PHONY : src/engine/PhysicsSystem/IntegrationSystem.cpp.i
 
 src/engine/PhysicsSystem/IntegrationSystem.s: src/engine/PhysicsSystem/IntegrationSystem.cpp.s
@@ -223,7 +247,7 @@ src/engine/PhysicsSystem/IntegrationSystem.s: src/engine/PhysicsSystem/Integrati
 
 # target to generate assembly for a file
 src/engine/PhysicsSystem/IntegrationSystem.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.s
 .PHONY : src/engine/PhysicsSystem/IntegrationSystem.cpp.s
 
 src/engine/PhysicsSystem/PhysicsSystem.o: src/engine/PhysicsSystem/PhysicsSystem.cpp.o
@@ -231,7 +255,7 @@ src/engine/PhysicsSystem/PhysicsSystem.o: src/engine/PhysicsSystem/PhysicsSystem
 
 # target to build an object file
 src/engine/PhysicsSystem/PhysicsSystem.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/PhysicsSystem.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/PhysicsSystem.cpp.o
 .PHONY : src/engine/PhysicsSystem/PhysicsSystem.cpp.o
 
 src/engine/PhysicsSystem/PhysicsSystem.i: src/engine/PhysicsSystem/PhysicsSystem.cpp.i
@@ -239,7 +263,7 @@ src/engine/PhysicsSystem/PhysicsSystem.i: src/engine/PhysicsSystem/PhysicsSystem
 
 # target to preprocess a source file
 src/engine/PhysicsSystem/PhysicsSystem.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/PhysicsSystem.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/PhysicsSystem.cpp.i
 .PHONY : src/engine/PhysicsSystem/PhysicsSystem.cpp.i
 
 src/engine/PhysicsSystem/PhysicsSystem.s: src/engine/PhysicsSystem/PhysicsSystem.cpp.s
@@ -247,7 +271,7 @@ src/engine/PhysicsSystem/PhysicsSystem.s: src/engine/PhysicsSystem/PhysicsSystem
 
 # target to generate assembly for a file
 src/engine/PhysicsSystem/PhysicsSystem.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/engine/PhysicsSystem/PhysicsSystem.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/PhysicsSystem.cpp.s
 .PHONY : src/engine/PhysicsSystem/PhysicsSystem.cpp.s
 
 src/engine/interface.o: src/engine/interface.cpp.o
@@ -255,7 +279,7 @@ src/engine/interface.o: src/engine/interface.cpp.o
 
 # target to build an object file
 src/engine/interface.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/engine/interface.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/interface.cpp.o
 .PHONY : src/engine/interface.cpp.o
 
 src/engine/interface.i: src/engine/interface.cpp.i
@@ -263,7 +287,7 @@ src/engine/interface.i: src/engine/interface.cpp.i
 
 # target to preprocess a source file
 src/engine/interface.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/engine/interface.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/interface.cpp.i
 .PHONY : src/engine/interface.cpp.i
 
 src/engine/interface.s: src/engine/interface.cpp.s
@@ -271,7 +295,7 @@ src/engine/interface.s: src/engine/interface.cpp.s
 
 # target to generate assembly for a file
 src/engine/interface.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/engine/interface.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/interface.cpp.s
 .PHONY : src/engine/interface.cpp.s
 
 src/main.o: src/main.cpp.o
@@ -279,7 +303,7 @@ src/main.o: src/main.cpp.o
 
 # target to build an object file
 src/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -287,7 +311,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -295,56 +319,8 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
-
-src/utility/Time.o: src/utility/Time.cpp.o
-.PHONY : src/utility/Time.o
-
-# target to build an object file
-src/utility/Time.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.o
-.PHONY : src/utility/Time.cpp.o
-
-src/utility/Time.i: src/utility/Time.cpp.i
-.PHONY : src/utility/Time.i
-
-# target to preprocess a source file
-src/utility/Time.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.i
-.PHONY : src/utility/Time.cpp.i
-
-src/utility/Time.s: src/utility/Time.cpp.s
-.PHONY : src/utility/Time.s
-
-# target to generate assembly for a file
-src/utility/Time.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/utility/Time.cpp.s
-.PHONY : src/utility/Time.cpp.s
-
-src/utility/Utility.o: src/utility/Utility.cpp.o
-.PHONY : src/utility/Utility.o
-
-# target to build an object file
-src/utility/Utility.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/utility/Utility.cpp.o
-.PHONY : src/utility/Utility.cpp.o
-
-src/utility/Utility.i: src/utility/Utility.cpp.i
-.PHONY : src/utility/Utility.i
-
-# target to preprocess a source file
-src/utility/Utility.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/utility/Utility.cpp.i
-.PHONY : src/utility/Utility.cpp.i
-
-src/utility/Utility.s: src/utility/Utility.cpp.s
-.PHONY : src/utility/Utility.s
-
-# target to generate assembly for a file
-src/utility/Utility.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PhysicsEngine.dir/build.make CMakeFiles/PhysicsEngine.dir/src/utility/Utility.cpp.s
-.PHONY : src/utility/Utility.cpp.s
 
 # Help Target
 help:
@@ -354,7 +330,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... PhysicsEngine"
+	@echo "... Zenoa"
+	@echo "... src/convex_circle_scene.o"
+	@echo "... src/convex_circle_scene.i"
+	@echo "... src/convex_circle_scene.s"
 	@echo "... src/engine/EntityManager.o"
 	@echo "... src/engine/EntityManager.i"
 	@echo "... src/engine/EntityManager.s"
@@ -376,12 +355,6 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
-	@echo "... src/utility/Time.o"
-	@echo "... src/utility/Time.i"
-	@echo "... src/utility/Time.s"
-	@echo "... src/utility/Utility.o"
-	@echo "... src/utility/Utility.i"
-	@echo "... src/utility/Utility.s"
 .PHONY : help
 
 
@@ -393,7 +366,7 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -P /home/cianleypoldt/Documents/cpp/2d_Physics/build/CMakeFiles/VerifyGlobs.cmake
+	$(CMAKE_COMMAND) -P /home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles/VerifyGlobs.cmake
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(PhysicsEngine LANGUAGES CXX)
+project(Zenoa LANGUAGES CXX)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)

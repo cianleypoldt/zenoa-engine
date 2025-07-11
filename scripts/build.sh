@@ -15,4 +15,4 @@ fi
 
 echo "Build succeeded"
 
-./PhysicsEngine
+./Zenoa
