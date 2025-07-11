@@ -2,6 +2,8 @@
 
 A deterministic, real-time 2D rigid-body physics engine built from scratch in modern C++ as a learning project at the age of 17.
 
+Zenoa engine spans exactly 1500 lines of code and was built over two months during school. Without prior experience in linear algebra or impulse-based physics, I learned many novel mathematical, geometric and physical concepts during the course of development.
+
 ---
 
 # Geometrical Models

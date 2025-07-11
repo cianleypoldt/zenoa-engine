@@ -1,5 +1,4 @@
 #include "IntegrationSystem.h"
-#include "../../utility/Utility.h"
 #include "../SystemContext.h"
 #include <glm/glm.hpp>
 #define GLM_ENABLE_EXPERIMENTAL

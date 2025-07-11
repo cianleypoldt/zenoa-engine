@@ -1,6 +1,4 @@
 #include "CollisionSystem.h"
-#include "../../graphics/Renderer.h"
-#include "../../utility/Utility.h"
 #include "../SystemContext.h"
 
 void CollisionSystem::apply(SystemContext* cntx) {
@@ -144,10 +142,6 @@ void CollisionSystem::circleConvexCollision(SystemContext* cntx, uint32_t id_cir
             min_distance = distance;
         }
     }
-
-    Renderer::debugCircle(cntx, closest_point);
-    Renderer::debugCircle(cntx, bodies.position[id_circle] -
-                                    bodies.collider[id_circle].circle.radius * glm::normalize(bodies.position[id_circle] - closest_point));
 
     if (inside) {
         min_distance = 0;

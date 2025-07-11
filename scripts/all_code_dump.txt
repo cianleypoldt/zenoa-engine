@@ -1,88 +1,54 @@
 
-// FILE: src/test.cpp
-#include "engine/interface.h"
-
-int ain()
-{
-
-    return 0;
-}
-
 // FILE: src/main.cpp
 #include "engine/interface.h"
 #include "graphics/Renderer.h"
 #include "utility/Utility.h"
 #include <SFML/Graphics.hpp>
 
-float random(float min, float max)
-{
+float random(float min, float max) {
     return min + static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * (max - min);
 }
 
-constexpr int count = 2;
-int main()
-{
-    utl::initLogger(utl::LogLevel::Debug, "physics_engine.log");
-    UTL_INFO("2D Physics Engine Starting...");
+constexpr int convex_count = 50;
+constexpr int circle_count = 50;
+int main() {
 
-    auto simulation = rbs::make_context();
-    Renderer renderer(simulation);
-    rbs::setBounds(simulation, {-500, -250}, {500, 250});
-    rbs::setGravity(simulation, -9.81);
-    simulation->fixed_timestep = 0.00001;
-    simulation->bounded = true;
-    unsigned int id[count + 1];
+    std::vector<glm::vec2> points = {{0, 0}, {95.0, -69.0}, {58.8, -181.0}, {-58.8, -181.0}, {-95.0, -69.0}};
+    float default_density = 0.000001;
+    auto simulation_context = rbs::make_context();
+    rbs::setBounds(simulation_context, {-500, -250}, {500, 250});
+    rbs::setGravity(simulation_context, 0);
 
-    std::vector<glm::vec2> points;
-    points = {{0, 0}, {47.5, -34.5}, {29.4, -90.5}, {-29.4, -90.5}, {-47.5, -34.5}};
+    simulation_context->fixed_timestep = 0.07;
 
-    // populate Physicsworld
-    for (int i = 0; i < count; i++)
-    {
-        id[i] = rbs::addEntity(simulation, {random(-450, 450), random(-230, 230)});
+    Renderer renderer(simulation_context, false, 25);
 
-        // rbs::addConvexCollider(simulation, id[i], {{1, 1}, {2, 2}});
-        rbs::addConvexCollider(simulation, id[i], points);
-        rbs::applyForce(simulation, id[i], {rbs::getPosition(simulation, id[i]).y * 1000, 0});
-        renderer.addConvex(id[i]);
-        simulation->entity_manager.disableGravity(id[i]);
-    }
-    // Number of simulation steps per frame
-    const int STEPS_PER_FRAME = 30; // Adjust as needed for desired simulation speed
-    while (renderer.active())
-    {
-        // Movement controls for entity 0
-        // Define movement speeds as variables
-        float player1Speed = 5.0f;
-        float player2Speed = 5.0f;
+    auto convex_id = rbs::addEntity(simulation_context);
+    auto convex2_id = rbs::addEntity(simulation_context);
+    auto circle_id = rbs::addEntity(simulation_context);
 
-        // Movement controls for entity 0
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-            simulation->entity_manager.bodies.position[id[0]] = simulation->entity_manager.bodies.position[id[0]] + glm::vec2{0, player1Speed};
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-            simulation->entity_manager.bodies.position[id[0]] = simulation->entity_manager.bodies.position[id[0]] + glm::vec2{0, -player1Speed};
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-            simulation->entity_manager.bodies.position[id[0]] = simulation->entity_manager.bodies.position[id[0]] + glm::vec2{-player1Speed, 0};
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-            simulation->entity_manager.bodies.position[id[0]] = simulation->entity_manager.bodies.position[id[0]] + glm::vec2{player1Speed, 0};
+    rbs::addConvexCollider(simulation_context, convex_id, points, default_density);
+    rbs::setPosition(simulation_context, convex_id, {-80, 150});
+    renderer.addConvex(convex_id);
+    rbs::addConvexCollider(simulation_context, convex2_id, points, default_density);
+    rbs::setPosition(simulation_context, convex2_id, {100, -140});
+    renderer.addConvex(convex2_id);
 
-        // Movement controls for entity 1
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
-            simulation->entity_manager.bodies.position[id[1]] = simulation->entity_manager.bodies.position[id[1]] + glm::vec2{0, player2Speed};
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
-            simulation->entity_manager.bodies.position[id[1]] = simulation->entity_manager.bodies.position[id[1]] + glm::vec2{0, -player2Speed};
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
-            simulation->entity_manager.bodies.position[id[1]] = simulation->entity_manager.bodies.position[id[1]] + glm::vec2{-player2Speed, 0};
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
-            simulation->entity_manager.bodies.position[id[1]] = simulation->entity_manager.bodies.position[id[1]] + glm::vec2{player2Speed, 0};
-        for (int step = 0; step < STEPS_PER_FRAME; step++)
-        {
-            rbs::step(simulation);
-        }
+    rbs::addCircleCollider(simulation_context, circle_id, 50, default_density);
+    rbs::setPosition(simulation_context, circle_id, {300, 50});
+    renderer.addCircle(circle_id);
+
+    rbs::applyTorque(simulation_context, convex_id, -2300);
+    rbs::applyTorque(simulation_context, convex2_id, 5000);
+
+    rbs::applyForce(simulation_context, circle_id, {-4, 0});
+
+    while (renderer.active()) {
+        rbs::step(simulation_context);
         renderer.refresh();
     }
-    /**/
-    rbs::drop(simulation);
+
+    rbs::drop(simulation_context);
     return 0;
 }
 
@@ -93,8 +59,7 @@ int main()
 #include <glm/glm.hpp>
 #include <vector>
 
-class Renderer
-{
+class Renderer {
   public:
     sf::RenderWindow& window;
     std::vector<uint32_t> circle;
@@ -106,50 +71,60 @@ class Renderer
     sf::Clock clock;
     sf::Time frameTime;
 
-    static sf::Vector2f translate(glm::vec2 pos)
-    {
-        return sf::Vector2f(pos.x + 500, -pos.y + 250);
+    sf::RenderTexture texture;
+    int framenumber = 0;
+
+    static sf::Vector2f translate(glm::vec2 pos) {
+        return sf::Vector2f((pos.x + 500) * 2, (-pos.y + 250) * 2);
     }
 
-    bool active()
-    {
+    bool active() {
         return window.isOpen();
     }
 
     Renderer(SystemContext* _cntx, bool Fullscreen = false, uint32_t fps = 60)
-        : window(_cntx->window), cntx(_cntx), bodies(_cntx->entity_manager.bodies), fullscreen(Fullscreen), frameTime(sf::seconds(1.0f / fps))
-    {
+        : window(_cntx->window), cntx(_cntx), bodies(_cntx->entity_manager.bodies), texture({2000, 1000}), fullscreen(Fullscreen), frameTime(sf::seconds(1.0f / fps)) {
         sf::ContextSettings settings;
         settings.antiAliasingLevel = 16;
         if (Fullscreen)
-            window.create(sf::VideoMode({1000, 500}), "Debug View", sf::Style::None, sf::State::Windowed, settings);
+            window.create(sf::VideoMode({1000, 500}), "Debug View", sf::Style::None, sf::State::Fullscreen, settings);
         else
-            window.create(sf::VideoMode({1000, 500}), "Debug View", sf::Style::None, sf::State::Windowed, settings);
+            window.create(sf::VideoMode({2000, 1000}), "Debug View", sf::Style::None, sf::State::Windowed, settings);
         window.setPosition({0, 0});
         window.display();
+        texture.clear(sf::Color::Black);
+
+        // Initialize frame texture for video recording
     }
 
-    void addCircle(uint32_t id)
-    {
+    static void debugCircle(SystemContext* cntx, glm::vec2 position) {
+        sf::CircleShape circleshape;
+        circleshape.setRadius(10);
+        circleshape.setOrigin({circleshape.getRadius(), circleshape.getRadius()});
+        circleshape.setFillColor(sf::Color::Transparent);
+        circleshape.setOutlineColor(sf::Color::Green);
+        circleshape.setOutlineThickness(2);
+        circleshape.setPosition(translate(position));
+        cntx->window.draw(circleshape);
+    }
+
+    void addCircle(uint32_t id) {
         circle.push_back(id);
     }
-    void addConvex(uint32_t id)
-    {
+    void addConvex(uint32_t id) {
         uint32_t verticy_count = bodies.collider[id].convex.end - bodies.collider[id].convex.begin;
         sf::ConvexShape shape(bodies.collider[id].convex.end - bodies.collider[id].convex.begin);
         shape.setOutlineColor(sf::Color::White);
         shape.setOutlineThickness(1);
         shape.setFillColor(sf::Color::Transparent);
         for (int i = 0; i < verticy_count; i++)
-            shape.setPoint(i,
-                           {cntx->vertex_pool[bodies.collider[id].convex.begin + i].x,
-                            cntx->vertex_pool[bodies.collider[id].convex.begin + i].y});
+            shape.setPoint(i, sf::Vector2f{cntx->vertex_pool[bodies.collider[id].convex.begin + i].x * 2,
+                                           -cntx->vertex_pool[bodies.collider[id].convex.begin + i].y * 2});
         convex_shapes.push_back(shape);
         convex.push_back(id);
     }
 
-    void refresh()
-    {
+    void refresh(int green = -1) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
             window.close();
 
@@ -159,43 +134,58 @@ class Renderer
         line.setFillColor(sf::Color::White);
 
         sf::CircleShape circleshape;
-        circleshape.setRadius(10);
-        circleshape.setOrigin({circleshape.getRadius(), circleshape.getRadius()});
         circleshape.setFillColor(sf::Color::Transparent);
         circleshape.setOutlineColor(sf::Color::White);
         circleshape.setOutlineThickness(1);
 
         // Draw circles
-        for (int i = 0; i < circle.size(); i++)
-        {
+        for (int i = 0; i < circle.size(); i++) {
+            if (circle[i] == green) {
+                circleshape.setOutlineColor(sf::Color::Green);
+                line.setFillColor(sf::Color::Green);
+            } else {
+                circleshape.setOutlineColor(sf::Color::White);
+                line.setFillColor(sf::Color::White);
+            }
+            circleshape.setRadius(bodies.collider[circle[i]].circle.radius * 2);
+            circleshape.setOrigin({circleshape.getRadius(), circleshape.getRadius()});
             circleshape.setPosition(translate(bodies.position[circle[i]]));
             line.setPosition(translate(bodies.position[circle[i]]));
-            line.setSize({circleshape.getRadius(), 0.5});
-            line.setRotation(sf::radians(bodies.collider[circle[i]].circle.radius));
+            line.setPosition(translate(bodies.position[circle[i]]));
+            line.setSize({circleshape.getRadius(), 1});
+            line.setRotation(-sf::radians(bodies.rotation[circle[i]] + 3.14 / 2));
             window.draw(line);
+            texture.draw(line);
             window.draw(circleshape);
+            texture.draw(circleshape);
         }
 
         // Draw convex shapes - fixed to use the correct data
-        for (int i = 0; i < convex.size(); i++)
-        {
-            circleshape.setRadius(bodies.collider[i].convex.bounding_radius);
-            circleshape.setPosition(translate(bodies.position[convex[i]]));
-            circleshape.setOrigin({circleshape.getRadius(), circleshape.getRadius()});
+        for (int i = 0; i < convex.size(); i++) {
+            if (convex[i] == green)
+                convex_shapes[i].setOutlineColor(sf::Color::Green);
             convex_shapes[i].setPosition(translate(bodies.position[convex[i]]));
-            convex_shapes[i].setRotation(sf::radians(bodies.rotation[convex[i]]));
+            convex_shapes[i].setRotation(sf::radians(-bodies.rotation[convex[i]]));
             window.draw(convex_shapes[i]);
-            window.draw(circleshape);
+            texture.draw(convex_shapes[i]);
         }
 
         window.display();
+
+        sf::Image frame = texture.getTexture().copyToImage();
+        std::stringstream ss;
+        ss << "frames/frame_" << std::setw(3) << std::setfill('0') << framenumber++ << ".png";
+        std::string filename = ss.str();
+        frame.saveToFile(filename);
+
+        // window.clear(sf::Color::White);
+        // window.display();
         window.clear();
+        texture.clear(sf::Color::Black);
 
         // Sleep to maintain 60 FPS
-
         sf::Time sleepTime = frameTime - clock.getElapsedTime();
-        if (sleepTime > sf::Time::Zero)
-        {
+        if (sleepTime > sf::Time::Zero) {
             sf::sleep(sleepTime);
         }
     }
@@ -206,12 +196,10 @@ class Renderer
 #include <glm/glm.hpp>
 #include <vector>
 
-struct Circle
-{
+struct Circle {
     float radius = 0;
 };
-struct Convex
-{
+struct Convex {
     uint32_t begin;
     uint32_t end;
     float bounding_radius;
@@ -222,8 +210,7 @@ union Collider {
     Convex convex;
 };
 
-struct Bodies
-{
+struct Bodies {
     std::vector<uint16_t> flag;
 
     std::vector<glm::vec2> position;
@@ -239,11 +226,11 @@ struct Bodies
     std::vector<float> inertia;
     std::vector<float> invInertia;
     std::vector<float> elasticity;
+    std::vector<float> friction;
 
     std::vector<Collider> collider;
 
-    void resize(size_t size)
-    {
+    void resize(size_t size) {
         flag.resize(size);
         position.resize(size);
         velocity.resize(size);
@@ -256,62 +243,44 @@ struct Bodies
         inertia.resize(size);
         invInertia.resize(size);
         elasticity.resize(size);
+        friction.resize(size);
         collider.resize(size);
     }
-    uint32_t size()
-    {
+    uint32_t size() {
         return flag.size();
     }
-};
-
-// FILE: src/engine/DynamicList.h
-#include <glm/glm.hpp>
-
-template <uint32_t max_entity_count>
-class DynamicList
-{
-    uint32_t count;
-    uint32_t id[max_entity_count];
 };
 
 // FILE: src/engine/interface.cpp
 #pragma once
 #include "interface.h"
-// #include "../utility/Utility.h"
 
-SystemContext* rbs::make_context()
-{
+SystemContext* rbs::make_context() {
     return new SystemContext{};
 }
-void rbs::drop(SystemContext* cntx)
-{
+void rbs::drop(SystemContext* cntx) {
     delete cntx;
 }
 
-uint32_t rbs::getMaxEntityCount(SystemContext* cntx)
-{
+uint32_t rbs::getMaxEntityCount(SystemContext* cntx) {
     return cntx->entity_manager.MAX_ENTITY_COUNT;
 }
 
-void rbs::setBounds(SystemContext* cntx, glm::vec2 bottom_left, glm::vec2 top_right)
-{
+void rbs::setBounds(SystemContext* cntx, glm::vec2 bottom_left, glm::vec2 top_right) {
     cntx->bounded = true;
     cntx->physics_system.m_border_system.bottom_left_corner = bottom_left;
     cntx->physics_system.m_border_system.top_right_corner = top_right;
 }
 
-void rbs::setGravity(SystemContext* cntx, float gravity)
-{
+void rbs::setGravity(SystemContext* cntx, float gravity) {
     cntx->physics_system.m_integration_system.gravity = gravity;
 }
 
-void rbs::step(SystemContext* cntx)
-{
+void rbs::step(SystemContext* cntx) {
     cntx->physics_system.step(cntx);
 }
 
-[[nodiscard]] unsigned int rbs::addEntity(SystemContext* cntx, glm::vec2 pos, float mass)
-{
+[[nodiscard]] unsigned int rbs::addEntity(SystemContext* cntx, glm::vec2 pos, float mass) {
     uint32_t id = cntx->entity_manager.addEntity();
     cntx->entity_manager.bodies.position[id] = pos;
     cntx->entity_manager.bodies.mass[id] = mass;
@@ -319,84 +288,110 @@ void rbs::step(SystemContext* cntx)
     cntx->entity_manager.enableGravity(id);
     return id;
 }
-void rbs::addCircleCollider(SystemContext* cntx, unsigned int id, float radius)
-{
-    if (!cntx->entity_manager.verifyID(id))
-        return;
+void rbs::addCircleCollider(SystemContext* cntx, unsigned int id, float radius, float density = 0.0005) {
+    if (!cntx->entity_manager.verifyID(id)) return;
     cntx->entity_manager.useCircleCollider(id);
     cntx->entity_manager.bodies.collider[id].circle.radius = radius;
+    cntx->entity_manager.bodies.mass[id] = 3.14 * radius * radius * (density);
+    cntx->entity_manager.bodies.invMass[id] = 1 / cntx->entity_manager.bodies.mass[id];
+    cntx->entity_manager.bodies.inertia[id] = 0.5 * cntx->entity_manager.bodies.mass[id] * radius * radius;
+    cntx->entity_manager.bodies.invInertia[id] = 1 / cntx->entity_manager.bodies.inertia[id];
 }
-void rbs::addConvexCollider(SystemContext* cntx, unsigned int id, std::vector<glm::vec2> verticies)
-{
-    // To Calclate the bounding radius:
-    // 1. Get center:
-    glm::vec2 sum;
-    for (auto& verticy : verticies)
-        sum += verticy;
-    sum /= verticies.size();
+void rbs::addConvexCollider(SystemContext* cntx, unsigned int id, std::vector<glm::vec2> vertices, float density = 0.00000005) {
 
-    // store verticies relative to center
-    for (auto& verticy : verticies)
-        verticy -= sum;
+    if (!cntx->entity_manager.verifyID(id)) return;
 
-    // find the bounding radius
-    float radius = 0;
-    for (auto& verticy : verticies)
-        radius = std::max(radius, glm::length(verticy));
+    // 1) Compute centroid
+    glm::vec2 centroid{0.0f};
+    for (auto& v : vertices) centroid += v;
+    centroid /= vertices.size();
 
-    if (!cntx->entity_manager.verifyID(id))
-        return;
-    cntx->entity_manager.useConvexCollider(id);
-    cntx->entity_manager.bodies.collider[id].convex.begin = cntx->vertex_pool.size();
-    cntx->vertex_pool.insert(cntx->vertex_pool.end(), verticies.begin(), verticies.end());
-    cntx->entity_manager.bodies.collider[id].convex.end = cntx->vertex_pool.size();
-    cntx->entity_manager.bodies.collider[id].convex.bounding_radius = radius;
+    // 2) Translate verts to centroid
+    for (auto& v : vertices) v -= centroid;
+
+    // 3) Store in pool & compute bounding radius
+    auto& em = cntx->entity_manager;
+    em.useConvexCollider(id);
+    auto& cc = em.bodies.collider[id].convex;
+    cc.begin = cntx->vertex_pool.size();
+    cntx->vertex_pool.insert(cntx->vertex_pool.end(), vertices.begin(), vertices.end());
+    cntx->vertex_pool_worldspace.insert(
+        cntx->vertex_pool_worldspace.end(), vertices.begin(), vertices.end());
+    cc.end = cntx->vertex_pool.size();
+
+    float maxR2 = 0.0f;
+    for (auto& v : vertices)
+        maxR2 = std::max(maxR2, glm::dot(v, v));
+    cc.bounding_radius = std::sqrt(maxR2);
+
+    // 4) Compute signed area & polygon mass properties
+    float A2 = 0.0f;      // twice signed area
+    float I_accum = 0.0f; // accumulator for inertia integral
+
+    for (size_t i = cc.begin; i < cc.end; ++i) {
+        const auto& p1 = cntx->vertex_pool[i];
+        const auto& p2 = cntx->vertex_pool[(i + 1 < cc.end) ? i + 1 : cc.begin];
+
+        float cross = p1.x * p2.y - p2.x * p1.y;
+        A2 += cross;
+
+        // for inertia: (p1·p1 + p1·p2 + p2·p2) * cross
+        float term = glm::dot(p1, p1) + glm::dot(p1, p2) + glm::dot(p2, p2);
+        I_accum += cross * term;
+    }
+
+    float area = 0.5f * std::abs(A2);
+    float mass = density * area;
+    em.bodies.mass[id] = mass;
+    em.bodies.invMass[id] = (mass > 0.0f ? 1.0f / mass : 0.0f);
+
+    // Polygon moment of inertia about centroid:
+    // I = density/12 * ∑ (cross_ij * (||p_i||^2 + p_i·p_j + ||p_j||^2))
+    float inertia = (density / 12.0f) * std::abs(I_accum);
+    em.bodies.inertia[id] = inertia;
+    em.bodies.invInertia[id] = (inertia > 0.0f ? 1.0f / inertia : 0.0f);
 }
-void rbs::killEntity(SystemContext* cntx, uint32_t id)
-{
+
+void rbs::killEntity(SystemContext* cntx, uint32_t id) {
     if (!cntx->entity_manager.verifyID(id))
         return;
     cntx->entity_manager.removeEntity(id);
 }
-void rbs::setPosition(SystemContext* cntx, uint32_t id, glm::vec2 pos)
-{
+void rbs::setPosition(SystemContext* cntx, uint32_t id, glm::vec2 pos) {
     if (!cntx->entity_manager.verifyID(id))
         return;
     cntx->entity_manager.bodies.position[id] = pos;
 }
-void rbs::setVelocity(SystemContext* cntx, uint32_t id, glm::vec2 vel)
-{
+void rbs::setVelocity(SystemContext* cntx, uint32_t id, glm::vec2 vel) {
     if (!cntx->entity_manager.verifyID(id))
         return;
     cntx->entity_manager.bodies.velocity[id] = vel;
 }
-void rbs::applyForce(SystemContext* cntx, uint32_t id, glm::vec2 force)
-{
-    if (!cntx->entity_manager.verifyID(id))
-        return;
-    cntx->entity_manager.bodies.force[id] = force;
+void rbs::applyForce(SystemContext* cntx, uint32_t id, glm::vec2 force) {
+    // if (!cntx->entity_manager.verifyID(id)) return;
+    cntx->entity_manager.bodies.force[id] += force;
+}
+void rbs::applyTorque(SystemContext* cntx, uint32_t id, float torque) {
+    // if (!cntx->entity_manager.verifyID(id)) return;
+    cntx->entity_manager.bodies.torque[id] += torque;
 }
 
-[[nodiscard]] glm::vec2 rbs::getPosition(SystemContext* cntx, uint32_t id)
-{
+[[nodiscard]] glm::vec2 rbs::getPosition(SystemContext* cntx, uint32_t id) {
     if (!cntx->entity_manager.verifyID(id))
         return {};
     return cntx->entity_manager.bodies.position[id];
 }
-[[nodiscard]] float rbs::getRotation(SystemContext* cntx, uint32_t id)
-{
+[[nodiscard]] float rbs::getRotation(SystemContext* cntx, uint32_t id) {
     if (!cntx->entity_manager.verifyID(id))
         return -1;
     return cntx->entity_manager.bodies.rotation[id];
 }
-[[nodiscard]] float rbs::getCircleRadius(SystemContext* cntx, uint32_t id)
-{
+[[nodiscard]] float rbs::getCircleRadius(SystemContext* cntx, uint32_t id) {
     if (!cntx->entity_manager.verifyID(id))
         return -1;
     return cntx->entity_manager.bodies.collider[id].circle.radius;
 }
-[[nodiscard]] const std::vector<glm::vec2> rbs::getConvexVerticies(SystemContext* cntx, uint32_t id)
-{
+[[nodiscard]] const std::vector<glm::vec2> rbs::getConvexVerticies(SystemContext* cntx, uint32_t id) {
     if (!cntx->entity_manager.verifyID(id))
         return {};
     return std::vector<glm::vec2>(
@@ -408,23 +403,19 @@ void rbs::applyForce(SystemContext* cntx, uint32_t id, glm::vec2 force)
 #include "EntityManager.h"
 #include <algorithm>
 
-EntityManager::EntityManager()
-{
+EntityManager::EntityManager() {
     bodies.resize(40);
 }
 
-uint32_t EntityManager::addEntity()
-{
+uint32_t EntityManager::addEntity() {
     uint32_t id = -1;
-    if (free_list.size() > 0)
-    {
+    if (free_list.size() > 0) {
         id = free_list[free_list.size() - 1];
         free_list.pop_back();
-    }
-    else
-    {
+    } else {
         if (bodies.size() <= occupied_slot_count)
-            bodies.resize(std::max<size_t>(static_cast<size_t>(occupied_slot_count * 1.5), occupied_slot_count + 40));
+            bodies.resize(std::max<size_t>(static_cast<size_t>(occupied_slot_count * 1.5),
+                                           occupied_slot_count + 40));
         id = occupied_slot_count++;
     }
 
@@ -436,16 +427,16 @@ uint32_t EntityManager::addEntity()
     bodies.rotation[id] = 0;
     bodies.angular_velocity[id] = 0;
     bodies.torque[id] = 0;
-    bodies.mass[id] = 0;
-    bodies.invMass[id] = 0;
-    bodies.inertia[id] = 0;
-    bodies.invInertia[id] = 0;
-    bodies.elasticity[id] = 0.8;
+    bodies.mass[id] = 0.1;
+    bodies.invMass[id] = 1 / bodies.mass[id];
+    bodies.inertia[id] = 1;
+    bodies.invInertia[id] = 1 / bodies.inertia[id];
+    bodies.elasticity[id] = 0.5;
+    bodies.friction[id] = 1;
 
     return id;
 }
-void EntityManager::removeEntity(uint32_t id)
-{
+void EntityManager::removeEntity(uint32_t id) {
     gravity_entities.remove(id);
     moveable_entities.remove(id);
     circle_colliders.remove(id);
@@ -456,40 +447,33 @@ void EntityManager::removeEntity(uint32_t id)
     free_list.push_back(id);
 }
 
-bool EntityManager::verifyID(uint32_t id)
-{
+bool EntityManager::verifyID(uint32_t id) {
     return ((id < occupied_slot_count) && (id >= 0) && isAlive(id));
 }
-void EntityManager::enableGravity(uint32_t id)
-{
+void EntityManager::enableGravity(uint32_t id) {
     gravity_entities.add(id);
     bodies.flag[id] |= HAS_GRAVITY;
 }
-void EntityManager::disableGravity(uint32_t id)
-{
+void EntityManager::disableGravity(uint32_t id) {
     gravity_entities.remove(id);
     bodies.flag[id] &= ~HAS_GRAVITY;
 }
-void EntityManager::makeMoveable(uint32_t id)
-{
+void EntityManager::makeMoveable(uint32_t id) {
     moveable_entities.add(id);
     bodies.flag[id] |= MOVEABLE;
 }
-void EntityManager::makeImmoveable(uint32_t id)
-{
+void EntityManager::makeImmoveable(uint32_t id) {
     moveable_entities.remove(id);
     bodies.flag[id] &= ~MOVEABLE;
 }
-void EntityManager::useCircleCollider(uint32_t id)
-{
+void EntityManager::useCircleCollider(uint32_t id) {
     circle_colliders.add(id);
     bodies.flag[id] |= COLLIDER;
     convex_colliders.remove(id);
     bodies.flag[id] &= ~CONVEX;
     bodies.collider[id].circle.radius = 0.0f;
 }
-void EntityManager::useConvexCollider(uint32_t id)
-{
+void EntityManager::useConvexCollider(uint32_t id) {
     convex_colliders.add(id);
     bodies.flag[id] |= COLLIDER;
     circle_colliders.remove(id);
@@ -497,8 +481,7 @@ void EntityManager::useConvexCollider(uint32_t id)
     bodies.collider[id].convex.begin = 0;
     bodies.collider[id].convex.end = 0;
 }
-bool EntityManager::isAlive(uint32_t id)
-{
+bool EntityManager::isAlive(uint32_t id) {
     return (bodies.flag[id] & ALIVE);
 }
 
@@ -506,8 +489,7 @@ bool EntityManager::isAlive(uint32_t id)
 #pragma once
 #include "SystemContext.h"
 
-namespace rbs
-{
+namespace rbs {
 SystemContext* make_context();
 void drop(SystemContext* cntx);
 
@@ -517,14 +499,15 @@ void setBounds(SystemContext* cntx, glm::vec2 bottom_left, glm::vec2 top_right);
 void setGravity(SystemContext* cntx, float gravity);
 
 [[nodiscard]] unsigned int addEntity(SystemContext* cntx, glm::vec2 pos = {0, 0}, float mass = 1);
-void addConvexCollider(SystemContext* cntx, unsigned int id, std::vector<glm::vec2> points);
-void addCircleCollider(SystemContext* cntx, unsigned int id, float radius);
+void addConvexCollider(SystemContext* cntx, unsigned int id, std::vector<glm::vec2> points, float density);
+void addCircleCollider(SystemContext* cntx, unsigned int id, float radius, float density);
 
 void killEntity(SystemContext* cntx, uint32_t id);
 
 void setPosition(SystemContext* cntx, uint32_t id, glm::vec2 pos);
 void setVelocity(SystemContext* cntx, uint32_t id, glm::vec2 vel);
 void applyForce(SystemContext* cntx, uint32_t id, glm::vec2 force);
+void applyTorque(SystemContext* cntx, uint32_t id, float torque);
 
 void setCircleCollider(SystemContext* cntx, uint32_t id, float radius);
 // void setCircleCollider(SystemContext* cntx, uint32_t id, std::vector<glm::vec2>& verticies);
@@ -545,12 +528,10 @@ void setCircleCollider(SystemContext* cntx, uint32_t id, float radius);
 #include <stdio.h>
 #include <vector>
 
-struct EntityManager
-{
+struct EntityManager {
     static constexpr uint32_t MAX_ENTITY_COUNT = 5000;
 
-    enum FlagBytes : uint8_t
-    {
+    enum FlagBytes : uint8_t {
         ALIVE = 1 << 0,
         MOVEABLE = 1 << 1,
         HAS_GRAVITY = 1 << 2,
@@ -582,8 +563,6 @@ struct EntityManager
     void useCircleCollider(uint32_t id);
     void useConvexCollider(uint32_t id);
 
-    void addConvexCollider();
-
     bool isAlive(uint32_t id);
 
   private:
@@ -595,14 +574,14 @@ struct EntityManager
 #include "PhysicsSystem/PhysicsSystem.h"
 #include <SFML/Graphics.hpp>
 
-struct SystemContext
-{
+struct SystemContext {
     PhysicsSystem physics_system;
     EntityManager entity_manager;
     std::vector<glm::vec2> vertex_pool;
+    std::vector<glm::vec2> vertex_pool_worldspace;
     sf::RenderWindow window;
     bool bounded = false;
-    float fixed_timestep = 0.1;
+    float fixed_timestep = 100;
     unsigned int iterations = 0;
 };
 
@@ -612,22 +591,18 @@ struct SystemContext
 #include <stdio.h>
 
 template <uint32_t max_entity_capacity>
-struct EntityIDList
-{
+struct EntityIDList {
     uint32_t count = 0;
     uint32_t id[max_entity_capacity];
 
-    EntityIDList()
-    {
+    EntityIDList() {
         for (uint32_t i = 0; i < max_entity_capacity; i++)
             id[i] = -1;
     }
 
-    void add(uint32_t added_id)
-    {
+    void add(uint32_t added_id) {
         // check if already in list
-        for (uint32_t i = 0; i < count; i++)
-        {
+        for (uint32_t i = 0; i < count; i++) {
             if (id[i] == added_id)
                 return;
         }
@@ -635,20 +610,15 @@ struct EntityIDList
         id[count++] = added_id;
     }
 
-    void remove(uint32_t removed_id)
-    {
-        if (count == 0)
-            return;
+    void remove(uint32_t removed_id) {
+        if (count == 0) return;
+
         uint32_t index = 0;
-        while (index < count)
-        {
-            if (id[index++] == removed_id)
-            {
-                break;
-            }
+        while (index < count) {
+            if (id[index++] == removed_id) break;
         }
-        while (index < count)
-        {
+        if (index == count) return;
+        while (index < count) {
             id[index - 1] = id[index];
             index++;
         }
@@ -685,104 +655,356 @@ class IntegrationSystem
     void integrate(SystemContext* cntx, uint32_t id);
 
     void applyGravity(SystemContext* cntx);
-    void updateConvexVerticies(SystemContext* cntx);
+    void updateConvexWorldspaceVerticies(SystemContext* cntx);
 };
 
 // FILE: src/engine/PhysicsSystem/BorderSystem.cpp
 #include "BorderSystem.h"
-#include "../../graphics/Renderer.h"
 #include "../SystemContext.h"
 #include <SFML/Graphics.hpp>
+#include <glm/glm.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/rotate_vector.hpp>
 
-void BorderSystem::apply(SystemContext* cntx)
-{
-    for (uint32_t i = 0; i < cntx->entity_manager.circle_colliders.count; i++)
-    {
+void BorderSystem::apply(SystemContext* cntx) {
+    for (uint32_t i = 0; i < cntx->entity_manager.circle_colliders.count; i++) {
         sphereBorderCollision(cntx, cntx->entity_manager.circle_colliders.id[i]);
     }
-    for (uint32_t i = 0; i < cntx->entity_manager.convex_colliders.count; i++)
-    {
+    for (uint32_t i = 0; i < cntx->entity_manager.convex_colliders.count; i++) {
         convexBorderCollision(cntx, cntx->entity_manager.convex_colliders.id[i]);
     }
 }
 
-void BorderSystem::sphereBorderCollision(SystemContext* cntx, uint32_t id)
-{
+void BorderSystem::sphereBorderCollision(SystemContext* cntx, uint32_t id) {
     auto& bodies = cntx->entity_manager.bodies;
     float radius = bodies.collider[id].circle.radius;
+    if (bodies.position[id].x - radius <= bottom_left_corner.x) {
+        if (bodies.velocity[id].x < 0) {
+            bodies.position[id].x = bottom_left_corner.x + radius;
+            float elasticity_coefficient = (1 + std::min(bodies.elasticity[id], border_elasticity));
+            float vel_change = bodies.velocity[id].x * -elasticity_coefficient;
+            float impulse = vel_change * bodies.mass[id];
+            bodies.velocity[id].x += vel_change;
 
-    if (bodies.position[id].x - radius <= bottom_left_corner.x)
-    {
-        bodies.position[id].x = bottom_left_corner.x + radius;
-        bodies.velocity[id].x *= -bodies.elasticity[id];
-    }
-    else if (bodies.position[id].x + radius >= top_right_corner.x)
-    {
-        bodies.position[id].x = top_right_corner.x - radius;
-        bodies.velocity[id].x *= -bodies.elasticity[id];
+            float point_vel_y = bodies.velocity[id].y + bodies.angular_velocity[id] * -radius;
+
+            float friction_coefficient = std::min(border_friction, bodies.friction[id]);
+            float friction_numerator = point_vel_y * -friction_coefficient;
+            float friction_denominator = bodies.invMass[id] + bodies.invInertia[id] * radius * radius;
+            float friction_impulse = friction_numerator / friction_denominator;
+
+            // Clamp based on normal impulse (computed earlier)
+            float max_friction = std::abs(friction_coefficient) * std::abs(impulse);
+            friction_impulse = glm::clamp(friction_impulse, -max_friction, max_friction);
+
+            // Apply friction impulse
+            bodies.velocity[id].y += friction_impulse * bodies.invMass[id];
+            bodies.angular_velocity[id] += (-radius * friction_impulse) * bodies.invInertia[id];
+        }
     }
 
-    if (bodies.position[id].y - radius <= bottom_left_corner.y)
-    {
-        bodies.position[id].y = bottom_left_corner.y + radius;
-        bodies.velocity[id].y *= -bodies.elasticity[id];
-        // rbs::killEntity(cntx, id);
-        // uint32_t id = rbs::addEntity(cntx);
-        // rbs::addCircleCollider(cntx, id, 3);
+    else if (bodies.position[id].x + radius >= top_right_corner.x) {
+        if (bodies.velocity[id].x > 0) {
+            bodies.position[id].x = top_right_corner.x - radius;
+            float elasticity_coefficient = 1 + std::min(bodies.elasticity[id], border_elasticity);
+            float vel_change = bodies.velocity[id].x * -elasticity_coefficient;
+            float impulse = vel_change * bodies.mass[id];
+            bodies.velocity[id].x += vel_change;
+
+            float point_vel_y = bodies.velocity[id].y + bodies.angular_velocity[id] * radius;
+
+            float friction_coefficient = std::min(border_friction, bodies.friction[id]);
+            float friction_numerator = point_vel_y * -friction_coefficient;
+            float friction_denominator = bodies.invMass[id] + bodies.invInertia[id] * radius * radius;
+            float friction_impulse = friction_numerator / friction_denominator;
+
+            // Clamp based on normal impulse
+            float max_friction = std::abs(friction_coefficient) * std::abs(impulse);
+            friction_impulse = glm::clamp(friction_impulse, -max_friction, max_friction);
+
+            // Apply friction impulse
+            bodies.velocity[id].y += friction_impulse * bodies.invMass[id];
+            bodies.angular_velocity[id] += (radius * friction_impulse) * bodies.invInertia[id];
+        }
     }
-    else if (bodies.position[id].y + radius >= top_right_corner.y)
-    {
-        bodies.position[id].y = top_right_corner.y - radius;
-        bodies.velocity[id].y *= -bodies.elasticity[id];
+
+    if (bodies.position[id].y - radius <= bottom_left_corner.y) {
+        if (bodies.velocity[id].y < 0) {
+            bodies.position[id].y = bottom_left_corner.y + radius;
+            float elasticity_coefficient = 1 + std::min(bodies.elasticity[id], border_elasticity);
+            float vel_change = bodies.velocity[id].y * -elasticity_coefficient;
+            float impulse = vel_change * bodies.mass[id];
+            bodies.velocity[id].y += vel_change;
+
+            float point_vel_x = bodies.velocity[id].x + bodies.angular_velocity[id] * radius;
+
+            float friction_coefficient = std::min(border_friction, bodies.friction[id]);
+            float friction_numerator = point_vel_x * -friction_coefficient;
+            float friction_denominator = bodies.invMass[id] + bodies.invInertia[id] * radius * radius;
+            float friction_impulse = friction_numerator / friction_denominator;
+
+            // Clamp based on normal impulse
+            float max_friction = std::abs(friction_coefficient) * std::abs(impulse);
+            friction_impulse = glm::clamp(friction_impulse, -max_friction, max_friction);
+
+            // Apply friction impulse
+            bodies.velocity[id].x += friction_impulse * bodies.invMass[id];
+            bodies.angular_velocity[id] += (radius * friction_impulse) * bodies.invInertia[id];
+        }
+    }
+
+    else if (bodies.position[id].y + radius >= top_right_corner.y) {
+        if (bodies.velocity[id].y > 0) {
+            bodies.position[id].y = top_right_corner.y - radius;
+            float elasticity_coefficient = 1 + std::min(bodies.elasticity[id], border_elasticity);
+            float vel_change = bodies.velocity[id].y * -elasticity_coefficient;
+            float impulse = vel_change * bodies.mass[id];
+            bodies.velocity[id].y += vel_change;
+
+            float point_vel_x = bodies.velocity[id].x + bodies.angular_velocity[id] * -radius;
+
+            float friction_coefficient = std::min(border_friction, bodies.friction[id]);
+            float friction_numerator = point_vel_x * -friction_coefficient;
+            float friction_denominator = bodies.invMass[id] + bodies.invInertia[id] * radius * radius;
+            float friction_impulse = friction_numerator / friction_denominator;
+
+            // Clamp based on normal impulse
+            float max_friction = std::abs(friction_coefficient) * std::abs(impulse);
+            friction_impulse = glm::clamp(friction_impulse, -max_friction, max_friction);
+
+            // Apply friction impulse
+            bodies.velocity[id].x += friction_impulse * bodies.invMass[id];
+            bodies.angular_velocity[id] += (-radius * friction_impulse) * bodies.invInertia[id];
+        }
     }
 }
-void BorderSystem::convexBorderCollision(SystemContext* cntx, uint32_t id)
-{
-    sf::CircleShape circle(5, 6);
-    circle.setOrigin({3, 3});
-    circle.setFillColor(sf::Color::Transparent);
-    circle.setOutlineColor(sf::Color::White);
-    circle.setOutlineThickness(1);
 
+void BorderSystem::convexBorderCollision(SystemContext* cntx, uint32_t id) {
     Bodies& bodies = cntx->entity_manager.bodies;
     float radius = bodies.collider[id].convex.bounding_radius;
-    if (bodies.position[id].x - radius <= bottom_left_corner.x)
-    {
-        float max = 0;
-        uint32_t index = -1;
 
-        for (int i = bodies.collider[i].convex.begin; i < bodies.collider[i].convex.end; i++)
-        {
-            if (cntx->vertex_pool[i].x <= max)
-            {
-                index = i;
-                max = cntx->vertex_pool[i].x;
+    // Bounding radius out of bounds check
+    if (bodies.position[id].x - radius <= bottom_left_corner.x) {
+        float maxPenetration = 0.0f;
+        int maxPenetrationIndex = -1;
+
+        // Find the vertex with maximum penetration
+        for (int index = bodies.collider[id].convex.begin;
+             index < bodies.collider[id].convex.end; index++) {
+            if (cntx->vertex_pool_worldspace[index].x < bottom_left_corner.x) {
+                float penetration = bottom_left_corner.x - cntx->vertex_pool_worldspace[index].x;
+                if (penetration > maxPenetration) {
+                    maxPenetration = penetration;
+                    maxPenetrationIndex = index;
+                }
             }
         }
-        bodies.rotation[id] += 0.001;
-        circle.setPosition(Renderer::translate(cntx->vertex_pool[index] + bodies.position[id]));
-    }
-    else if (bodies.position[id].x + radius >= top_right_corner.x)
-    {
+
+        // Apply correction and impulse only for the deepest penetrating vertex
+        if (maxPenetrationIndex != -1) {
+            // Position correction
+            bodies.position[id].x += maxPenetration;
+
+            glm::vec2 r = cntx->vertex_pool_worldspace[maxPenetrationIndex] - bodies.position[id];
+            float point_vel_x = bodies.velocity[id].x + bodies.angular_velocity[id] * -r.y;
+            if (point_vel_x <= 0) {
+                float elasticity_coefficient = -(1 + std::min(bodies.elasticity[id], border_elasticity));
+                float numerator = elasticity_coefficient * point_vel_x;
+                float denominator = bodies.invMass[id] + bodies.invInertia[id] * r.y * r.y;
+                float impulse = numerator / denominator;
+
+                // Apply linear impulse
+                bodies.velocity[id].x += impulse * bodies.invMass[id];
+
+                // Apply angular impulse
+                bodies.angular_velocity[id] += (-r.y * impulse) * bodies.invInertia[id];
+
+                float point_vel_y = bodies.velocity[id].y + bodies.angular_velocity[id] * r.x;
+
+                float friction_coefficient = -std::min(border_friction, bodies.friction[id]);
+                float friction_numerator = point_vel_y * friction_coefficient;
+                float friction_denominator = bodies.invMass[id] + bodies.invInertia[id] * r.x * r.x;
+                float friction_impulse = friction_numerator / friction_denominator;
+
+                // Clamp based on normal impulse (computed earlier)
+                float max_friction = std::abs(friction_coefficient) * std::abs(impulse);
+                friction_impulse = glm::clamp(friction_impulse, -max_friction, max_friction);
+
+                // Apply friction impulse
+                bodies.velocity[id].y += friction_impulse * bodies.invMass[id];
+                bodies.angular_velocity[id] += (r.x * friction_impulse) * bodies.invInertia[id];
+            }
+        }
     }
 
-    if (bodies.position[id].y - radius <= bottom_left_corner.y)
-    {
+    else if (bodies.position[id].x + radius >= top_right_corner.x) {
+        float maxPenetration = 0.0f;
+        int maxPenetrationIndex = -1;
+
+        // Find the vertex with maximum penetration
+        for (int index = bodies.collider[id].convex.begin;
+             index < bodies.collider[id].convex.end; index++) {
+            if (cntx->vertex_pool_worldspace[index].x > top_right_corner.x) {
+                float penetration = cntx->vertex_pool_worldspace[index].x - top_right_corner.x;
+                if (penetration > maxPenetration) {
+                    maxPenetration = penetration;
+                    maxPenetrationIndex = index;
+                }
+            }
+        }
+
+        // Apply correction and impulse only for the deepest penetrating vertex
+        if (maxPenetrationIndex != -1) {
+            // Position correction
+            bodies.position[id].x -= maxPenetration;
+
+            glm::vec2 r = cntx->vertex_pool_worldspace[maxPenetrationIndex] - bodies.position[id];
+            float point_vel_x = bodies.velocity[id].x + bodies.angular_velocity[id] * -r.y;
+            if (point_vel_x >= 0) {
+                float elasticity_coefficient = -(1 + std::min(bodies.elasticity[id], border_elasticity));
+                float numerator = elasticity_coefficient * point_vel_x;
+                float denominator = bodies.invMass[id] + bodies.invInertia[id] * r.y * r.y;
+                float impulse = numerator / denominator;
+
+                // Apply linear impulse
+                bodies.velocity[id] += glm::vec2(impulse * bodies.invMass[id], 0);
+
+                // Apply angular impulse
+                bodies.angular_velocity[id] += (-r.y * impulse) * bodies.invInertia[id];
+
+                // Apply friction
+                float point_vel_y = bodies.velocity[id].y + bodies.angular_velocity[id] * r.x;
+
+                float friction_coefficient = -std::min(border_friction, bodies.friction[id]);
+                float friction_numerator = point_vel_y * friction_coefficient;
+                float friction_denominator = bodies.invMass[id] + bodies.invInertia[id] * r.x * r.x;
+                float friction_impulse = friction_numerator / friction_denominator;
+
+                // Clamp based on normal impulse
+                float max_friction = std::abs(friction_coefficient) * std::abs(impulse);
+                friction_impulse = glm::clamp(friction_impulse, -max_friction, max_friction);
+
+                // Apply friction impulse
+                bodies.velocity[id].y += friction_impulse * bodies.invMass[id];
+                bodies.angular_velocity[id] += (r.x * friction_impulse) * bodies.invInertia[id];
+            }
+        }
     }
-    else if (bodies.position[id].y + radius >= top_right_corner.y)
-    {
+
+    if (bodies.position[id].y - radius <= bottom_left_corner.y) {
+        float maxPenetration = 0.0f;
+        int maxPenetrationIndex = -1;
+
+        // Find the vertex with maximum penetration
+        for (int index = bodies.collider[id].convex.begin;
+             index < bodies.collider[id].convex.end; index++) {
+            if (cntx->vertex_pool_worldspace[index].y < bottom_left_corner.y) {
+                float penetration = bottom_left_corner.y - cntx->vertex_pool_worldspace[index].y;
+                if (penetration > maxPenetration) {
+                    maxPenetration = penetration;
+                    maxPenetrationIndex = index;
+                }
+            }
+        }
+
+        // Apply correction and impulse only for the deepest penetrating vertex
+        if (maxPenetrationIndex != -1) {
+            // Position correction
+            bodies.position[id].y += maxPenetration;
+
+            glm::vec2 r = cntx->vertex_pool_worldspace[maxPenetrationIndex] - bodies.position[id];
+            float point_vel_y = bodies.velocity[id].y + bodies.angular_velocity[id] * r.x;
+            if (point_vel_y <= 0) {
+                float elasticity_coefficient = -(1 + std::min(bodies.elasticity[id], border_elasticity));
+                float numerator = elasticity_coefficient * point_vel_y;
+                float denominator = bodies.invMass[id] + bodies.invInertia[id] * r.x * r.x;
+                float impulse = numerator / denominator;
+
+                // Apply linear impulse
+                bodies.velocity[id] += glm::vec2(0, impulse * bodies.invMass[id]);
+
+                // Apply angular impulse
+                bodies.angular_velocity[id] += (r.x * impulse) * bodies.invInertia[id];
+
+                // Apply friction
+                float point_vel_x = bodies.velocity[id].x + bodies.angular_velocity[id] * -r.y;
+
+                float friction_coefficient = -std::min(border_friction, bodies.friction[id]);
+                float friction_numerator = point_vel_x * friction_coefficient;
+                float friction_denominator = bodies.invMass[id] + bodies.invInertia[id] * r.y * r.y;
+                float friction_impulse = friction_numerator / friction_denominator;
+
+                // Clamp based on normal impulse
+                float max_friction = std::abs(friction_coefficient) * std::abs(impulse);
+                friction_impulse = glm::clamp(friction_impulse, -max_friction, max_friction);
+
+                // Apply friction impulse
+                bodies.velocity[id].x += friction_impulse * bodies.invMass[id];
+                bodies.angular_velocity[id] += (-r.y * friction_impulse) * bodies.invInertia[id];
+            }
+        }
     }
-    // circle.setPosition({500, 250});
-    cntx->window.draw(circle);
+
+    else if (bodies.position[id].y + radius >= top_right_corner.y) {
+        float maxPenetration = 0.0f;
+        int maxPenetrationIndex = -1;
+
+        // Find the vertex with maximum penetration
+        for (int index = bodies.collider[id].convex.begin;
+             index < bodies.collider[id].convex.end; index++) {
+            if (cntx->vertex_pool_worldspace[index].y > top_right_corner.y) {
+                float penetration = cntx->vertex_pool_worldspace[index].y - top_right_corner.y;
+                if (penetration > maxPenetration) {
+                    maxPenetration = penetration;
+                    maxPenetrationIndex = index;
+                }
+            }
+        }
+
+        // Apply correction and impulse only for the deepest penetrating vertex
+        if (maxPenetrationIndex != -1) {
+            // Position correction
+            bodies.position[id].y -= maxPenetration;
+
+            glm::vec2 r = cntx->vertex_pool_worldspace[maxPenetrationIndex] - bodies.position[id];
+            float point_vel_y = bodies.velocity[id].y + bodies.angular_velocity[id] * r.x;
+            if (point_vel_y >= 0) {
+                float elasticity_coefficient = -(1 + std::min(bodies.elasticity[id], border_elasticity));
+                float numerator = elasticity_coefficient * point_vel_y;
+                float denominator = bodies.invMass[id] + bodies.invInertia[id] * r.x * r.x;
+                float impulse = numerator / denominator;
+
+                // Apply linear impulse
+                bodies.velocity[id] += glm::vec2(0, impulse * bodies.invMass[id]);
+
+                // Apply angular impulse
+                bodies.angular_velocity[id] += (r.x * impulse) * bodies.invInertia[id];
+
+                // Apply friction
+                float point_vel_x = bodies.velocity[id].x + bodies.angular_velocity[id] * -r.y;
+
+                float friction_coefficient = -std::min(border_friction, bodies.friction[id]);
+                float friction_numerator = point_vel_x * friction_coefficient;
+                float friction_denominator = bodies.invMass[id] + bodies.invInertia[id] * r.y * r.y;
+                float friction_impulse = friction_numerator / friction_denominator;
+
+                // Clamp based on normal impulse
+                float max_friction = std::abs(friction_coefficient) * std::abs(impulse);
+                friction_impulse = glm::clamp(friction_impulse, -max_friction, max_friction);
+
+                // Apply friction impulse
+                bodies.velocity[id].x += friction_impulse * bodies.invMass[id];
+                bodies.angular_velocity[id] += (-r.y * friction_impulse) * bodies.invInertia[id];
+            }
+        }
+    }
 }
 
 // FILE: src/engine/PhysicsSystem/PhysicsSystem.cpp
 #include "PhysicsSystem.h"
-
 #include "../SystemContext.h"
 
-void PhysicsSystem::step(SystemContext* cntx)
-{
+void PhysicsSystem::step(SystemContext* cntx) {
     m_integration_system.applyGravity(cntx);
     m_integration_system.apply(cntx);
     m_border_system.apply(cntx);
@@ -791,35 +1013,46 @@ void PhysicsSystem::step(SystemContext* cntx)
 
 // FILE: src/engine/PhysicsSystem/IntegrationSystem.cpp
 #include "IntegrationSystem.h"
-#include "../../utility/Utility.h"
 #include "../SystemContext.h"
+#include <glm/glm.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/rotate_vector.hpp>
 
-void IntegrationSystem::apply(SystemContext* cntx)
-{
-    for (uint32_t i = 0; i < cntx->entity_manager.moveable_entities.count; i++)
-    {
-        integrate(cntx, cntx->entity_manager.gravity_entities.id[i]);
+void IntegrationSystem::apply(SystemContext* cntx) {
+    for (uint32_t i = 0; i < cntx->entity_manager.moveable_entities.count; i++) {
+        updateConvexWorldspaceVerticies(cntx);
+        integrate(cntx, cntx->entity_manager.moveable_entities.id[i]);
     }
 }
 
-void IntegrationSystem::integrate(SystemContext* cntx, uint32_t id)
-{
+void IntegrationSystem::integrate(SystemContext* cntx, uint32_t id) {
     auto& bodies = cntx->entity_manager.bodies;
-    bodies.velocity[id] += (bodies.force[id] / bodies.mass[id]) * cntx->fixed_timestep;
+    bodies.velocity[id] += (bodies.force[id] * bodies.invMass[id]) * cntx->fixed_timestep;
     bodies.position[id] += bodies.velocity[id] * cntx->fixed_timestep;
     bodies.force[id] = {0, 0};
+
+    bodies.angular_velocity[id] += (bodies.torque[id] * bodies.invInertia[id]) * cntx->fixed_timestep;
+    bodies.rotation[id] += bodies.angular_velocity[id] * cntx->fixed_timestep;
+    bodies.torque[id] = 0;
 }
 
-void IntegrationSystem::applyGravity(SystemContext* cntx)
-{
-    for (int id = 0; id < cntx->entity_manager.gravity_entities.count; id++)
-        cntx->entity_manager.bodies.velocity[id].y += gravity;
+void IntegrationSystem::applyGravity(SystemContext* cntx) {
+    for (int index = 0; index < cntx->entity_manager.gravity_entities.count; index++)
+        cntx->entity_manager.bodies.velocity[cntx->entity_manager.gravity_entities.id[index]].y +=
+            gravity;
 }
 
-void updateConvexVerticies(SystemContext* cntx)
-{
-    for (int id = 0; id < cntx->entity_manager.convex_colliders.count; id++)
-    {
+void IntegrationSystem::updateConvexWorldspaceVerticies(SystemContext* cntx) {
+    for (int index = 0; index < cntx->entity_manager.convex_colliders.count; index++) {
+        uint32_t this_id = cntx->entity_manager.convex_colliders.id[index];
+        for (uint32_t vertex_index = cntx->entity_manager.bodies.collider[this_id].convex.begin;
+             vertex_index < cntx->entity_manager.bodies.collider[this_id].convex.end;
+             vertex_index++) {
+            cntx->vertex_pool_worldspace[vertex_index] =
+                glm::rotate(cntx->vertex_pool[vertex_index],
+                            cntx->entity_manager.bodies.rotation[this_id]) +
+                cntx->entity_manager.bodies.position[this_id];
+        }
     }
 }
 
@@ -828,10 +1061,10 @@ void updateConvexVerticies(SystemContext* cntx)
 #include <glm/glm.hpp>
 
 class SystemContext;
-
-class BorderSystem
-{
+class BorderSystem {
   public:
+    float border_elasticity = 1;
+    float border_friction = 1;
     glm::vec2 bottom_left_corner = {-250, 500};
     glm::vec2 top_right_corner = {250, 500};
 
@@ -846,84 +1079,399 @@ class BorderSystem
 #include "CollisionSystem.h"
 #include "../SystemContext.h"
 
-void CollisionSystem::apply(SystemContext* cntx)
-{
-    for (uint32_t i = 0; i < cntx->entity_manager.circle_colliders.count; i++)
-    {
+void CollisionSystem::apply(SystemContext* cntx) {
+    for (uint32_t i = 0; i < cntx->entity_manager.circle_colliders.count; i++) {
         uint32_t circle_a = cntx->entity_manager.circle_colliders.id[i];
-        for (uint32_t j = 0; j < cntx->entity_manager.circle_colliders.count; j++)
-        {
+        for (uint32_t j = 0; j < cntx->entity_manager.circle_colliders.count; j++) {
             uint32_t circle_b = cntx->entity_manager.circle_colliders.id[j];
-            if (!(circle_a == circle_b)) [[likely]]
+            if (circle_a != circle_b) [[likely]]
                 circleCircleCollision(cntx, circle_a, circle_b);
         }
     }
-    for (uint32_t i = 0; i < cntx->entity_manager.circle_colliders.count; i++)
-    {
+    for (uint32_t i = 0; i < cntx->entity_manager.circle_colliders.count; i++) {
         uint32_t circle = cntx->entity_manager.circle_colliders.id[i];
-        for (uint32_t j = 0; j < cntx->entity_manager.convex_colliders.count; j++)
-        {
+        for (uint32_t j = 0; j < cntx->entity_manager.convex_colliders.count; j++) {
             uint32_t convex = cntx->entity_manager.convex_colliders.id[j];
-            circleCircleCollision(cntx, circle, convex);
+            circleConvexCollision(cntx, circle, convex);
         }
     }
-    for (uint32_t i = 0; i < cntx->entity_manager.convex_colliders.count; i++)
-    {
+    for (uint32_t i = 0; i < cntx->entity_manager.convex_colliders.count; i++) {
         uint32_t convex_a = cntx->entity_manager.convex_colliders.id[i];
-        for (uint32_t j = 0; j < cntx->entity_manager.convex_colliders.count; j++)
-        {
+        for (uint32_t j = 0; j < cntx->entity_manager.convex_colliders.count; j++) {
             uint32_t convex_b = cntx->entity_manager.convex_colliders.id[j];
-            if (!(convex_a == convex_b)) [[likely]]
+            if (convex_a != convex_b) [[likely]]
                 convexConvexCollision(cntx, convex_a, convex_b);
         }
     }
 }
-void CollisionSystem::circleCircleCollision(SystemContext* cntx, uint32_t id_a, uint32_t id_b)
-{
+
+void CollisionSystem::circleCircleCollision(SystemContext* cntx, uint32_t id_a, uint32_t id_b) {
     auto& bodies = cntx->entity_manager.bodies;
 
     float radius_a = bodies.collider[id_a].circle.radius;
     float radius_b = bodies.collider[id_b].circle.radius;
 
-    glm::vec2 diff = bodies.position[id_a] - bodies.position[id_b];
-    float dist = glm::length(diff);
-    float overlap = radius_a + radius_b - dist;
+    glm::vec2 diff = bodies.position[id_b] - bodies.position[id_a];
+    float distance = glm::length(diff);
+    float overlap = (radius_a + radius_b) - distance;
+    if (overlap < 0) return;
 
-    if (overlap < 0)
-        return;
+    glm::vec2 collision_normal_ab = diff / distance;
 
-    // Avoid division by zero
-    glm::vec2 normal = (dist > 0) ? diff / dist : glm::vec2(1, 0);
+    float total_inv_mass = bodies.invMass[id_a] + bodies.invMass[id_b];
+    if (total_inv_mass > 0) {
+        bodies.position[id_a] -= collision_normal_ab * overlap * (bodies.invMass[id_a] / total_inv_mass);
+        bodies.position[id_b] += collision_normal_ab * overlap * (bodies.invMass[id_b] / total_inv_mass);
+    }
 
-    // Separate circles
-    bodies.position[id_a] += normal * (overlap / 2.0f);
-    bodies.position[id_b] -= normal * (overlap / 2.0f);
+    glm::vec2 relative_velocity = bodies.velocity[id_b] - bodies.velocity[id_a];
+    float rv_along_normal = glm::dot(relative_velocity, collision_normal_ab);
+    if (rv_along_normal > 0) return;
 
-    // Calculate impulse for collision response
-    glm::vec2 relativeVelocity = bodies.velocity[id_a] - bodies.velocity[id_b];
-    float velAlongNormal = glm::dot(relativeVelocity, normal);
+    float elasticity_coefficient = (1 + std::min(bodies.elasticity[id_a], bodies.elasticity[id_b]));
+    float numerator = -elasticity_coefficient * rv_along_normal;
+    float denominator = bodies.invMass[id_a] + bodies.invMass[id_b];
+    float impulse = numerator / denominator;
 
-    // Only resolve if objects are moving toward each other
-    if (velAlongNormal > 0)
-        return;
+    bodies.velocity[id_a] -= collision_normal_ab * impulse * bodies.invMass[id_a];
+    bodies.velocity[id_b] += collision_normal_ab * impulse * bodies.invMass[id_b];
 
-    // Calculate restitution (elasticity)
-    float e = std::min(bodies.elasticity[id_a], bodies.elasticity[id_b]);
+    relative_velocity = bodies.velocity[id_b] - bodies.velocity[id_a];
+
+    radius_a *= -1;
+    glm::vec2 collision_tangent = glm::vec2(-collision_normal_ab.y, collision_normal_ab.x);
+
+    glm::vec2 contact_vector_a = collision_normal_ab * radius_a;
+    glm::vec2 contact_vector_b = collision_normal_ab * -radius_b;
+
+    float rot_a = bodies.angular_velocity[id_a] * radius_a;
+    float rot_b = bodies.angular_velocity[id_b] * radius_b;
+
+    float rv_along_surface = glm::dot(relative_velocity, collision_tangent) + rot_a - rot_b;
+
+    float friction_coefficient = std::min(bodies.friction[id_a], bodies.friction[id_b]);
+
+    float friction_denominator = bodies.invMass[id_a] + bodies.invMass[id_b] +
+                                 bodies.invInertia[id_a] * radius_a * radius_a +
+                                 bodies.invInertia[id_b] * radius_b * radius_b;
+
+    float friction_impulse = -rv_along_surface / friction_denominator;
+
+    friction_impulse = glm::clamp(friction_impulse, -friction_coefficient * std::abs(impulse), friction_coefficient * std::abs(impulse));
+
+    glm::vec2 friction_force = collision_tangent * friction_impulse;
+
+    bodies.velocity[id_a] -= friction_force * bodies.invMass[id_a];
+    bodies.velocity[id_b] += friction_force * bodies.invMass[id_b];
+
+    float torque_a = contact_vector_a.x * friction_force.y - contact_vector_a.y * friction_force.x;
+    float torque_b = contact_vector_b.x * friction_force.y - contact_vector_b.y * friction_force.x;
+
+    bodies.angular_velocity[id_a] += torque_a * bodies.invInertia[id_a];
+    bodies.angular_velocity[id_b] += torque_b * bodies.invInertia[id_b];
+}
+
+void CollisionSystem::circleConvexCollision(SystemContext* cntx, uint32_t id_circle, uint32_t id_convex) {
+    auto& bodies = cntx->entity_manager.bodies;
+    const auto& circle_pos = bodies.position[id_circle];
+    const auto& convex_pos = bodies.position[id_convex];
+    const float circle_radius = bodies.collider[id_circle].circle.radius;
+    const auto& convex = bodies.collider[id_convex].convex;
+
+    // Quick bounding radius check
+    glm::vec2 relative_pos = convex_pos - circle_pos;
+    // if (glm::length(relative_pos) > circle_radius + convex.bounding_radius) return;
+
+    // Find closest point on convex to circle
+    glm::vec2 closest_point;
+    float min_distance = std::numeric_limits<float>::max();
+    bool inside = true;
+    for (int i = convex.begin; i < convex.end; i++) {
+        // Get current and next vertex (with wraparound)
+        const glm::vec2& p1 = cntx->vertex_pool_worldspace[i];
+        const glm::vec2& p2 = cntx->vertex_pool_worldspace[i < convex.end - 1 ? i + 1 : convex.begin];
+
+        // Edge vector and circle position relative to p1
+        glm::vec2 edge = p2 - p1;
+        glm::vec2 circle_to_p1 = circle_pos - p1;
+
+        // Skip if circle is on the wrong side of the edge
+
+        if (circle_to_p1.x * edge.y - circle_to_p1.y * edge.x > 0) continue;
+        inside = false;
+        // Project circle center onto edge
+        float edge_length = glm::length(edge);
+        glm::vec2 edge_dir = edge / edge_length;
+        float projection = glm::dot(edge_dir, circle_to_p1);
+
+        // Find closest point on edge
+        glm::vec2 candidate_point;
+        if (projection <= 0)
+            candidate_point = p1;
+        else if (projection >= edge_length)
+            candidate_point = p2;
+        else
+            candidate_point = p1 + edge_dir * projection;
+
+        // Update if this is the closest point so far
+        float distance = glm::length(candidate_point - circle_pos);
+        if (distance < min_distance) {
+            closest_point = candidate_point;
+            min_distance = distance;
+        }
+    }
+
+    if (inside) {
+        min_distance = 0;
+        closest_point = bodies.position[id_convex];
+    }
+
+    // Check if there's a collision
+    float overlap = circle_radius - min_distance;
+    if (overlap <= 0) return; // No collision
+
+    // Create vectors from object centers to contact point
+    glm::vec2 r_circle = closest_point - bodies.position[id_circle];
+    glm::vec2 r_convex = closest_point - bodies.position[id_convex];
+
+    glm::vec2 collision_normal = glm::normalize(closest_point - circle_pos);
+
+    glm::vec2 relative_velocity = bodies.velocity[id_convex] +
+                                  glm::vec2(-r_convex.y * bodies.angular_velocity[id_convex], r_convex.x * bodies.angular_velocity[id_convex]) -
+                                  bodies.velocity[id_circle];
+
+    float rv_along_normal = glm::dot(relative_velocity, collision_normal);
+
+    if (rv_along_normal > 0) return;
+
+    float total_inv_mass = bodies.invMass[id_circle] + bodies.invMass[id_convex];
+    if (total_inv_mass > 0) {
+        bodies.position[id_circle] -= collision_normal * overlap * (bodies.invMass[id_circle] / total_inv_mass);
+        bodies.position[id_convex] += collision_normal * overlap * (bodies.invMass[id_convex] / total_inv_mass);
+    }
+    // Calculate elasticity (coefficient of restitution)
+    float elasticity = 1.0f + std::min(bodies.elasticity[id_circle], bodies.elasticity[id_convex]);
+
+    // Calculate cross products for rotational effects
+    float r_convex_cross_n = r_convex.x * collision_normal.y - r_convex.y * collision_normal.x;
 
     // Calculate impulse scalar
-    float j = -(1.0f + e) * velAlongNormal;
-    j /= (1.0f / bodies.mass[id_a]) + (1.0f / bodies.mass[id_b]);
+    float denominator = bodies.invMass[id_circle] + bodies.invMass[id_convex] +
+                        bodies.invInertia[id_convex] * r_convex_cross_n * r_convex_cross_n;
 
-    // Apply impulse
-    glm::vec2 impulse = j * normal;
-    bodies.velocity[id_a] += impulse / bodies.mass[id_a];
-    bodies.velocity[id_b] -= impulse / bodies.mass[id_b];
+    float impulse = -(elasticity * rv_along_normal) / denominator;
+
+    // Apply impulse to linear and angular velocities
+    bodies.velocity[id_circle] -= collision_normal * impulse * bodies.invMass[id_circle];
+    bodies.velocity[id_convex] += collision_normal * impulse * bodies.invMass[id_convex];
+    bodies.angular_velocity[id_convex] += impulse * r_convex_cross_n * bodies.invInertia[id_convex];
+
+    glm::vec2 tangent{-collision_normal.y, collision_normal.x};
+    relative_velocity = bodies.velocity[id_convex] +
+                        glm::vec2(-r_convex.y * bodies.angular_velocity[id_convex], r_convex.x * bodies.angular_velocity[id_convex]) -
+                        bodies.velocity[id_circle] -
+                        glm::vec2(-r_circle.y * bodies.angular_velocity[id_circle], r_circle.x * bodies.angular_velocity[id_circle]);
+    float rv_along_tangent = glm::dot(relative_velocity, tangent);
+
+    float friction_coefficient = std::min(bodies.friction[id_circle], bodies.friction[id_convex]);
+
+    float r_circle_cross_t = r_circle.x * tangent.y - r_circle.y * tangent.x;
+    float r_convex_cross_t = r_convex.x * tangent.y - r_convex.y * tangent.x;
+
+    float friction_denominator = bodies.invMass[id_circle] + bodies.invMass[id_convex] +
+                                 bodies.invInertia[id_circle] * r_circle_cross_t * r_circle_cross_t +
+                                 bodies.invInertia[id_convex] * r_convex_cross_t * r_convex_cross_t;
+
+    float friction_impulse = -rv_along_tangent / friction_denominator;
+
+    // Clamp friction impulse
+    friction_impulse = glm::clamp(friction_impulse, -friction_coefficient * std::abs(impulse),
+                                  friction_coefficient * std::abs(impulse));
+
+    // Apply friction impulse
+    bodies.velocity[id_circle] -= tangent * friction_impulse * bodies.invMass[id_circle];
+    bodies.velocity[id_convex] += tangent * friction_impulse * bodies.invMass[id_convex];
+    bodies.angular_velocity[id_circle] -= friction_impulse * r_circle_cross_t * bodies.invInertia[id_circle];
+    bodies.angular_velocity[id_convex] += friction_impulse * r_convex_cross_t * bodies.invInertia[id_convex];
 }
-void CollisionSystem::circleConvexCollision(SystemContext* cntx, uint32_t id_a, uint32_t id_b)
-{
-}
-void CollisionSystem::convexConvexCollision(SystemContext* cntx, uint32_t id_a, uint32_t id_b)
-{
+
+void CollisionSystem::convexConvexCollision(SystemContext* cntx, uint32_t id_a, uint32_t id_b) {
+    auto& bodies = cntx->entity_manager.bodies;
+
+    glm::vec2 relative_pos = bodies.position[id_b] - bodies.position[id_a];
+    if (glm::length(relative_pos) > bodies.collider[id_a].convex.bounding_radius + bodies.collider[id_b].convex.bounding_radius) return;
+
+    const auto& convex_a = bodies.collider[id_a].convex;
+    const auto& convex_b = bodies.collider[id_b].convex;
+
+    float min_overlap = std::numeric_limits<float>::max();
+    glm::vec2 smallest_axis;
+
+    for (int i = convex_a.begin; i < convex_a.end; i++) {
+        const glm::vec2& p1 = cntx->vertex_pool_worldspace[i];
+        const glm::vec2& p2 = cntx->vertex_pool_worldspace[i < convex_a.end - 1 ? i + 1 : convex_a.begin];
+
+        glm::vec2 edge = p2 - p1;
+        glm::vec2 normal = glm::normalize(glm::vec2(-edge.y, edge.x));
+
+        float minA = FLT_MAX, maxA = -FLT_MAX;
+        float minB = FLT_MAX, maxB = -FLT_MAX;
+
+        for (int j = convex_a.begin; j < convex_a.end; j++) {
+            float projection = glm::dot(cntx->vertex_pool_worldspace[j], normal);
+            minA = std::min(minA, projection);
+            maxA = std::max(maxA, projection);
+        }
+        for (int j = convex_b.begin; j < convex_b.end; j++) {
+            float projection = glm::dot(cntx->vertex_pool_worldspace[j], normal);
+            minB = std::min(minB, projection);
+            maxB = std::max(maxB, projection);
+        }
+
+        if (maxA < minB || maxB < minA) return;
+        float overlap = std::min(maxA, maxB) - std::max(minA, minB);
+        if (overlap < min_overlap) {
+            min_overlap = overlap;
+            smallest_axis = normal;
+        }
+    }
+    for (int i = convex_b.begin; i < convex_b.end; i++) {
+        const glm::vec2& p1 = cntx->vertex_pool_worldspace[i];
+        const glm::vec2& p2 = cntx->vertex_pool_worldspace[i < convex_b.end - 1 ? i + 1 : convex_b.begin];
+
+        glm::vec2 edge = p2 - p1;
+        glm::vec2 normal = glm::normalize(glm::vec2(-edge.y, edge.x));
+
+        float minA = FLT_MAX, maxA = -FLT_MAX;
+        float minB = FLT_MAX, maxB = -FLT_MAX;
+
+        for (int j = convex_a.begin; j < convex_a.end; j++) {
+            float projection = glm::dot(cntx->vertex_pool_worldspace[j], normal);
+            minA = std::min(minA, projection);
+            maxA = std::max(maxA, projection);
+        }
+        for (int j = convex_b.begin; j < convex_b.end; j++) {
+            float projection = glm::dot(cntx->vertex_pool_worldspace[j], normal);
+            minB = std::min(minB, projection);
+            maxB = std::max(maxB, projection);
+        }
+
+        if (maxA < minB || maxB < minA) return;
+        float overlap = std::min(maxA, maxB) - std::max(minA, minB);
+        if (overlap < min_overlap) {
+            min_overlap = overlap;
+            smallest_axis = normal;
+        }
+    }
+
+    // Ensure correct collision normal direction (from A to B)
+    if (glm::dot(smallest_axis, relative_pos) < 0) {
+        smallest_axis = -smallest_axis;
+    }
+
+    // Apply positional correction
+    float total_inv_mass = bodies.invMass[id_a] + bodies.invMass[id_b];
+    if (total_inv_mass > 0) {
+        // Move objects apart based on their inverse mass ratio
+        bodies.position[id_a] -= smallest_axis * min_overlap * (bodies.invMass[id_a] / total_inv_mass);
+        bodies.position[id_b] += smallest_axis * min_overlap * (bodies.invMass[id_b] / total_inv_mass);
+    }
+
+    // Find contact point (approximate using the average of the deepest points)
+    glm::vec2 contact_point = {0, 0};
+    int contact_count = 0;
+
+    // Find deepest points on each shape relative to collision axis
+    for (int i = convex_a.begin; i < convex_a.end; i++) {
+        const glm::vec2& vertex = cntx->vertex_pool_worldspace[i];
+        // Check if this vertex is near the contact plane
+        if (glm::dot(vertex - bodies.position[id_b], smallest_axis) <= min_overlap + 0.01f) {
+            contact_point += vertex;
+            contact_count++;
+        }
+    }
+
+    for (int i = convex_b.begin; i < convex_b.end; i++) {
+        const glm::vec2& vertex = cntx->vertex_pool_worldspace[i];
+        // Check if this vertex is near the contact plane
+        if (glm::dot(vertex - bodies.position[id_a], -smallest_axis) <= min_overlap + 0.01f) {
+            contact_point += vertex;
+            contact_count++;
+        }
+    }
+
+    if (contact_count > 0) {
+        contact_point /= static_cast<float>(contact_count);
+    } else {
+        // Fallback: use midpoint between the two objects
+        contact_point = (bodies.position[id_a] + bodies.position[id_b]) * 0.5f;
+    }
+
+    // Calculate vectors from object centers to contact point
+    glm::vec2 r_a = contact_point - bodies.position[id_a];
+    glm::vec2 r_b = contact_point - bodies.position[id_b];
+
+    // Calculate relative velocity at contact point
+    glm::vec2 rel_velocity = bodies.velocity[id_b] +
+                             glm::vec2(-r_b.y * bodies.angular_velocity[id_b],
+                                       r_b.x * bodies.angular_velocity[id_b]) -
+                             bodies.velocity[id_a] -
+                             glm::vec2(-r_a.y * bodies.angular_velocity[id_a],
+                                       r_a.x * bodies.angular_velocity[id_a]);
+
+    // Calculate velocity along normal
+    float vel_along_normal = glm::dot(rel_velocity, smallest_axis);
+
+    // Do not resolve if velocities are separating
+    if (vel_along_normal > 0) return;
+
+    // Calculate elasticity (coefficient of restitution)
+    float elasticity = 1.0f + std::min(bodies.elasticity[id_a], bodies.elasticity[id_b]);
+
+    // Calculate cross products for rotational effects
+    float r_a_cross_n = r_a.x * smallest_axis.y - r_a.y * smallest_axis.x;
+    float r_b_cross_n = r_b.x * smallest_axis.y - r_b.y * smallest_axis.x;
+
+    // Calculate impulse scalar
+    float impulse_denominator = bodies.invMass[id_a] + bodies.invMass[id_b] +
+                                bodies.invInertia[id_a] * r_a_cross_n * r_a_cross_n +
+                                bodies.invInertia[id_b] * r_b_cross_n * r_b_cross_n;
+
+    float impulse = -(elasticity * vel_along_normal) / impulse_denominator;
+
+    // Apply impulse to linear and angular velocities
+    bodies.velocity[id_a] -= smallest_axis * impulse * bodies.invMass[id_a];
+    bodies.velocity[id_b] += smallest_axis * impulse * bodies.invMass[id_b];
+    bodies.angular_velocity[id_a] -= impulse * r_a_cross_n * bodies.invInertia[id_a];
+    bodies.angular_velocity[id_b] += impulse * r_b_cross_n * bodies.invInertia[id_b];
+
+    // Calculate friction impulse
+    glm::vec2 tangent = glm::vec2(-smallest_axis.y, smallest_axis.x);
+    float vel_along_tangent = glm::dot(rel_velocity, tangent);
+
+    // Calculate friction coefficient
+    float friction_coefficient = std::min(bodies.friction[id_a], bodies.friction[id_b]);
+
+    // Calculate cross products for tangential direction
+    float r_a_cross_t = r_a.x * tangent.y - r_a.y * tangent.x;
+    float r_b_cross_t = r_b.x * tangent.y - r_b.y * tangent.x;
+
+    // Calculate friction impulse scalar
+    float friction_denominator = bodies.invMass[id_a] + bodies.invMass[id_b] +
+                                 bodies.invInertia[id_a] * r_a_cross_t * r_a_cross_t +
+                                 bodies.invInertia[id_b] * r_b_cross_t * r_b_cross_t;
+
+    float friction_impulse = -vel_along_tangent / friction_denominator;
+
+    // Clamp friction impulse
+    friction_impulse = glm::clamp(friction_impulse, -friction_coefficient * std::abs(impulse),
+                                  friction_coefficient * std::abs(impulse));
+
+    // Apply friction impulse
+    bodies.velocity[id_a] -= tangent * friction_impulse * bodies.invMass[id_a];
+    bodies.velocity[id_b] += tangent * friction_impulse * bodies.invMass[id_b];
+    bodies.angular_velocity[id_a] -= friction_impulse * r_a_cross_t * bodies.invInertia[id_a];
+    bodies.angular_velocity[id_b] += friction_impulse * r_b_cross_t * bodies.invInertia[id_b];
 }
 
 // FILE: src/engine/PhysicsSystem/PhysicsSystem.h
@@ -949,350 +1497,3 @@ class PhysicsSystem
     BorderSystem m_border_system;
     CollisionSystem m_collision_system;
 };
-
-// FILE: src/utility/Utility.cpp
-#include "Utility.h"
-#include <cstdio>
-#include <ctime>
-#include <iostream>
-
-namespace utl
-{
-
-//==============================================================================
-// Logger implementation
-//==============================================================================
-static LogLevel g_logLevel = LogLevel::Info;
-static std::ofstream g_logFile;
-
-void initLogger(LogLevel minLevel, const char* logFile)
-{
-    g_logLevel = minLevel;
-}
-static std::string getCurrentTimestamp()
-{
-    char buffer[64];
-    time_t now = time(nullptr);
-    strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", localtime(&now));
-    return buffer;
-}
-// Internal function to get level name
-static const char* getLevelName(LogLevel level)
-{
-    switch (level)
-    {
-    case LogLevel::Debug:
-        return "DEBUG";
-    case LogLevel::Info:
-        return "INFO";
-    case LogLevel::Warning:
-        return "WARNING";
-    case LogLevel::Error:
-        return "ERROR";
-    default:
-        return "UNKNOWN";
-    }
-}
-static void log(LogLevel level, const char* format, va_list args)
-{
-    if (level < g_logLevel)
-        return;
-
-    char message[1024];
-    vsnprintf(message, sizeof(message), format, args);
-
-    std::string timestamp = getCurrentTimestamp();
-    std::string output = timestamp + " [" + getLevelName(level) + "] " + message;
-
-    std::cout << output << std::endl;
-}
-
-void logDebug(const char* format, ...)
-{
-    va_list args;
-    va_start(args, format);
-    log(LogLevel::Debug, format, args);
-    va_end(args);
-}
-
-void logInfo(const char* format, ...)
-{
-    va_list args;
-    va_start(args, format);
-    log(LogLevel::Info, format, args);
-    va_end(args);
-}
-
-void logWarning(const char* format, ...)
-{
-    va_list args;
-    va_start(args, format);
-    log(LogLevel::Warning, format, args);
-    va_end(args);
-}
-
-void logError(const char* format, ...)
-{
-    va_list args;
-    va_start(args, format);
-    log(LogLevel::Error, format, args);
-    va_end(args);
-}
-
-//==============================================================================
-// Memory arena implementation
-//==============================================================================
-MemoryArena MemoryArena::create(size_t capacity)
-{
-    MemoryArena arena;
-    arena.buffer = static_cast<char*>(malloc(capacity));
-    arena.capacity = capacity;
-    arena.used = 0;
-
-    if (!arena.buffer)
-    {
-        UTL_ERROR("Failed to allocate memory arena of size %zu", capacity);
-        arena.capacity = 0;
-    }
-
-    return arena;
-}
-
-void MemoryArena::destroy()
-{
-    free(buffer);
-    buffer = nullptr;
-    capacity = 0;
-    used = 0;
-}
-
-void MemoryArena::reset()
-{
-    used = 0;
-}
-
-void* MemoryArena::alloc(size_t size, size_t alignment)
-{
-    if (!buffer)
-        return nullptr;
-
-    // Calculate aligned address
-    size_t current = reinterpret_cast<size_t>(buffer + used);
-    size_t aligned = (current + alignment - 1) & ~(alignment - 1);
-    size_t padding = aligned - current;
-
-    // Check if there's enough space
-    if (used + padding + size > capacity)
-    {
-        UTL_ERROR("Memory arena out of space: %zu requested, %zu available",
-                  size, capacity - used);
-        return nullptr;
-    }
-
-    // Update used amount and return pointer
-    used += padding + size;
-    return buffer + aligned - reinterpret_cast<size_t>(buffer);
-}
-
-bool MemoryArena::canFit(size_t size, size_t alignment) const
-{
-    size_t current = reinterpret_cast<size_t>(buffer + used);
-    size_t aligned = (current + alignment - 1) & ~(alignment - 1);
-    size_t padding = aligned - current;
-
-    return (used + padding + size <= capacity);
-}
-
-//==============================================================================
-// Profiling implementation
-//==============================================================================
-ScopedTimer::ScopedTimer(const char* name)
-    : name(name)
-{
-    startTime = std::chrono::high_resolution_clock::now();
-}
-
-ScopedTimer::~ScopedTimer()
-{
-    auto endTime = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration<float, std::milli>(endTime - startTime).count();
-    UTL_DEBUG("%s: %.3f ms", name, duration);
-}
-
-} // namespace utl
-
-// FILE: src/utility/Utility.h
-#pragma once
-#include <cassert>
-#include <chrono>
-#include <cstdarg>
-#include <cstddef>
-#include <cstdlib>
-#include <cstring>
-#include <fstream>
-#include <functional>
-#include <iostream>
-#include <string>
-
-namespace utl
-{
-
-//==============================================================================
-// Simple logging system
-//==============================================================================
-enum class LogLevel
-{
-    Debug,
-    Info,
-    Warning,
-    Error,
-    None // Use to disable logging
-};
-
-// Initialize the logger - call once at program start
-void initLogger(LogLevel minLevel = LogLevel::Info, const char* logFile = nullptr);
-
-// Core logging functions
-void logDebug(const char* format, ...);
-void logInfo(const char* format, ...);
-void logWarning(const char* format, ...);
-void logError(const char* format, ...);
-
-// Convenience macros
-#ifdef NDEBUG
-#define UTL_DEBUG(...)
-#else
-#define UTL_DEBUG(...) utl::logDebug(__VA_ARGS__)
-#endif
-
-#define UTL_INFO(...) utl::logInfo(__VA_ARGS__)
-#define UTL_WARNING(...) utl::logWarning(__VA_ARGS__)
-#define UTL_ERROR(...) utl::logError(__VA_ARGS__)
-
-//==============================================================================
-// Simple assertions
-//==============================================================================
-#ifdef NDEBUG
-#define UTL_ASSERT(condition, message) ((void)0)
-#else
-#define UTL_ASSERT(condition, message)                                                  \
-    do                                                                                  \
-    {                                                                                   \
-        if (!(condition))                                                               \
-        {                                                                               \
-            utl::logError("Assertion failed: %s (%s:%d)", message, __FILE__, __LINE__); \
-            assert(condition);                                                          \
-        }                                                                               \
-    } while (0)
-#endif
-
-//==============================================================================
-// Memory arena allocator
-//==============================================================================
-struct MemoryArena
-{
-    char* buffer;
-    size_t capacity;
-    size_t used;
-
-    // Create a new memory arena with the given capacity
-    static MemoryArena create(size_t capacity);
-
-    void destroy();
-    void reset();
-
-    void* alloc(size_t size, size_t alignment = alignof(std::max_align_t));
-
-    template <typename T>
-    T* allocArray(size_t count)
-    {
-        return static_cast<T*>(alloc(sizeof(T) * count, alignof(T)));
-    }
-
-    template <typename T>
-    T* alloc()
-    {
-        return static_cast<T*>(alloc(sizeof(T), alignof(T)));
-    }
-
-    bool canFit(size_t size, size_t alignment = alignof(std::max_align_t)) const;
-};
-
-//==============================================================================
-// RAII Memory arena scope helper
-//==============================================================================
-class ScopedArena
-{
-  public:
-    explicit ScopedArena(size_t capacity)
-    {
-        arena = MemoryArena::create(capacity);
-    }
-
-    ~ScopedArena()
-    {
-        arena.destroy();
-    }
-
-    MemoryArena& get() { return arena; }
-
-    // Disallow copying
-    ScopedArena(const ScopedArena&) = delete;
-    ScopedArena& operator=(const ScopedArena&) = delete;
-
-  private:
-    MemoryArena arena;
-};
-
-//==============================================================================
-// Simple profiling utilities
-//==============================================================================
-class ScopedTimer
-{
-  public:
-    explicit ScopedTimer(const char* name);
-    ~ScopedTimer();
-
-  private:
-    const char* name;
-    std::chrono::high_resolution_clock::time_point startTime;
-};
-
-// Measure execution time of a function
-template <typename Func>
-float measureExecutionTime(Func&& func)
-{
-    auto start = std::chrono::high_resolution_clock::now();
-    std::forward<Func>(func)();
-    auto end = std::chrono::high_resolution_clock::now();
-
-    return std::chrono::duration<float, std::milli>(end - start).count();
-}
-
-#ifdef ENABLE_PROFILING
-#define UTL_PROFILE_SCOPE(name) utl::ScopedTimer timer##__LINE__(name)
-#else
-#define UTL_PROFILE_SCOPE(name) ((void)0)
-#endif
-
-//==============================================================================
-// Error checking helpers
-//==============================================================================
-// Check if an index is within bounds
-template <typename T>
-bool isInBounds(T index, T size)
-{
-    return index >= 0 && index < size;
-}
-
-// Safe array access with bounds checking
-template <typename T>
-T& safeAccess(T* array, size_t index, size_t size, const char* errorMsg = "Array index out of bounds")
-{
-    UTL_ASSERT(index < size, errorMsg);
-    return array[index];
-}
-
-} // namespace utl
-
-// FILE: src/utility/Time.cpp
