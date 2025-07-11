@@ -104,7 +104,7 @@ void CollisionSystem::circleConvexCollision(SystemContext* cntx, uint32_t id_cir
 
     // Quick bounding radius check
     glm::vec2 relative_pos = convex_pos - circle_pos;
-    if (glm::length(relative_pos) > circle_radius + convex.bounding_radius) return;
+    // if (glm::length(relative_pos) > circle_radius + convex.bounding_radius) return;
 
     // Find closest point on convex to circle
     glm::vec2 closest_point;
@@ -144,6 +144,10 @@ void CollisionSystem::circleConvexCollision(SystemContext* cntx, uint32_t id_cir
             min_distance = distance;
         }
     }
+
+    Renderer::debugCircle(cntx, closest_point);
+    Renderer::debugCircle(cntx, bodies.position[id_circle] -
+                                    bodies.collider[id_circle].circle.radius * glm::normalize(bodies.position[id_circle] - closest_point));
 
     if (inside) {
         min_distance = 0;

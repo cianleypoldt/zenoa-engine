@@ -21,10 +21,10 @@ Supports convex polygon and circle collisions, accurate impulse resolution, and 
 **Polygon Collision & Friction**
 ![convex_polygon_demo](media/convex_polygon_demo.mp4)
 
-**Mixed Shape Contact**
-![circle_collision_demo](media/circle_collision_demo.mp4)
+**Convex Circle Impulse**
+![convexcircle](media/convex-circle-impulse.gif)
 
-**Zenoa stress test**
+**Piling Stability**
 ![Piling stability under mass disparity](media/50convex_50circle.gif)
 
 ---

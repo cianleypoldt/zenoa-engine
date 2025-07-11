@@ -20,7 +20,7 @@ class Renderer {
     int framenumber = 0;
 
     static sf::Vector2f translate(glm::vec2 pos) {
-        return sf::Vector2f((pos.x + 500), (-pos.y + 250));
+        return sf::Vector2f((pos.x + 500) * 2, (-pos.y + 250) * 2);
     }
 
     bool active() {
@@ -34,7 +34,7 @@ class Renderer {
         if (Fullscreen)
             window.create(sf::VideoMode({1000, 500}), "Debug View", sf::Style::None, sf::State::Fullscreen, settings);
         else
-            window.create(sf::VideoMode({1000, 500}), "Debug View", sf::Style::None, sf::State::Windowed, settings);
+            window.create(sf::VideoMode({2000, 1000}), "Debug View", sf::Style::None, sf::State::Windowed, settings);
         window.setPosition({0, 0});
         window.display();
         texture.clear(sf::Color::Black);
@@ -44,11 +44,11 @@ class Renderer {
 
     static void debugCircle(SystemContext* cntx, glm::vec2 position) {
         sf::CircleShape circleshape;
-        circleshape.setRadius(6);
+        circleshape.setRadius(10);
         circleshape.setOrigin({circleshape.getRadius(), circleshape.getRadius()});
         circleshape.setFillColor(sf::Color::Transparent);
-        circleshape.setOutlineColor(sf::Color::White);
-        circleshape.setOutlineThickness(1);
+        circleshape.setOutlineColor(sf::Color::Green);
+        circleshape.setOutlineThickness(2);
         circleshape.setPosition(translate(position));
         cntx->window.draw(circleshape);
     }
@@ -63,8 +63,8 @@ class Renderer {
         shape.setOutlineThickness(1);
         shape.setFillColor(sf::Color::Transparent);
         for (int i = 0; i < verticy_count; i++)
-            shape.setPoint(i, sf::Vector2f{cntx->vertex_pool[bodies.collider[id].convex.begin + i].x,
-                                           -cntx->vertex_pool[bodies.collider[id].convex.begin + i].y});
+            shape.setPoint(i, sf::Vector2f{cntx->vertex_pool[bodies.collider[id].convex.begin + i].x * 2,
+                                           -cntx->vertex_pool[bodies.collider[id].convex.begin + i].y * 2});
         convex_shapes.push_back(shape);
         convex.push_back(id);
     }
@@ -79,8 +79,6 @@ class Renderer {
         line.setFillColor(sf::Color::White);
 
         sf::CircleShape circleshape;
-        circleshape.setRadius(10);
-        circleshape.setOrigin({circleshape.getRadius(), circleshape.getRadius()});
         circleshape.setFillColor(sf::Color::Transparent);
         circleshape.setOutlineColor(sf::Color::White);
         circleshape.setOutlineThickness(1);
@@ -94,7 +92,7 @@ class Renderer {
                 circleshape.setOutlineColor(sf::Color::White);
                 line.setFillColor(sf::Color::White);
             }
-            circleshape.setRadius(bodies.collider[circle[i]].circle.radius);
+            circleshape.setRadius(bodies.collider[circle[i]].circle.radius * 2);
             circleshape.setOrigin({circleshape.getRadius(), circleshape.getRadius()});
             circleshape.setPosition(translate(bodies.position[circle[i]]));
             line.setPosition(translate(bodies.position[circle[i]]));
@@ -125,13 +123,15 @@ class Renderer {
         std::string filename = ss.str();
         frame.saveToFile(filename);
 
+        // window.clear(sf::Color::White);
+        // window.display();
         window.clear();
         texture.clear(sf::Color::Black);
 
         // Sleep to maintain 60 FPS
         sf::Time sleepTime = frameTime - clock.getElapsedTime();
         if (sleepTime > sf::Time::Zero) {
-            // sf::sleep(sleepTime);
+            sf::sleep(sleepTime);
         }
     }
 };
