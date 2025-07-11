@@ -15,7 +15,8 @@ Supports convex polygon and circle-shape collisions, accurate impulse resolution
 
 - Deterministic fixed time step
 - Coulomb friction
-- Impulse-based solver with mass and inertia using
+- Impulse-based solver with mass and inertia
+
 $$J = \frac{-(1+e) \cdot V_{rel} \cdot n}{\frac{1}{m_A} + \frac{1}{m_B} + \frac{(r_A \times n)^2}{I_A} + \frac{(r_B \times n)^2}{I_B}}$$
 ---
 
