@@ -1,4 +1,4 @@
-# 2D Physics Engine (C++)
+# Zenoa Engine (C++)
 
 A deterministic, real-time 2D rigid-body physics engine built from scratch in modern C++.
 Supports convex polygon and circle-shape collisions, accurate impulse resolution, and friction (static and dynamic).
