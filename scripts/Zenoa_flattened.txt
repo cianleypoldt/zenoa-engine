@@ -2,7 +2,23 @@
 // FILE: src/main.cpp
 #include "engine/interface.h"
 #include "graphics/Renderer.h"
-#include "utility/Utility.h"
+#include <SFML/Graphics.hpp>
+
+int main() {
+    auto simulation_context = rbs::make_context();
+    Renderer debug_renderer(simulation_context, false, 120);
+
+    while (debug_renderer.active()) {
+        rbs::step(simulation_context);
+        debug_renderer.refresh();
+    }
+
+    rbs::drop(simulation_context);
+}
+
+// FILE: src/convex_circle_scene.cpp
+#include "engine/interface.h"
+#include "graphics/Renderer.h"
 #include <SFML/Graphics.hpp>
 
 float random(float min, float max) {
@@ -11,14 +27,18 @@ float random(float min, float max) {
 
 constexpr int convex_count = 50;
 constexpr int circle_count = 50;
+
+// Demo scene 2 spinning convex + 1 circle:
+
+#if 0
 int main() {
 
     std::vector<glm::vec2> points = {{0, 0}, {95.0, -69.0}, {58.8, -181.0}, {-58.8, -181.0}, {-95.0, -69.0}};
     float default_density = 0.000001;
     auto simulation_context = rbs::make_context();
     rbs::setBounds(simulation_context, {-500, -250}, {500, 250});
-    rbs::setGravity(simulation_context, 0);
 
+    rbs::setGravity(simulation_context, 0);
     simulation_context->fixed_timestep = 0.07;
 
     Renderer renderer(simulation_context, false, 25);
@@ -51,6 +71,7 @@ int main() {
     rbs::drop(simulation_context);
     return 0;
 }
+#endif
 
 // FILE: src/graphics/Renderer.h
 #pragma once
@@ -71,11 +92,8 @@ class Renderer {
     sf::Clock clock;
     sf::Time frameTime;
 
-    sf::RenderTexture texture;
-    int framenumber = 0;
-
     static sf::Vector2f translate(glm::vec2 pos) {
-        return sf::Vector2f((pos.x + 500) * 2, (-pos.y + 250) * 2);
+        return sf::Vector2f((pos.x + 500), (-pos.y + 250));
     }
 
     bool active() {
@@ -83,18 +101,15 @@ class Renderer {
     }
 
     Renderer(SystemContext* _cntx, bool Fullscreen = false, uint32_t fps = 60)
-        : window(_cntx->window), cntx(_cntx), bodies(_cntx->entity_manager.bodies), texture({2000, 1000}), fullscreen(Fullscreen), frameTime(sf::seconds(1.0f / fps)) {
+        : window(_cntx->window), cntx(_cntx), bodies(_cntx->entity_manager.bodies), fullscreen(Fullscreen), frameTime(sf::seconds(1.0f / fps)) {
         sf::ContextSettings settings;
         settings.antiAliasingLevel = 16;
         if (Fullscreen)
             window.create(sf::VideoMode({1000, 500}), "Debug View", sf::Style::None, sf::State::Fullscreen, settings);
         else
-            window.create(sf::VideoMode({2000, 1000}), "Debug View", sf::Style::None, sf::State::Windowed, settings);
+            window.create(sf::VideoMode({1000, 500}), "Debug View", sf::Style::None, sf::State::Windowed, settings);
         window.setPosition({0, 0});
         window.display();
-        texture.clear(sf::Color::Black);
-
-        // Initialize frame texture for video recording
     }
 
     static void debugCircle(SystemContext* cntx, glm::vec2 position) {
@@ -103,7 +118,7 @@ class Renderer {
         circleshape.setOrigin({circleshape.getRadius(), circleshape.getRadius()});
         circleshape.setFillColor(sf::Color::Transparent);
         circleshape.setOutlineColor(sf::Color::Green);
-        circleshape.setOutlineThickness(2);
+        circleshape.setOutlineThickness(1);
         circleshape.setPosition(translate(position));
         cntx->window.draw(circleshape);
     }
@@ -118,8 +133,8 @@ class Renderer {
         shape.setOutlineThickness(1);
         shape.setFillColor(sf::Color::Transparent);
         for (int i = 0; i < verticy_count; i++)
-            shape.setPoint(i, sf::Vector2f{cntx->vertex_pool[bodies.collider[id].convex.begin + i].x * 2,
-                                           -cntx->vertex_pool[bodies.collider[id].convex.begin + i].y * 2});
+            shape.setPoint(i, sf::Vector2f{cntx->vertex_pool[bodies.collider[id].convex.begin + i].x,
+                                           -cntx->vertex_pool[bodies.collider[id].convex.begin + i].y});
         convex_shapes.push_back(shape);
         convex.push_back(id);
     }
@@ -147,7 +162,7 @@ class Renderer {
                 circleshape.setOutlineColor(sf::Color::White);
                 line.setFillColor(sf::Color::White);
             }
-            circleshape.setRadius(bodies.collider[circle[i]].circle.radius * 2);
+            circleshape.setRadius(bodies.collider[circle[i]].circle.radius);
             circleshape.setOrigin({circleshape.getRadius(), circleshape.getRadius()});
             circleshape.setPosition(translate(bodies.position[circle[i]]));
             line.setPosition(translate(bodies.position[circle[i]]));
@@ -155,9 +170,7 @@ class Renderer {
             line.setSize({circleshape.getRadius(), 1});
             line.setRotation(-sf::radians(bodies.rotation[circle[i]] + 3.14 / 2));
             window.draw(line);
-            texture.draw(line);
             window.draw(circleshape);
-            texture.draw(circleshape);
         }
 
         // Draw convex shapes - fixed to use the correct data
@@ -167,23 +180,11 @@ class Renderer {
             convex_shapes[i].setPosition(translate(bodies.position[convex[i]]));
             convex_shapes[i].setRotation(sf::radians(-bodies.rotation[convex[i]]));
             window.draw(convex_shapes[i]);
-            texture.draw(convex_shapes[i]);
         }
 
         window.display();
-
-        sf::Image frame = texture.getTexture().copyToImage();
-        std::stringstream ss;
-        ss << "frames/frame_" << std::setw(3) << std::setfill('0') << framenumber++ << ".png";
-        std::string filename = ss.str();
-        frame.saveToFile(filename);
-
-        // window.clear(sf::Color::White);
-        // window.display();
         window.clear();
-        texture.clear(sf::Color::Black);
 
-        // Sleep to maintain 60 FPS
         sf::Time sleepTime = frameTime - clock.getElapsedTime();
         if (sleepTime > sf::Time::Zero) {
             sf::sleep(sleepTime);

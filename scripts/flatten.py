@@ -3,7 +3,7 @@ import os
 # Directory to search
 SRC_DIR = "src/"
 # Output file
-OUTPUT_FILE = "scripts/Zenoaflattened.txt"
+OUTPUT_FILE = "scripts/Zenoa_flattened.txt"
 
 def collect_cpp_and_headers(src_dir):
     cpp_and_headers = []
