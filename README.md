@@ -16,8 +16,8 @@ A deterministic, real-time 2D rigid-body physics engine built from scratch in mo
 - **Impulse-based solver** incorporating mass and inertia using the following equation:
 
 $$
-J = \frac{-(1 + e) \cdot \vec V_rel \cdot \vec{n}}
-{\frac{1}{m_A} + \frac{1}{m_B} + \frac{(r_A \times n)^2}{I_A} + \frac{(r_B \times n)^2}{I_B}}
+J = \frac{-(1 + e) \cdot \vec V_{rel} \cdot \vec{n}}
+{\frac{1}{m_A} + \frac{1}{m_B} + \frac{(\vec r_A \times \vec n)^2}{I_A} + \frac{(\vec r_B \times \vec n)^2}{I_B}}
 $$
 
 ## Architecture
