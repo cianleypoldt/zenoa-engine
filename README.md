@@ -15,7 +15,7 @@ A deterministic, real-time 2D rigid-body physics engine built from scratch in mo
 - **Coulomb friction**
 - **Impulse-based solver** incorporating mass and inertia using the following equation:
 
-  ![impulse_equation](media/tmp_black_text.png)
+  ![impulse_equation](media/impulse_formula_latex.png)
 
 ## Architecture
 
