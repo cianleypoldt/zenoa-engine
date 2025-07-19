@@ -51,7 +51,7 @@ A deterministic, real-time 2D rigid-body physics engine built in modern C++ as a
 
 ```sh
 sudo apt install libsfml-dev
-git clone https://github.com/your-username/physics-engine.git
+git clone https://github.com/cianleypoldt/Zenoa.git
 cd physics-engine
 make
 ./bin/physics_demo
