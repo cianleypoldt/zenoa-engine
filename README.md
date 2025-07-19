@@ -14,6 +14,8 @@ A deterministic, real-time 2D rigid-body physics engine built in modern C++ as a
 
 - **Coulomb friction**
 - **Impulse-based solver** incorporating mass and inertia using the following equation:
+
+
 $$
 \vec{J} =
 - \frac{(1 + e)(\vec{v}_{\text{rel}} \cdot \hat{n})}
