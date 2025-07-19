@@ -15,7 +15,17 @@ A deterministic, real-time 2D rigid-body physics engine built in modern C++ as a
 - **Coulomb friction**
 - **Impulse-based solver** incorporating mass and inertia using the following equation:
 
-  ![impulse_equation](media/impulse_formula_latex.png)
+  $$
+  J =
+  \frac{
+  -(1 + e) \cdot \vec{V}_{rel} \cdot \vec{n}
+  }{
+  \frac{1}{m_A} + \frac{1}{m_B} +
+  \frac{(\vec{r}_A \times \vec{n})^2}{I_A} +
+  \frac{(\vec{r}_B \times \vec{n})^2}{I_B}
+  }
+  $$
+
 
 ## Architecture
 
