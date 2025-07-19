@@ -17,14 +17,15 @@ A deterministic, real-time 2D rigid-body physics engine built in modern C++ as a
 
 
 $$
-\vec{J} =
-- \frac{(1 + e)(\vec{v}_{\text{rel}} \cdot \hat{n})}
+J =
+- \frac{(1 + e)(v_{\text{rel}} \cdot \hat{n})}
 {
 \frac{1}{m_a} + \frac{1}{m_b} +
-\left( \frac{ \left[ (\vec{r}_a \times \hat{n})^2 \right] }{I_a} +
-       \frac{ \left[ (\vec{r}_b \times \hat{n})^2 \right] }{I_b} \right)
+\frac{ \left\| r_a \times \hat{n} \right\|^2 }{I_a} +
+\frac{ \left\| r_b \times \hat{n} \right\|^2 }{I_b}
 } \hat{n}
 $$
+
 
 
 ## Architecture
