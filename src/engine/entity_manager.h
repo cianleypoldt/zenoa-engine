@@ -18,7 +18,7 @@ class EntityManager
         CONVEX      = 1 << 4
     };
 
-    bodies_ref bodies;
+    bodies_container bodies;
 
     uint32_t              occupied_slot_count = 0;
     std::vector<uint32_t> free_list;

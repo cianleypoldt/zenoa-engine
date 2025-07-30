@@ -5,12 +5,12 @@
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/home/cianleypoldt/Documents/cpp/Zenoa/src/*.cpp")
 set(OLD_GLOB
   "/home/cianleypoldt/Documents/cpp/Zenoa/src/convex_circle_scene.cpp"
-  "/home/cianleypoldt/Documents/cpp/Zenoa/src/engine/EntityManager.cpp"
-  "/home/cianleypoldt/Documents/cpp/Zenoa/src/engine/PhysicsSystem/BorderSystem.cpp"
-  "/home/cianleypoldt/Documents/cpp/Zenoa/src/engine/PhysicsSystem/CollisionSystem.cpp"
-  "/home/cianleypoldt/Documents/cpp/Zenoa/src/engine/PhysicsSystem/IntegrationSystem.cpp"
-  "/home/cianleypoldt/Documents/cpp/Zenoa/src/engine/PhysicsSystem/PhysicsSystem.cpp"
+  "/home/cianleypoldt/Documents/cpp/Zenoa/src/engine/entity_manager.cpp"
   "/home/cianleypoldt/Documents/cpp/Zenoa/src/engine/interface.cpp"
+  "/home/cianleypoldt/Documents/cpp/Zenoa/src/engine/physics_system/border.cpp"
+  "/home/cianleypoldt/Documents/cpp/Zenoa/src/engine/physics_system/collision.cpp"
+  "/home/cianleypoldt/Documents/cpp/Zenoa/src/engine/physics_system/integration.cpp"
+  "/home/cianleypoldt/Documents/cpp/Zenoa/src/engine/physics_system/physics.cpp"
   "/home/cianleypoldt/Documents/cpp/Zenoa/src/main.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")

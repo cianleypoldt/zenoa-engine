@@ -1,25 +1,25 @@
 #pragma once
+#include <cstddef>
 #include <cstdint>
 #include <glm/ext/vector_float2.hpp>
-#include <cstddef>
 #include <vector>
 
-struct circle {
+struct circle_shape {
     float radius = 0;
 };
 
-struct convex {
+struct convex_shape {
     uint32_t begin;
     uint32_t end;
     float    bounding_radius;
 };
 
-union collider {
-    circle circle_col{ 0 };
-    convex convex_col;
+union collider_union {
+    circle_shape circle{ 0 };
+    convex_shape convex;
 };
 
-struct bodies_ref {
+struct bodies_container {
     std::vector<uint16_t> flag;
 
     std::vector<glm::vec2> position;
@@ -38,7 +38,7 @@ struct bodies_ref {
     std::vector<float> elasticity;
     std::vector<float> friction;
 
-    std::vector<collider> collider_shape;
+    std::vector<collider_union> collider;
 
     void resize(size_t size) {
         flag.resize(size);
@@ -54,7 +54,7 @@ struct bodies_ref {
         inv_inertia.resize(size);
         elasticity.resize(size);
         friction.resize(size);
-        collider_shape.resize(size);
+        collider.resize(size);
     }
 
     uint32_t size() const { return flag.size(); }

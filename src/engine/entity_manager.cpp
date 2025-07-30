@@ -78,7 +78,7 @@ void EntityManager::use_circle_collider(uint32_t id) {
     bodies.flag[id] |= COLLIDER;
     convex_colliders.remove(id);
     bodies.flag[id] &= ~CONVEX;
-    bodies.collider_shape[id].circle_col.radius = 0.0f;
+    bodies.collider[id].circle.radius = 0.0f;
 }
 
 void EntityManager::use_convex_collider(uint32_t id) {
@@ -86,8 +86,8 @@ void EntityManager::use_convex_collider(uint32_t id) {
     bodies.flag[id] |= COLLIDER;
     circle_colliders.remove(id);
     bodies.flag[id] |= CONVEX;
-    bodies.collider_shape[id].convex_col.begin = 0;
-    bodies.collider_shape[id].convex_col.end   = 0;
+    bodies.collider[id].convex.begin = 0;
+    bodies.collider[id].convex.end   = 0;
 }
 
 bool EntityManager::is_alive(uint32_t id) {

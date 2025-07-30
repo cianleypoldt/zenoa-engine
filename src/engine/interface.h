@@ -1,33 +1,37 @@
 #pragma once
-#include "SystemContext.h"
+#include "context.h"
+#include <cstdint>
+#include <glm/ext/vector_float2.hpp>
+#include <vector>
 
-namespace rbs {
-SystemContext* make_context();
-void drop(SystemContext* cntx);
+namespace rbs
+{
+system_context* make_context();
+void            drop(system_context* cntx);
 
-void step(SystemContext* cntx);
-uint32_t getMaxEntityCount(SystemContext* cntx);
-void setBounds(SystemContext* cntx, glm::vec2 bottom_left, glm::vec2 top_right);
-void setGravity(SystemContext* cntx, float gravity);
+void     step(system_context* cntx);
+uint32_t get_max_entity_count();
+void     set_bounds(system_context* cntx, glm::vec2 bottom_left, glm::vec2 top_right);
+void     set_gravity(system_context* cntx, float gravity);
 
-[[nodiscard]] unsigned int addEntity(SystemContext* cntx, glm::vec2 pos = {0, 0}, float mass = 1);
-void addConvexCollider(SystemContext* cntx, unsigned int id, std::vector<glm::vec2> points, float density);
-void addCircleCollider(SystemContext* cntx, unsigned int id, float radius, float density);
+[[nodiscard]] unsigned int add_entity(system_context* cntx, glm::vec2 pos = { 0, 0 }, float mass = 1);
+void add_convex_collider(system_context* cntx, unsigned int id, std::vector<glm::vec2> points, float density);
+void add_circle_collider(system_context* cntx, unsigned int id, float radius, float density);
 
-void killEntity(SystemContext* cntx, uint32_t id);
+void kill_entity(system_context* cntx, uint32_t id);
 
-void setPosition(SystemContext* cntx, uint32_t id, glm::vec2 pos);
-void setVelocity(SystemContext* cntx, uint32_t id, glm::vec2 vel);
-void applyForce(SystemContext* cntx, uint32_t id, glm::vec2 force);
-void applyTorque(SystemContext* cntx, uint32_t id, float torque);
+void set_position(system_context* cntx, uint32_t id, glm::vec2 pos);
+void set_velocity(system_context* cntx, uint32_t id, glm::vec2 vel);
+void apply_force(system_context* cntx, uint32_t id, glm::vec2 force);
+void apply_torque(system_context* cntx, uint32_t id, float torque);
 
-void setCircleCollider(SystemContext* cntx, uint32_t id, float radius);
-// void setCircleCollider(SystemContext* cntx, uint32_t id, std::vector<glm::vec2>& verticies);
+void set_circle_collider(system_context* cntx, uint32_t id, float radius);
+// void set_circle_collider(system_context* cntx, uint32_t id, std::vector<glm::vec2>& verticies);
 
-[[nodiscard]] glm::vec2 getPosition(SystemContext* cntx, uint32_t id);
-[[nodiscard]] float getRotation(SystemContext* cntx, uint32_t id);
+[[nodiscard]] glm::vec2 get_position(system_context* cntx, uint32_t id);
+[[nodiscard]] float     get_rotation(system_context* cntx, uint32_t id);
 
-[[nodiscard]] float getCircleRadius(SystemContext* cntx, uint32_t id);
-[[nodiscard]] const std::vector<glm::vec2> getConvexVerticies(SystemContext* cntx, uint32_t id);
+[[nodiscard]] float                  get_circle_radius(system_context* cntx, uint32_t id);
+[[nodiscard]] std::vector<glm::vec2> get_convex_verticies(system_context* cntx, uint32_t id);
 
-} // namespace rbs
+}  // namespace rbs

@@ -1,6 +1,7 @@
 #include "collision.h"
 
 #include "../context.h"
+
 #include <sys/types.h>
 
 #include <algorithm>
@@ -12,7 +13,7 @@
 #include <glm/geometric.hpp>
 #include <limits>
 
-void CollisionSystem::apply(system_context * cntx) {
+void CollisionSystem::apply(system_context* cntx) {
     for (uint32_t i = 0; i < cntx->entity_manager.circle_colliders.count; i++) {
         uint32_t circle_a = cntx->entity_manager.circle_colliders.id[i];
         for (uint32_t j = 0; j < cntx->entity_manager.circle_colliders.count; j++) {
@@ -40,11 +41,11 @@ void CollisionSystem::apply(system_context * cntx) {
     }
 }
 
-void CollisionSystem::circle_circle_collision(system_context * cntx, uint32_t id_a, uint32_t id_b) {
-    auto & bodies = cntx->entity_manager.bodies;
+void CollisionSystem::circle_circle_collision(system_context* cntx, uint32_t id_a, uint32_t id_b) {
+    auto& bodies = cntx->entity_manager.bodies;
 
-    float radius_a = bodies.collider_shape[id_a].circle_col.radius;
-    float radius_b = bodies.collider_shape[id_b].circle_col.radius;
+    float radius_a = bodies.collider[id_a].circle.radius;
+    float radius_b = bodies.collider[id_b].circle.radius;
 
     glm::vec2 diff     = bodies.position[id_b] - bodies.position[id_a];
     float     distance = glm::length(diff);
@@ -111,12 +112,12 @@ void CollisionSystem::circle_circle_collision(system_context * cntx, uint32_t id
     bodies.angular_velocity[id_b] += torque_b * bodies.inv_inertia[id_b];
 }
 
-void CollisionSystem::circle_convex_collision(system_context * cntx, uint32_t id_circle, uint32_t id_convex) {
-    auto &       bodies        = cntx->entity_manager.bodies;
-    const auto & circle_pos    = bodies.position[id_circle];
-    const auto & convex_pos    = bodies.position[id_convex];
-    const float  circle_radius = bodies.collider_shape[id_circle].circle_col.radius;
-    const auto & convex        = bodies.collider_shape[id_convex].convex_col;
+void CollisionSystem::circle_convex_collision(system_context* cntx, uint32_t id_circle, uint32_t id_convex) {
+    auto&       bodies        = cntx->entity_manager.bodies;
+    const auto& circle_pos    = bodies.position[id_circle];
+    const auto& convex_pos    = bodies.position[id_convex];
+    const float circle_radius = bodies.collider[id_circle].circle.radius;
+    const auto& convex        = bodies.collider[id_convex].convex;
 
     // Quick bounding radius check
     glm::vec2 relative_pos = convex_pos - circle_pos;
@@ -130,8 +131,8 @@ void CollisionSystem::circle_convex_collision(system_context * cntx, uint32_t id
     bool      inside       = true;
     for (uint i = convex.begin; i < convex.end; i++) {
         // Get current and next vertex (with wraparound)
-        const glm::vec2 & p1 = cntx->vertex_pool_worldspace[i];
-        const glm::vec2 & p2 = cntx->vertex_pool_worldspace[i < convex.end - 1 ? i + 1 : convex.begin];
+        const glm::vec2& p1 = cntx->vertex_pool_worldspace[i];
+        const glm::vec2& p2 = cntx->vertex_pool_worldspace[i < convex.end - 1 ? i + 1 : convex.begin];
 
         // Edge vector and circle position relative to p1
         glm::vec2 edge         = p2 - p1;
@@ -246,24 +247,24 @@ void CollisionSystem::circle_convex_collision(system_context * cntx, uint32_t id
     bodies.angular_velocity[id_convex] += friction_impulse * r_convex_cross_t * bodies.inv_inertia[id_convex];
 }
 
-void CollisionSystem::convex_convex_collision(system_context * cntx, uint32_t id_a, uint32_t id_b) {
-    auto & bodies = cntx->entity_manager.bodies;
+void CollisionSystem::convex_convex_collision(system_context* cntx, uint32_t id_a, uint32_t id_b) {
+    auto& bodies = cntx->entity_manager.bodies;
 
     glm::vec2 relative_pos = bodies.position[id_b] - bodies.position[id_a];
-    if (glm::length(relative_pos) > bodies.collider_shape[id_a].convex_col.bounding_radius +
-                                        bodies.collider_shape[id_b].convex_col.bounding_radius) {
+    if (glm::length(relative_pos) >
+        bodies.collider[id_a].convex.bounding_radius + bodies.collider[id_b].convex.bounding_radius) {
         return;
     }
 
-    const auto & convex_a = bodies.collider_shape[id_a].convex_col;
-    const auto & convex_b = bodies.collider_shape[id_b].convex_col;
+    const auto& convex_a = bodies.collider[id_a].convex;
+    const auto& convex_b = bodies.collider[id_b].convex;
 
     float     min_overlap = std::numeric_limits<float>::max();
     glm::vec2 smallest_axis;
 
     for (uint i = convex_a.begin; i < convex_a.end; i++) {
-        const glm::vec2 & p1 = cntx->vertex_pool_worldspace[i];
-        const glm::vec2 & p2 = cntx->vertex_pool_worldspace[i < convex_a.end - 1 ? i + 1 : convex_a.begin];
+        const glm::vec2& p1 = cntx->vertex_pool_worldspace[i];
+        const glm::vec2& p2 = cntx->vertex_pool_worldspace[i < convex_a.end - 1 ? i + 1 : convex_a.begin];
 
         glm::vec2 edge   = p2 - p1;
         glm::vec2 normal = glm::normalize(glm::vec2(-edge.y, edge.x));
@@ -294,8 +295,8 @@ void CollisionSystem::convex_convex_collision(system_context * cntx, uint32_t id
         }
     }
     for (int i = convex_b.begin; i < convex_b.end; i++) {
-        const glm::vec2 & p1 = cntx->vertex_pool_worldspace[i];
-        const glm::vec2 & p2 = cntx->vertex_pool_worldspace[i < convex_b.end - 1 ? i + 1 : convex_b.begin];
+        const glm::vec2& p1 = cntx->vertex_pool_worldspace[i];
+        const glm::vec2& p2 = cntx->vertex_pool_worldspace[i < convex_b.end - 1 ? i + 1 : convex_b.begin];
 
         glm::vec2 edge   = p2 - p1;
         glm::vec2 normal = glm::normalize(glm::vec2(-edge.y, edge.x));
@@ -345,7 +346,7 @@ void CollisionSystem::convex_convex_collision(system_context * cntx, uint32_t id
 
     // Find deepest points on each shape relative to collision axis
     for (uint i = convex_a.begin; i < convex_a.end; i++) {
-        const glm::vec2 & vertex = cntx->vertex_pool_worldspace[i];
+        const glm::vec2& vertex = cntx->vertex_pool_worldspace[i];
         // Check if this vertex is near the contact plane
         if (glm::dot(vertex - bodies.position[id_b], smallest_axis) <= min_overlap + 0.01f) {
             contact_point += vertex;
@@ -354,7 +355,7 @@ void CollisionSystem::convex_convex_collision(system_context * cntx, uint32_t id
     }
 
     for (uint i = convex_b.begin; i < convex_b.end; i++) {
-        const glm::vec2 & vertex = cntx->vertex_pool_worldspace[i];
+        const glm::vec2& vertex = cntx->vertex_pool_worldspace[i];
         // Check if this vertex is near the contact plane
         if (glm::dot(vertex - bodies.position[id_a], -smallest_axis) <= min_overlap + 0.01f) {
             contact_point += vertex;

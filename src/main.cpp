@@ -1,9 +1,9 @@
 #include "engine/interface.h"
-#include "graphics/Renderer.h"
-#include <SFML/Graphics.hpp>
+#include "graphics/renderer.h"
 
 int main() {
-    auto simulation_context = rbs::make_context();
+    auto* simulation_context = rbs::make_context();
+
     Renderer debug_renderer(simulation_context, false, 120);
 
     while (debug_renderer.active()) {

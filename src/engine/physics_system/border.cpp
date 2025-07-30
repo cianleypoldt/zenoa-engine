@@ -1,6 +1,7 @@
 #include "border.h"
 
 #include "../context.h"
+
 #include <sys/types.h>
 
 #include <algorithm>
@@ -9,7 +10,7 @@
 #include <glm/common.hpp>
 #define GlmEnableExperimental
 
-void BorderSystem::apply(system_context * cntx) const {
+void BorderSystem::apply(system_context* cntx) const {
     for (uint32_t i = 0; i < cntx->entity_manager.circle_colliders.count; i++) {
         sphere_border_collision(cntx, cntx->entity_manager.circle_colliders.id[i]);
     }
@@ -18,9 +19,9 @@ void BorderSystem::apply(system_context * cntx) const {
     }
 }
 
-void BorderSystem::sphere_border_collision(system_context * cntx, uint32_t id) const {
-    auto & bodies = cntx->entity_manager.bodies;
-    float  radius = bodies.collider_shape[id].circle_col.radius;
+void BorderSystem::sphere_border_collision(system_context* cntx, uint32_t id) const {
+    auto& bodies = cntx->entity_manager.bodies;
+    float radius = bodies.collider[id].circle.radius;
     if (bodies.position[id].x - radius <= bottom_left_corner.x) {
         if (bodies.velocity[id].x < 0) {
             bodies.position[id].x        = bottom_left_corner.x + radius;
@@ -122,9 +123,9 @@ void BorderSystem::sphere_border_collision(system_context * cntx, uint32_t id) c
     }
 }
 
-void BorderSystem::convex_border_collision(system_context * cntx, uint32_t id) const {
-    bodies_ref & bodies = cntx->entity_manager.bodies;
-    float        radius = bodies.collider_shape[id].convex_col.bounding_radius;
+void BorderSystem::convex_border_collision(system_context* cntx, uint32_t id) const {
+    bodies_container& bodies = cntx->entity_manager.bodies;
+    float             radius = bodies.collider[id].convex.bounding_radius;
 
     // Bounding radius out of bounds check
     if (bodies.position[id].x - radius <= bottom_left_corner.x) {
@@ -132,8 +133,7 @@ void BorderSystem::convex_border_collision(system_context * cntx, uint32_t id) c
         int   max_penetration_index = -1;
 
         // Find the vertex with maximum penetration
-        for (uint index = bodies.collider_shape[id].convex_col.begin; index < bodies.collider_shape[id].convex_col.end;
-             index++) {
+        for (uint index = bodies.collider[id].convex.begin; index < bodies.collider[id].convex.end; index++) {
             if (cntx->vertex_pool_worldspace[index].x < bottom_left_corner.x) {
                 float penetration = bottom_left_corner.x - cntx->vertex_pool_worldspace[index].x;
                 if (penetration > max_penetration) {
@@ -185,8 +185,7 @@ void BorderSystem::convex_border_collision(system_context * cntx, uint32_t id) c
         int   max_penetration_index = -1;
 
         // Find the vertex with maximum penetration
-        for (uint index = bodies.collider_shape[id].convex_col.begin; index < bodies.collider_shape[id].convex_col.end;
-             index++) {
+        for (uint index = bodies.collider[id].convex.begin; index < bodies.collider[id].convex.end; index++) {
             if (cntx->vertex_pool_worldspace[index].x > top_right_corner.x) {
                 float penetration = cntx->vertex_pool_worldspace[index].x - top_right_corner.x;
                 if (penetration > max_penetration) {
@@ -239,8 +238,7 @@ void BorderSystem::convex_border_collision(system_context * cntx, uint32_t id) c
         int   max_penetration_index = -1;
 
         // Find the vertex with maximum penetration
-        for (uint index = bodies.collider_shape[id].convex_col.begin; index < bodies.collider_shape[id].convex_col.end;
-             index++) {
+        for (uint index = bodies.collider[id].convex.begin; index < bodies.collider[id].convex.end; index++) {
             if (cntx->vertex_pool_worldspace[index].y < bottom_left_corner.y) {
                 float penetration = bottom_left_corner.y - cntx->vertex_pool_worldspace[index].y;
                 if (penetration > max_penetration) {
@@ -293,8 +291,7 @@ void BorderSystem::convex_border_collision(system_context * cntx, uint32_t id) c
         int   max_penetration_index = -1;
 
         // Find the vertex with maximum penetration
-        for (uint index = bodies.collider_shape[id].convex_col.begin; index < bodies.collider_shape[id].convex_col.end;
-             index++) {
+        for (uint index = bodies.collider[id].convex.begin; index < bodies.collider[id].convex.end; index++) {
             if (cntx->vertex_pool_worldspace[index].y > top_right_corner.y) {
                 float penetration = cntx->vertex_pool_worldspace[index].y - top_right_corner.y;
                 if (penetration > max_penetration) {

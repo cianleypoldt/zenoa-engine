@@ -48,10 +48,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /bin/cmake
+CMAKE_COMMAND = /usr/bin/cmake
 
 # The command to remove a file.
-RM = /bin/cmake -E rm -f
+RM = /usr/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -78,7 +78,7 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running CMake to regenerate build system..."
-	/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/usr/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -154,125 +154,29 @@ src/convex_circle_scene.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.s
 .PHONY : src/convex_circle_scene.cpp.s
 
-src/engine/EntityManager.o: src/engine/EntityManager.cpp.o
-.PHONY : src/engine/EntityManager.o
+src/engine/entity_manager.o: src/engine/entity_manager.cpp.o
+.PHONY : src/engine/entity_manager.o
 
 # target to build an object file
-src/engine/EntityManager.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/EntityManager.cpp.o
-.PHONY : src/engine/EntityManager.cpp.o
+src/engine/entity_manager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/entity_manager.cpp.o
+.PHONY : src/engine/entity_manager.cpp.o
 
-src/engine/EntityManager.i: src/engine/EntityManager.cpp.i
-.PHONY : src/engine/EntityManager.i
-
-# target to preprocess a source file
-src/engine/EntityManager.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/EntityManager.cpp.i
-.PHONY : src/engine/EntityManager.cpp.i
-
-src/engine/EntityManager.s: src/engine/EntityManager.cpp.s
-.PHONY : src/engine/EntityManager.s
-
-# target to generate assembly for a file
-src/engine/EntityManager.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/EntityManager.cpp.s
-.PHONY : src/engine/EntityManager.cpp.s
-
-src/engine/PhysicsSystem/BorderSystem.o: src/engine/PhysicsSystem/BorderSystem.cpp.o
-.PHONY : src/engine/PhysicsSystem/BorderSystem.o
-
-# target to build an object file
-src/engine/PhysicsSystem/BorderSystem.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/BorderSystem.cpp.o
-.PHONY : src/engine/PhysicsSystem/BorderSystem.cpp.o
-
-src/engine/PhysicsSystem/BorderSystem.i: src/engine/PhysicsSystem/BorderSystem.cpp.i
-.PHONY : src/engine/PhysicsSystem/BorderSystem.i
+src/engine/entity_manager.i: src/engine/entity_manager.cpp.i
+.PHONY : src/engine/entity_manager.i
 
 # target to preprocess a source file
-src/engine/PhysicsSystem/BorderSystem.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/BorderSystem.cpp.i
-.PHONY : src/engine/PhysicsSystem/BorderSystem.cpp.i
+src/engine/entity_manager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/entity_manager.cpp.i
+.PHONY : src/engine/entity_manager.cpp.i
 
-src/engine/PhysicsSystem/BorderSystem.s: src/engine/PhysicsSystem/BorderSystem.cpp.s
-.PHONY : src/engine/PhysicsSystem/BorderSystem.s
-
-# target to generate assembly for a file
-src/engine/PhysicsSystem/BorderSystem.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/BorderSystem.cpp.s
-.PHONY : src/engine/PhysicsSystem/BorderSystem.cpp.s
-
-src/engine/PhysicsSystem/CollisionSystem.o: src/engine/PhysicsSystem/CollisionSystem.cpp.o
-.PHONY : src/engine/PhysicsSystem/CollisionSystem.o
-
-# target to build an object file
-src/engine/PhysicsSystem/CollisionSystem.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/CollisionSystem.cpp.o
-.PHONY : src/engine/PhysicsSystem/CollisionSystem.cpp.o
-
-src/engine/PhysicsSystem/CollisionSystem.i: src/engine/PhysicsSystem/CollisionSystem.cpp.i
-.PHONY : src/engine/PhysicsSystem/CollisionSystem.i
-
-# target to preprocess a source file
-src/engine/PhysicsSystem/CollisionSystem.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/CollisionSystem.cpp.i
-.PHONY : src/engine/PhysicsSystem/CollisionSystem.cpp.i
-
-src/engine/PhysicsSystem/CollisionSystem.s: src/engine/PhysicsSystem/CollisionSystem.cpp.s
-.PHONY : src/engine/PhysicsSystem/CollisionSystem.s
+src/engine/entity_manager.s: src/engine/entity_manager.cpp.s
+.PHONY : src/engine/entity_manager.s
 
 # target to generate assembly for a file
-src/engine/PhysicsSystem/CollisionSystem.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/CollisionSystem.cpp.s
-.PHONY : src/engine/PhysicsSystem/CollisionSystem.cpp.s
-
-src/engine/PhysicsSystem/IntegrationSystem.o: src/engine/PhysicsSystem/IntegrationSystem.cpp.o
-.PHONY : src/engine/PhysicsSystem/IntegrationSystem.o
-
-# target to build an object file
-src/engine/PhysicsSystem/IntegrationSystem.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.o
-.PHONY : src/engine/PhysicsSystem/IntegrationSystem.cpp.o
-
-src/engine/PhysicsSystem/IntegrationSystem.i: src/engine/PhysicsSystem/IntegrationSystem.cpp.i
-.PHONY : src/engine/PhysicsSystem/IntegrationSystem.i
-
-# target to preprocess a source file
-src/engine/PhysicsSystem/IntegrationSystem.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.i
-.PHONY : src/engine/PhysicsSystem/IntegrationSystem.cpp.i
-
-src/engine/PhysicsSystem/IntegrationSystem.s: src/engine/PhysicsSystem/IntegrationSystem.cpp.s
-.PHONY : src/engine/PhysicsSystem/IntegrationSystem.s
-
-# target to generate assembly for a file
-src/engine/PhysicsSystem/IntegrationSystem.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/IntegrationSystem.cpp.s
-.PHONY : src/engine/PhysicsSystem/IntegrationSystem.cpp.s
-
-src/engine/PhysicsSystem/PhysicsSystem.o: src/engine/PhysicsSystem/PhysicsSystem.cpp.o
-.PHONY : src/engine/PhysicsSystem/PhysicsSystem.o
-
-# target to build an object file
-src/engine/PhysicsSystem/PhysicsSystem.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/PhysicsSystem.cpp.o
-.PHONY : src/engine/PhysicsSystem/PhysicsSystem.cpp.o
-
-src/engine/PhysicsSystem/PhysicsSystem.i: src/engine/PhysicsSystem/PhysicsSystem.cpp.i
-.PHONY : src/engine/PhysicsSystem/PhysicsSystem.i
-
-# target to preprocess a source file
-src/engine/PhysicsSystem/PhysicsSystem.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/PhysicsSystem.cpp.i
-.PHONY : src/engine/PhysicsSystem/PhysicsSystem.cpp.i
-
-src/engine/PhysicsSystem/PhysicsSystem.s: src/engine/PhysicsSystem/PhysicsSystem.cpp.s
-.PHONY : src/engine/PhysicsSystem/PhysicsSystem.s
-
-# target to generate assembly for a file
-src/engine/PhysicsSystem/PhysicsSystem.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/PhysicsSystem/PhysicsSystem.cpp.s
-.PHONY : src/engine/PhysicsSystem/PhysicsSystem.cpp.s
+src/engine/entity_manager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/entity_manager.cpp.s
+.PHONY : src/engine/entity_manager.cpp.s
 
 src/engine/interface.o: src/engine/interface.cpp.o
 .PHONY : src/engine/interface.o
@@ -297,6 +201,102 @@ src/engine/interface.s: src/engine/interface.cpp.s
 src/engine/interface.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/interface.cpp.s
 .PHONY : src/engine/interface.cpp.s
+
+src/engine/physics_system/border.o: src/engine/physics_system/border.cpp.o
+.PHONY : src/engine/physics_system/border.o
+
+# target to build an object file
+src/engine/physics_system/border.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/physics_system/border.cpp.o
+.PHONY : src/engine/physics_system/border.cpp.o
+
+src/engine/physics_system/border.i: src/engine/physics_system/border.cpp.i
+.PHONY : src/engine/physics_system/border.i
+
+# target to preprocess a source file
+src/engine/physics_system/border.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/physics_system/border.cpp.i
+.PHONY : src/engine/physics_system/border.cpp.i
+
+src/engine/physics_system/border.s: src/engine/physics_system/border.cpp.s
+.PHONY : src/engine/physics_system/border.s
+
+# target to generate assembly for a file
+src/engine/physics_system/border.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/physics_system/border.cpp.s
+.PHONY : src/engine/physics_system/border.cpp.s
+
+src/engine/physics_system/collision.o: src/engine/physics_system/collision.cpp.o
+.PHONY : src/engine/physics_system/collision.o
+
+# target to build an object file
+src/engine/physics_system/collision.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/physics_system/collision.cpp.o
+.PHONY : src/engine/physics_system/collision.cpp.o
+
+src/engine/physics_system/collision.i: src/engine/physics_system/collision.cpp.i
+.PHONY : src/engine/physics_system/collision.i
+
+# target to preprocess a source file
+src/engine/physics_system/collision.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/physics_system/collision.cpp.i
+.PHONY : src/engine/physics_system/collision.cpp.i
+
+src/engine/physics_system/collision.s: src/engine/physics_system/collision.cpp.s
+.PHONY : src/engine/physics_system/collision.s
+
+# target to generate assembly for a file
+src/engine/physics_system/collision.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/physics_system/collision.cpp.s
+.PHONY : src/engine/physics_system/collision.cpp.s
+
+src/engine/physics_system/integration.o: src/engine/physics_system/integration.cpp.o
+.PHONY : src/engine/physics_system/integration.o
+
+# target to build an object file
+src/engine/physics_system/integration.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/physics_system/integration.cpp.o
+.PHONY : src/engine/physics_system/integration.cpp.o
+
+src/engine/physics_system/integration.i: src/engine/physics_system/integration.cpp.i
+.PHONY : src/engine/physics_system/integration.i
+
+# target to preprocess a source file
+src/engine/physics_system/integration.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/physics_system/integration.cpp.i
+.PHONY : src/engine/physics_system/integration.cpp.i
+
+src/engine/physics_system/integration.s: src/engine/physics_system/integration.cpp.s
+.PHONY : src/engine/physics_system/integration.s
+
+# target to generate assembly for a file
+src/engine/physics_system/integration.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/physics_system/integration.cpp.s
+.PHONY : src/engine/physics_system/integration.cpp.s
+
+src/engine/physics_system/physics.o: src/engine/physics_system/physics.cpp.o
+.PHONY : src/engine/physics_system/physics.o
+
+# target to build an object file
+src/engine/physics_system/physics.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/physics_system/physics.cpp.o
+.PHONY : src/engine/physics_system/physics.cpp.o
+
+src/engine/physics_system/physics.i: src/engine/physics_system/physics.cpp.i
+.PHONY : src/engine/physics_system/physics.i
+
+# target to preprocess a source file
+src/engine/physics_system/physics.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/physics_system/physics.cpp.i
+.PHONY : src/engine/physics_system/physics.cpp.i
+
+src/engine/physics_system/physics.s: src/engine/physics_system/physics.cpp.s
+.PHONY : src/engine/physics_system/physics.s
+
+# target to generate assembly for a file
+src/engine/physics_system/physics.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/engine/physics_system/physics.cpp.s
+.PHONY : src/engine/physics_system/physics.cpp.s
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
@@ -334,24 +334,24 @@ help:
 	@echo "... src/convex_circle_scene.o"
 	@echo "... src/convex_circle_scene.i"
 	@echo "... src/convex_circle_scene.s"
-	@echo "... src/engine/EntityManager.o"
-	@echo "... src/engine/EntityManager.i"
-	@echo "... src/engine/EntityManager.s"
-	@echo "... src/engine/PhysicsSystem/BorderSystem.o"
-	@echo "... src/engine/PhysicsSystem/BorderSystem.i"
-	@echo "... src/engine/PhysicsSystem/BorderSystem.s"
-	@echo "... src/engine/PhysicsSystem/CollisionSystem.o"
-	@echo "... src/engine/PhysicsSystem/CollisionSystem.i"
-	@echo "... src/engine/PhysicsSystem/CollisionSystem.s"
-	@echo "... src/engine/PhysicsSystem/IntegrationSystem.o"
-	@echo "... src/engine/PhysicsSystem/IntegrationSystem.i"
-	@echo "... src/engine/PhysicsSystem/IntegrationSystem.s"
-	@echo "... src/engine/PhysicsSystem/PhysicsSystem.o"
-	@echo "... src/engine/PhysicsSystem/PhysicsSystem.i"
-	@echo "... src/engine/PhysicsSystem/PhysicsSystem.s"
+	@echo "... src/engine/entity_manager.o"
+	@echo "... src/engine/entity_manager.i"
+	@echo "... src/engine/entity_manager.s"
 	@echo "... src/engine/interface.o"
 	@echo "... src/engine/interface.i"
 	@echo "... src/engine/interface.s"
+	@echo "... src/engine/physics_system/border.o"
+	@echo "... src/engine/physics_system/border.i"
+	@echo "... src/engine/physics_system/border.s"
+	@echo "... src/engine/physics_system/collision.o"
+	@echo "... src/engine/physics_system/collision.i"
+	@echo "... src/engine/physics_system/collision.s"
+	@echo "... src/engine/physics_system/integration.o"
+	@echo "... src/engine/physics_system/integration.i"
+	@echo "... src/engine/physics_system/integration.s"
+	@echo "... src/engine/physics_system/physics.o"
+	@echo "... src/engine/physics_system/physics.i"
+	@echo "... src/engine/physics_system/physics.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
