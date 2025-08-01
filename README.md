@@ -12,7 +12,7 @@ The engine supports convex polygon and circle bodies, impulse-based collision re
 - [Physics Model](#physics-model)  
 - [Design Notes](#design-notes)  
 - [Demos](#demos)  
-- [Build Instructions](#build-instructions)  
+- [Build Instructions](#build-instructions-(linux))  
 - [Dependencies](#dependencies)
 
 ---
