@@ -17,25 +17,25 @@ The engine supports convex polygon and circle bodies, impulse-based collision re
 
 ---
 
-### Collision Handling
+## Collision Handling
 
-#### Convex Shapes
+### Convex Shapes
 
 Collision detection between convex polygons uses the Separating Axis Theorem (SAT). Contact points are computed using face clipping and penetration depth is used to generate response impulses.
 
-#### Circle–Polygon Interactions
+### Circle–Polygon Interactions
 
 Circles are handled with a face projection method, allowing smooth resolution against polygon edges without excessive branching or shape-specific logic.
 
-#### Wall and Border Contacts
+### Wall and Border Contacts
 
 Simple deepest-point resolution is used to prevent tunneling and maintain expected object boundaries in confined scenes.
 
 ---
 
-### Physics Model
+## Physics Model
 
-#### Impulse Resolution
+### Impulse Resolution
 
 Collisions are resolved using a basic impulse solver. Linear and angular velocities are updated using the relative velocity at the contact point and the combined inverse mass and inertia of the two bodies.
 
@@ -58,13 +58,13 @@ Where:
 	-	\vec{n} is the contact normal
 	-	m, I are the mass and moment of inertia
 
-#### Friction
+### Friction
 
 Basic Coulomb friction is supported. Tangential impulses are clamped relative to the normal impulse, allowing simple sliding and resting contact behavior.
 
 ---
 
-### Design Notes
+## Design Notes
 
 - Uses Structure of Arrays (SoA) for better cache behavior during updates.
 	-	Simulation runs on a fixed timestep for consistency and repeatability.
@@ -73,23 +73,23 @@ Basic Coulomb friction is supported. Tangential impulses are clamped relative to
 
 ---
 
-### Demos
+## Demos
 
-#### Contact + Friction Resolution
+### Contact + Friction Resolution
 
 Collisions between circles and polygons with impulse + friction response.
 
 
 ---
 
-#### Mass Disparity Stress Test
+### Mass Disparity Stress Test
 
 Demonstrates stacking behavior with large differences in object mass and shape.
 
 
 ---
 
-### Build Instructions (Linux)
+## Build Instructions (Linux)
 
 ``` bash
 sudo apt install libsfml-dev
@@ -101,13 +101,13 @@ make
 
 ---
 
-### Dependencies
+## Dependencies
 
  - GLM – Vector math and linear algebra
  -	SFML – Debug rendering and input
 
 ---
 
-### License
+## License
 
 Zenoa is released under the MIT License.
