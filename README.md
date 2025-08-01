@@ -39,7 +39,7 @@ Simple deepest-point resolution is used to prevent tunneling and maintain expect
 
 Collisions are resolved using a basic impulse solver. Linear and angular velocities are updated using the relative velocity at the contact point and the combined inverse mass and inertia of the two bodies.
 
-Impulse formula:
+**Impulse formula:**
 
 $$
 J =
