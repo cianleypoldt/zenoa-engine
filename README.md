@@ -52,11 +52,12 @@ J =
 }
 $$
 
-Where:
-	-	$e$ is the restitution coefficient
-	-	$\vec{v}_{rel}$ is the relative velocity at the contact
-	-	$\vec{n}$ is the contact normal
-	-	$m$, $I$ are the mass and moment of inertia
+**Where:**
+
+-	$e$ is the restitution coefficient
+-	$\vec{v}_{rel}$ is the relative velocity at the contact
+-	$\vec{n}$ is the contact normal
+-	$m$, $I$ are the mass and moment of inertia
 
 ### Friction
 
