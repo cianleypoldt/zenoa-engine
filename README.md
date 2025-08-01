@@ -6,14 +6,14 @@ The engine supports convex polygon and circle bodies, impulse-based collision re
 
 ---
 
-### Contents
+## Contents
 
--	Collision Handling
-- Physics Model
-- Design Notes
-- Demos
-- Build Instructions
-- Dependencies
+- [Collision Handling](#collision-handling)  
+- [Physics Model](#physics-model)  
+- [Design Notes](#design-notes)  
+- [Demos](#demos)  
+- [Build Instructions](#build-instructions)  
+- [Dependencies](#dependencies)
 
 ---
 
