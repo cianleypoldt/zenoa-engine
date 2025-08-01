@@ -6,7 +6,7 @@ The engine supports convex polygon and circle bodies, impulse-based collision re
 
 ---
 
-### Contents
+## Contents
 
 - [Collision Handling](#collision-handling)  
 - [Physics Model](#physics-model)  
@@ -17,25 +17,25 @@ The engine supports convex polygon and circle bodies, impulse-based collision re
 
 ---
 
-### Collision Handling
+## Collision Handling
 
-##### Convex Shapes
+### Convex Shapes
 
-Collision detection between convex polygons uses the Separating Axis Theorem (SAT). Contact points are computed using face clipping and penetration depth is used to generate response impulses.
+Collision detection between convex polygons uses the **Separating Axis Theorem (SAT)**. Contact points are computed using face clipping and penetration depth is used to generate response impulses.
 
-##### Circle–Polygon Interactions
+### Circle–Polygon Interactions
 
-Circles are handled with a face projection method, allowing smooth resolution against polygon edges without excessive branching or shape-specific logic.
+Circles are handled with a **face projection method**, allowing smooth resolution against polygon edges without excessive branching or shape-specific logic.
 
-##### Wall and Border Contacts
+### Wall and Border Contacts
 
 Simple deepest-point resolution is used to prevent tunneling and maintain expected object boundaries in confined scenes.
 
 ---
 
-### Physics Model
+## Physics Model
 
-##### Impulse Resolution
+### Impulse Resolution
 
 Collisions are resolved using a basic impulse solver. Linear and angular velocities are updated using the relative velocity at the contact point and the combined inverse mass and inertia of the two bodies.
 
@@ -58,56 +58,58 @@ Where:
 	-	\vec{n} is the contact normal
 	-	m, I are the mass and moment of inertia
 
-##### Friction
+### Friction
 
 Basic Coulomb friction is supported. Tangential impulses are clamped relative to the normal impulse, allowing simple sliding and resting contact behavior.
 
 ---
 
-### Design Notes
+## Design Notes
 
-- Uses Structure of Arrays (SoA) for better cache behavior during updates.
-	-	Simulation runs on a fixed timestep for consistency and repeatability.
-	-	Built to be easy to understand and extend—most components are separated cleanly and avoid unnecessary abstraction.
-	-	Engine state is stored in a self-contained context, allowing integration into other applications or environments.
-
----
-
-### Demos
-
-##### Contact + Friction Resolution
-
-Collisions between circles and polygons with impulse + friction response.
-
+- Uses **Structure of Arrays (SoA)** for better cache behavior during updates.
+-	Simulation runs on a fixed timestep for consistency and repeatability.
+-	Built to be easy to understand and extend—most components are separated cleanly and avoid unnecessary abstraction.
+-	Engine state is stored in a self-contained context, allowing integration into other applications or environments.
 
 ---
 
-##### Mass Disparity Stress Test
+## Demos
 
-Demonstrates stacking behavior with large differences in object mass and shape.
+### Convex + Circle Impulse and Friction Resolution
 
+A visual test of contact generation and resolution between convex shapes and circles. Demonstrates working restitution and friction.
+
+![Convex + circle impulse and friction resolution](media/convex_circle_impulse.gif)
 
 ---
 
-### Build Instructions (Linux)
+### Mass Disparity Stability Test
+
+Stress test demonstrating object stacking behavior under significant differences in body mass and shape.
+
+![Piling stability under mass disparity](media/50convex_50circle.gif)
+
+---
+
+## Build Instructions (Linux)
 
 ``` bash
-sudo apt install libsfml-dev
-git clone https://github.com/cianleypoldt/Zenoa.git
-cd physics-engine
-make
-./bin/physics_demo
+sudo pacman -S git clang cmake make sfml glm
+git clone https://github.com/cianleypoldt/SAT-Impulse-Physics.git
+mkdir Zenoa/build; cd Zenoa/build
+cmake ..; make
+./Zenoa
 ```
 
 ---
 
-### Dependencies
+## Dependencies
 
  - GLM – Vector math and linear algebra
  -	SFML – Debug rendering and input
 
 ---
 
-### License
+## License
 
 Zenoa is released under the MIT License.
