@@ -4,17 +4,18 @@ Zenoa is a real-time 2D rigid-body physics engine built in modern C++17. It was 
 
 The engine supports convex polygon and circle bodies, impulse-based collision resolution, and visual debugging through SFML. While compact in scope, it demonstrates working solutions to core physics simulation problems like friction, stacking, and energy conservation.
 
-⸻
+---
 
 ### Contents
-	•	Collision Handling
-	•	Physics Model
-	•	Design Notes
-	•	Demos
-	•	Build Instructions
-	•	Dependencies
 
-⸻
+-	Collision Handling
+- Physics Model
+- Design Notes
+- Demos
+- Build Instructions
+- Dependencies
+
+---
 
 ### Collision Handling
 
@@ -30,7 +31,7 @@ Circles are handled with a face projection method, allowing smooth resolution ag
 
 Simple deepest-point resolution is used to prevent tunneling and maintain expected object boundaries in confined scenes.
 
-⸻
+---
 
 ### Physics Model
 
@@ -52,24 +53,25 @@ J =
 $$
 
 Where:
-	•	e is the restitution coefficient
-	•	\vec{v}_{rel} is the relative velocity at the contact
-	•	\vec{n} is the contact normal
-	•	m, I are the mass and moment of inertia
+	-	e is the restitution coefficient
+	-	\vec{v}_{rel} is the relative velocity at the contact
+	-	\vec{n} is the contact normal
+	-	m, I are the mass and moment of inertia
 
 #### Friction
 
 Basic Coulomb friction is supported. Tangential impulses are clamped relative to the normal impulse, allowing simple sliding and resting contact behavior.
 
-⸻
+---
 
 ### Design Notes
-	•	Uses Structure of Arrays (SoA) for better cache behavior during updates.
-	•	Simulation runs on a fixed timestep for consistency and repeatability.
-	•	Built to be easy to understand and extend—most components are separated cleanly and avoid unnecessary abstraction.
-	•	Engine state is stored in a self-contained context, allowing integration into other applications or environments.
 
-⸻
+- Uses Structure of Arrays (SoA) for better cache behavior during updates.
+	-	Simulation runs on a fixed timestep for consistency and repeatability.
+	-	Built to be easy to understand and extend—most components are separated cleanly and avoid unnecessary abstraction.
+	-	Engine state is stored in a self-contained context, allowing integration into other applications or environments.
+
+---
 
 ### Demos
 
@@ -78,36 +80,34 @@ Basic Coulomb friction is supported. Tangential impulses are clamped relative to
 Collisions between circles and polygons with impulse + friction response.
 
 
-⸻
+---
 
 #### Mass Disparity Stress Test
 
 Demonstrates stacking behavior with large differences in object mass and shape.
 
 
-⸻
+---
 
 ### Build Instructions (Linux)
 
+``` bash
 sudo apt install libsfml-dev
 git clone https://github.com/cianleypoldt/Zenoa.git
 cd physics-engine
 make
 ./bin/physics_demo
+```
 
-
-⸻
+---
 
 ### Dependencies
-	•	GLM – Vector math and linear algebra
-	•	SFML – Debug rendering and input
 
-⸻
+ - GLM – Vector math and linear algebra
+ -	SFML – Debug rendering and input
+
+---
 
 ### License
 
 Zenoa is released under the MIT License.
-
-⸻
-
-Let me know if you want a version that includes benchmarking or performance notes, though I assume this was more of a “prove I can do it” engine than a “beat Box2D” one.
