@@ -13,7 +13,7 @@ int main() {
     rbs::set_gravity(ctx, 0); // No gravity for controlled testing
     ctx->fixed_timestep = 0.07;
 
-    Renderer renderer(ctx, /* vsync= */ false, /* scale= */ 25);
+    Renderer renderer(ctx, /* fullscreen= */ false, /* FPS= */ 60);
     float density = 1e-6f;
 
     // Create and place two convex bodies
