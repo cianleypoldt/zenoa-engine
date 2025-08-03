@@ -1,47 +1,49 @@
 #include "engine/interface.h"
 #include "graphics/renderer.h"
 
-// Demo scene 2 spinning convex + 1 circle:
-
-#if 0
 int main() {
-    // clang-format off
-    std::vector<glm::vec2> points = {{0, 0}, {95.0, -69.0}, {58.8,  -181.0}, {-58.8, -181.0}, {-95.0, -69.0}};
-    // clang-format on
-    float default_density    = 0.000001;
-    auto* simulation_context = rbs::make_context();
-    rbs::set_bounds(simulation_context, { -500, -250 }, { 500, 250 });
-    rbs::set_gravity(simulation_context, 0);
+    // Define a convex polygon shape (pentagon-like)
+    std::vector<glm::vec2> points = {
+        {0, 0}, {95.0f, -69.0f}, {58.8f, -181.0f},
+        {-58.8f, -181.0f}, {-95.0f, -69.0f}
+    };
 
-    simulation_context->fixed_timestep = 0.07;
+    auto* ctx = rbs::make_context();
+    rbs::set_bounds(ctx, {-500, -250}, {500, 250});
+    rbs::set_gravity(ctx, 0); // No gravity for controlled testing
+    ctx->fixed_timestep = 0.07;
 
-    Renderer renderer(simulation_context, false, 25);
+    Renderer renderer(ctx, /* vsync= */ false, /* scale= */ 25);
+    float density = 1e-6f;
 
-    auto convex_id  = rbs::add_entity(simulation_context);
-    auto convex2_id = rbs::add_entity(simulation_context);
-    auto circle_id  = rbs::add_entity(simulation_context);
+    // Create and place two convex bodies
+    auto convex1 = rbs::add_entity(ctx);
+    rbs::add_convex_collider(ctx, convex1, points, density);
+    rbs::set_position(ctx, convex1, {-80, 150});
+    renderer.add_convex(convex1);
 
-    rbs::add_convex_collider(simulation_context, convex_id, points, default_density);
-    rbs::set_position(simulation_context, convex_id, { -80, 150 });
-    renderer.add_convex(convex_id);
-    rbs::add_convex_collider(simulation_context, convex2_id, points, default_density);
-    rbs::set_position(simulation_context, convex2_id, { 100, -140 });
-    renderer.add_convex(convex2_id);
+    auto convex2 = rbs::add_entity(ctx);
+    rbs::add_convex_collider(ctx, convex2, points, density);
+    rbs::set_position(ctx, convex2, {100, -140});
+    renderer.add_convex(convex2);
 
-    rbs::add_circle_collider(simulation_context, circle_id, 50, default_density);
-    rbs::set_position(simulation_context, circle_id, { 300, 50 });
-    renderer.add_circle(circle_id);
+    // Create and place a circle
+    auto circle = rbs::add_entity(ctx);
+    rbs::add_circle_collider(ctx, circle, 50, density);
+    rbs::set_position(ctx, circle, {300, 50});
+    renderer.add_circle(circle);
 
-    rbs::apply_torque(simulation_context, convex_id, -2300);
-    rbs::apply_torque(simulation_context, convex2_id, 5000);
+    // Apply torque and force to test dynamics
+    rbs::apply_torque(ctx, convex1, -2300);
+    rbs::apply_torque(ctx, convex2, 5000);
+    rbs::apply_force(ctx, circle, {-4, 0});
 
-    rbs::apply_force(simulation_context, circle_id, { -4, 0 });
-
+    // Run the simulation
     while (renderer.active()) {
-        rbs::step(simulation_context);
+        rbs::step(ctx);
         renderer.refresh();
     }
 
-    rbs::drop(simulation_context);
+    rbs::drop(ctx);
     return 0;
 }
