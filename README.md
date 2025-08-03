@@ -108,8 +108,8 @@ cmake ..; make
 
 ## Dependencies
 
- - GLM – Vector math and linear algebra
- -	SFML – Debug rendering and input
+ - **GLM** – Vector math and linear algebra
+ - **SFML** – Debug rendering and input
 
 ---
 
