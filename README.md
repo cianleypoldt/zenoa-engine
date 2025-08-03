@@ -68,9 +68,8 @@ Basic Coulomb friction is supported. Tangential impulses are clamped relative to
 ## Design Notes
 
 - Uses **Structure of Arrays (SoA)** for better cache behavior during updates.
-- Simulation runs on a fixed timestep for consistency and repeatability.
-- Built to be easy to understand and extend—most components are separated cleanly and avoid unnecessary abstraction.
-- Engine state is stored in a self-contained context, allowing integration into other applications or environments.
+- Simulation runs on a **fixed timestep** for consistency and repeatability.
+- Engine **state** is stored in a **self-contained context**, allowing integration into other applications or environments.
 - The API is exposed via the interface header: [`src/engine/interface.h`](src/engine/interface.h).
 - Usage examples are provided in the [`examples`](examples/) directory.
 
