@@ -8,11 +8,11 @@ The engine supports convex polygon and circle bodies, impulse-based collision re
 
 ## Contents
 
-- [Collision Handling](#collision-handling)  
-- [Physics Model](#physics-model)  
-- [Design Notes](#design-notes)  
-- [Demos](#demos)  
-- [Build Instructions](#build-instructions-(linux))  
+- [Collision Handling](#collision-handling)
+- [Physics Model](#physics-model)
+- [Design Notes](#design-notes)
+- [Visual Demos](#demonstration)
+- [Build Instructions](#build-instructions-(linux))
 - [Dependencies](#dependencies)
 
 ---
@@ -59,6 +59,7 @@ $$
 -	$\vec{n}$ is the contact normal
 -	$m$, $I$ are the mass and moment of inertia
 
+
 ### Friction
 
 Basic Coulomb friction is supported. Tangential impulses are clamped relative to the normal impulse, allowing simple sliding and resting contact behavior.
@@ -75,14 +76,15 @@ Basic Coulomb friction is supported. Tangential impulses are clamped relative to
 
 ---
 
-## Demos
+## Demonstration
 
 ### Convex + Circle Impulse and Friction Resolution
 
 Demonstrates contact resolution, restitution, and friction between convex shapes and circles.
 
 ![Convex + circle impulse and friction resolution](media/convex_circle_impulse.gif)
-[`View source`](examples/collision_demo.cpp)
+
+[`View source code`](examples/collision_demo.cpp)
 
 ---
 
