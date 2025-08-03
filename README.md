@@ -71,8 +71,8 @@ Basic Coulomb friction is supported. Tangential impulses are clamped relative to
 - Simulation runs on a fixed timestep for consistency and repeatability.
 - Built to be easy to understand and extend—most components are separated cleanly and avoid unnecessary abstraction.
 - Engine state is stored in a self-contained context, allowing integration into other applications or environments.
-- A set of example programs is included in the [`examples`](examples/) directory
-- The public API is exposed via the interface header: [`src/engine/interface.h`](src/engine/interface.h).
+- The API is exposed via the interface header: [`src/engine/interface.h`](src/engine/interface.h).
+- Usage examples are provided in the [`examples`](examples/) directory.
 
 ---
 
@@ -80,16 +80,16 @@ Basic Coulomb friction is supported. Tangential impulses are clamped relative to
 
 ### Convex + Circle Impulse and Friction Resolution
 
-A visual test of contact generation and resolution between convex shapes and circles. Demonstrates working restitution and friction.
--> [`View source`](examples/collision_demo.cpp)
+Demonstrates contact resolution, restitution, and friction between convex shapes and circles.
 
 ![Convex + circle impulse and friction resolution](media/convex_circle_impulse.gif)
+[`View source`](examples/collision_demo.cpp)
 
 ---
 
 ### Mass Disparity Stability Test
 
-Stress test demonstrating object stacking behavior under significant differences in body mass and shape.
+Tests stability under differences in body mass and geometry.
 
 ![Piling stability under mass disparity](media/50convex_50circle.gif)
 
