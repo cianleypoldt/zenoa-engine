@@ -1,3 +1,4 @@
+{{REWRITTEN_CODE}}
 # Zenoa Engine (C++)
 
 Zenoa is a real-time 2D rigid-body physics engine built in modern C++17. It was developed as an educational project at age 17, with a focus on clarity, determinism, and stable simulation under simple physical assumptions.
@@ -21,7 +22,7 @@ The engine supports convex polygon and circle bodies, impulse-based collision re
 
 ### Convex Shapes
 
-Collision detection between convex polygons uses the **Separating Axis Theorem (SAT)**. Contact points are computed using face clipping and penetration depth is used to generate response impulses.
+Collision detection between convex polygons uses the **Separating Axis Theorem (SAT)**. Contact points are computed using face clipping, and penetration depth is used to generate response impulses.
 
 ### Circle–Polygon Interactions
 
@@ -29,7 +30,7 @@ Circles are handled with a **face projection method**, allowing smooth resolutio
 
 ### Wall and Border Contacts
 
-Simple deepest-point resolution is used to prevent tunneling and maintain expected object boundaries in confined scenes.
+A simple deepest-point resolution is used to prevent tunneling and maintain expected object boundaries in confined scenes.
 
 ---
 
@@ -42,23 +43,15 @@ Collisions are resolved using a basic impulse solver. Linear and angular velocit
 **Impulse formula:**
 
 $$
-J =
-\frac{
--(1 + e) \cdot (\vec{v}_{rel} \cdot \vec{n})
-}{
-\frac{1}{m_A} + \frac{1}{m_B} +
-\frac{(\vec{r}_A \times \vec{n})^2}{I_A} +
-\frac{(\vec{r}_B \times \vec{n})^2}{I_B}
-}
+J = \frac{-(1 + e) \cdot (\vec{v}_{rel} \cdot \vec{n})}{\frac{1}{m_A} + \frac{1}{m_B} + \frac{(\vec{r}_A \times \vec{n})^2}{I_A} + \frac{(\vec{r}_B \times \vec{n})^2}{I_B}}
 $$
 
 **Where:**
 
--	$e$ is the restitution coefficient
--	$\vec{v}_{rel}$ is the relative velocity at the contact
--	$\vec{n}$ is the contact normal
--	$m$, $I$ are the mass and moment of inertia
-
+- $e$ is the restitution coefficient
+- $\vec{v}_{rel}$ is the relative velocity at the contact
+- $\vec{n}$ is the contact normal
+- $m$, $I$ are the mass and moment of inertia
 
 ### Friction
 
@@ -83,7 +76,8 @@ Basic Coulomb friction is supported. Tangential impulses are clamped relative to
 Demonstrates contact resolution, restitution, and friction between convex shapes and circles.
 
 <img src="media/convex_circle_impulse.gif" alt="Convex + circle impulse and friction resolution" width="100%" />
-View <a href="examples/collision_demo.cpp" class="code-link">Source Code</a>
+
+View <a href="examples/collision_demo.cpp" class="code-link">source code</a>
 
 ---
 
@@ -97,7 +91,7 @@ Tests stability under differences in body mass and geometry.
 
 ## Build Instructions (Linux)
 
-``` bash
+```bash
 sudo pacman -S git clang cmake make sfml glm
 git clone https://github.com/cianleypoldt/SAT-Impulse-Physics.git
 mkdir Zenoa/build; cd Zenoa/build
@@ -109,8 +103,8 @@ cmake ..; make
 
 ## Dependencies
 
- - **GLM** – Vector math and linear algebra
- - **SFML** – Debug rendering and input
+- **GLM** – Vector math and linear algebra
+- **SFML** – Debug rendering and input
 
 ---
 
