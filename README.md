@@ -82,7 +82,7 @@ Basic Coulomb friction is supported. Tangential impulses are clamped relative to
 
 Demonstrates contact resolution, restitution, and friction between convex shapes and circles.
 
-![Convex + circle impulse and friction resolution](media/convex_circle_impulse.gif)
+<img src="media/convex_circle_impulse.gif" alt="Convex + circle impulse and friction resolution" width="100%" />
 
 [`View source code`](examples/collision_demo.cpp)
 
@@ -92,7 +92,7 @@ Demonstrates contact resolution, restitution, and friction between convex shapes
 
 Tests stability under differences in body mass and geometry.
 
-![Piling stability under mass disparity](media/50convex_50circle.gif)
+<img src="media/50convex_50circle.gif" alt="Piling stability under mass disparity" width="100%" />
 
 ---
 
