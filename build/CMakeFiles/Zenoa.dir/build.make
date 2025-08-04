@@ -72,24 +72,10 @@ include CMakeFiles/Zenoa.dir/flags.make
 CMakeFiles/Zenoa.dir/codegen:
 .PHONY : CMakeFiles/Zenoa.dir/codegen
 
-CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.o: CMakeFiles/Zenoa.dir/flags.make
-CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.o: /home/cianleypoldt/Documents/cpp/Zenoa/src/convex_circle_scene.cpp
-CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.o: CMakeFiles/Zenoa.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.o -MF CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.o.d -o CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.o -c /home/cianleypoldt/Documents/cpp/Zenoa/src/convex_circle_scene.cpp
-
-CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cianleypoldt/Documents/cpp/Zenoa/src/convex_circle_scene.cpp > CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.i
-
-CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cianleypoldt/Documents/cpp/Zenoa/src/convex_circle_scene.cpp -o CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.s
-
 CMakeFiles/Zenoa.dir/src/engine/entity_manager.cpp.o: CMakeFiles/Zenoa.dir/flags.make
 CMakeFiles/Zenoa.dir/src/engine/entity_manager.cpp.o: /home/cianleypoldt/Documents/cpp/Zenoa/src/engine/entity_manager.cpp
 CMakeFiles/Zenoa.dir/src/engine/entity_manager.cpp.o: CMakeFiles/Zenoa.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Zenoa.dir/src/engine/entity_manager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Zenoa.dir/src/engine/entity_manager.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Zenoa.dir/src/engine/entity_manager.cpp.o -MF CMakeFiles/Zenoa.dir/src/engine/entity_manager.cpp.o.d -o CMakeFiles/Zenoa.dir/src/engine/entity_manager.cpp.o -c /home/cianleypoldt/Documents/cpp/Zenoa/src/engine/entity_manager.cpp
 
 CMakeFiles/Zenoa.dir/src/engine/entity_manager.cpp.i: cmake_force
@@ -103,7 +89,7 @@ CMakeFiles/Zenoa.dir/src/engine/entity_manager.cpp.s: cmake_force
 CMakeFiles/Zenoa.dir/src/engine/interface.cpp.o: CMakeFiles/Zenoa.dir/flags.make
 CMakeFiles/Zenoa.dir/src/engine/interface.cpp.o: /home/cianleypoldt/Documents/cpp/Zenoa/src/engine/interface.cpp
 CMakeFiles/Zenoa.dir/src/engine/interface.cpp.o: CMakeFiles/Zenoa.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Zenoa.dir/src/engine/interface.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Zenoa.dir/src/engine/interface.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Zenoa.dir/src/engine/interface.cpp.o -MF CMakeFiles/Zenoa.dir/src/engine/interface.cpp.o.d -o CMakeFiles/Zenoa.dir/src/engine/interface.cpp.o -c /home/cianleypoldt/Documents/cpp/Zenoa/src/engine/interface.cpp
 
 CMakeFiles/Zenoa.dir/src/engine/interface.cpp.i: cmake_force
@@ -117,7 +103,7 @@ CMakeFiles/Zenoa.dir/src/engine/interface.cpp.s: cmake_force
 CMakeFiles/Zenoa.dir/src/engine/physics_system/border.cpp.o: CMakeFiles/Zenoa.dir/flags.make
 CMakeFiles/Zenoa.dir/src/engine/physics_system/border.cpp.o: /home/cianleypoldt/Documents/cpp/Zenoa/src/engine/physics_system/border.cpp
 CMakeFiles/Zenoa.dir/src/engine/physics_system/border.cpp.o: CMakeFiles/Zenoa.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Zenoa.dir/src/engine/physics_system/border.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Zenoa.dir/src/engine/physics_system/border.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Zenoa.dir/src/engine/physics_system/border.cpp.o -MF CMakeFiles/Zenoa.dir/src/engine/physics_system/border.cpp.o.d -o CMakeFiles/Zenoa.dir/src/engine/physics_system/border.cpp.o -c /home/cianleypoldt/Documents/cpp/Zenoa/src/engine/physics_system/border.cpp
 
 CMakeFiles/Zenoa.dir/src/engine/physics_system/border.cpp.i: cmake_force
@@ -131,7 +117,7 @@ CMakeFiles/Zenoa.dir/src/engine/physics_system/border.cpp.s: cmake_force
 CMakeFiles/Zenoa.dir/src/engine/physics_system/collision.cpp.o: CMakeFiles/Zenoa.dir/flags.make
 CMakeFiles/Zenoa.dir/src/engine/physics_system/collision.cpp.o: /home/cianleypoldt/Documents/cpp/Zenoa/src/engine/physics_system/collision.cpp
 CMakeFiles/Zenoa.dir/src/engine/physics_system/collision.cpp.o: CMakeFiles/Zenoa.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Zenoa.dir/src/engine/physics_system/collision.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Zenoa.dir/src/engine/physics_system/collision.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Zenoa.dir/src/engine/physics_system/collision.cpp.o -MF CMakeFiles/Zenoa.dir/src/engine/physics_system/collision.cpp.o.d -o CMakeFiles/Zenoa.dir/src/engine/physics_system/collision.cpp.o -c /home/cianleypoldt/Documents/cpp/Zenoa/src/engine/physics_system/collision.cpp
 
 CMakeFiles/Zenoa.dir/src/engine/physics_system/collision.cpp.i: cmake_force
@@ -145,7 +131,7 @@ CMakeFiles/Zenoa.dir/src/engine/physics_system/collision.cpp.s: cmake_force
 CMakeFiles/Zenoa.dir/src/engine/physics_system/integration.cpp.o: CMakeFiles/Zenoa.dir/flags.make
 CMakeFiles/Zenoa.dir/src/engine/physics_system/integration.cpp.o: /home/cianleypoldt/Documents/cpp/Zenoa/src/engine/physics_system/integration.cpp
 CMakeFiles/Zenoa.dir/src/engine/physics_system/integration.cpp.o: CMakeFiles/Zenoa.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Zenoa.dir/src/engine/physics_system/integration.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Zenoa.dir/src/engine/physics_system/integration.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Zenoa.dir/src/engine/physics_system/integration.cpp.o -MF CMakeFiles/Zenoa.dir/src/engine/physics_system/integration.cpp.o.d -o CMakeFiles/Zenoa.dir/src/engine/physics_system/integration.cpp.o -c /home/cianleypoldt/Documents/cpp/Zenoa/src/engine/physics_system/integration.cpp
 
 CMakeFiles/Zenoa.dir/src/engine/physics_system/integration.cpp.i: cmake_force
@@ -159,7 +145,7 @@ CMakeFiles/Zenoa.dir/src/engine/physics_system/integration.cpp.s: cmake_force
 CMakeFiles/Zenoa.dir/src/engine/physics_system/physics.cpp.o: CMakeFiles/Zenoa.dir/flags.make
 CMakeFiles/Zenoa.dir/src/engine/physics_system/physics.cpp.o: /home/cianleypoldt/Documents/cpp/Zenoa/src/engine/physics_system/physics.cpp
 CMakeFiles/Zenoa.dir/src/engine/physics_system/physics.cpp.o: CMakeFiles/Zenoa.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Zenoa.dir/src/engine/physics_system/physics.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Zenoa.dir/src/engine/physics_system/physics.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Zenoa.dir/src/engine/physics_system/physics.cpp.o -MF CMakeFiles/Zenoa.dir/src/engine/physics_system/physics.cpp.o.d -o CMakeFiles/Zenoa.dir/src/engine/physics_system/physics.cpp.o -c /home/cianleypoldt/Documents/cpp/Zenoa/src/engine/physics_system/physics.cpp
 
 CMakeFiles/Zenoa.dir/src/engine/physics_system/physics.cpp.i: cmake_force
@@ -173,7 +159,7 @@ CMakeFiles/Zenoa.dir/src/engine/physics_system/physics.cpp.s: cmake_force
 CMakeFiles/Zenoa.dir/src/main.cpp.o: CMakeFiles/Zenoa.dir/flags.make
 CMakeFiles/Zenoa.dir/src/main.cpp.o: /home/cianleypoldt/Documents/cpp/Zenoa/src/main.cpp
 CMakeFiles/Zenoa.dir/src/main.cpp.o: CMakeFiles/Zenoa.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Zenoa.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Zenoa.dir/src/main.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Zenoa.dir/src/main.cpp.o -MF CMakeFiles/Zenoa.dir/src/main.cpp.o.d -o CMakeFiles/Zenoa.dir/src/main.cpp.o -c /home/cianleypoldt/Documents/cpp/Zenoa/src/main.cpp
 
 CMakeFiles/Zenoa.dir/src/main.cpp.i: cmake_force
@@ -186,7 +172,6 @@ CMakeFiles/Zenoa.dir/src/main.cpp.s: cmake_force
 
 # Object files for target Zenoa
 Zenoa_OBJECTS = \
-"CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.o" \
 "CMakeFiles/Zenoa.dir/src/engine/entity_manager.cpp.o" \
 "CMakeFiles/Zenoa.dir/src/engine/interface.cpp.o" \
 "CMakeFiles/Zenoa.dir/src/engine/physics_system/border.cpp.o" \
@@ -198,7 +183,6 @@ Zenoa_OBJECTS = \
 # External object files for target Zenoa
 Zenoa_EXTERNAL_OBJECTS =
 
-Zenoa: CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.o
 Zenoa: CMakeFiles/Zenoa.dir/src/engine/entity_manager.cpp.o
 Zenoa: CMakeFiles/Zenoa.dir/src/engine/interface.cpp.o
 Zenoa: CMakeFiles/Zenoa.dir/src/engine/physics_system/border.cpp.o
@@ -214,7 +198,7 @@ Zenoa: /usr/lib/libsfml-audio.so.3.0.1
 Zenoa: /usr/lib/libglm.a
 Zenoa: /usr/lib/libsfml-system.so.3.0.1
 Zenoa: CMakeFiles/Zenoa.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable Zenoa"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable Zenoa"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Zenoa.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

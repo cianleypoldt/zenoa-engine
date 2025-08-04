@@ -130,30 +130,6 @@ Zenoa/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/build
 .PHONY : Zenoa/fast
 
-src/convex_circle_scene.o: src/convex_circle_scene.cpp.o
-.PHONY : src/convex_circle_scene.o
-
-# target to build an object file
-src/convex_circle_scene.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.o
-.PHONY : src/convex_circle_scene.cpp.o
-
-src/convex_circle_scene.i: src/convex_circle_scene.cpp.i
-.PHONY : src/convex_circle_scene.i
-
-# target to preprocess a source file
-src/convex_circle_scene.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.i
-.PHONY : src/convex_circle_scene.cpp.i
-
-src/convex_circle_scene.s: src/convex_circle_scene.cpp.s
-.PHONY : src/convex_circle_scene.s
-
-# target to generate assembly for a file
-src/convex_circle_scene.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Zenoa.dir/build.make CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.s
-.PHONY : src/convex_circle_scene.cpp.s
-
 src/engine/entity_manager.o: src/engine/entity_manager.cpp.o
 .PHONY : src/engine/entity_manager.o
 
@@ -331,9 +307,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Zenoa"
-	@echo "... src/convex_circle_scene.o"
-	@echo "... src/convex_circle_scene.i"
-	@echo "... src/convex_circle_scene.s"
 	@echo "... src/engine/entity_manager.o"
 	@echo "... src/engine/entity_manager.i"
 	@echo "... src/engine/entity_manager.s"

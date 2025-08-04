@@ -1,7 +1,5 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Zenoa.dir/link.d"
-  "CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.o"
-  "CMakeFiles/Zenoa.dir/src/convex_circle_scene.cpp.o.d"
   "CMakeFiles/Zenoa.dir/src/engine/entity_manager.cpp.o"
   "CMakeFiles/Zenoa.dir/src/engine/entity_manager.cpp.o.d"
   "CMakeFiles/Zenoa.dir/src/engine/interface.cpp.o"

@@ -4,7 +4,6 @@
 # SOURCES at CMakeLists.txt:17 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/home/cianleypoldt/Documents/cpp/Zenoa/src/*.cpp")
 set(OLD_GLOB
-  "/home/cianleypoldt/Documents/cpp/Zenoa/src/convex_circle_scene.cpp"
   "/home/cianleypoldt/Documents/cpp/Zenoa/src/engine/entity_manager.cpp"
   "/home/cianleypoldt/Documents/cpp/Zenoa/src/engine/interface.cpp"
   "/home/cianleypoldt/Documents/cpp/Zenoa/src/engine/physics_system/border.cpp"
