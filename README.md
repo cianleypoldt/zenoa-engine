@@ -83,7 +83,7 @@ Basic Coulomb friction is supported. Tangential impulses are clamped relative to
 Demonstrates contact resolution, restitution, and friction between convex shapes and circles.
 
 <img src="media/convex_circle_impulse.gif" alt="Convex + circle impulse and friction resolution" width="100%" />
-<a href="examples/collision_demo.cpp">`View source code`</a>
+<a href="examples/collision_demo.cpp" class="code-link">📝 Explore the Source Code &rarr;</a>
 
 ---
 
