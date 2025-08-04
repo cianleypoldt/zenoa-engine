@@ -1,140 +1,120 @@
 # Zenoa Engine (C++)
 
-<div class="engine-overview">
-    <p>Zenoa is a real-time 2D rigid-body physics engine built in modern C++17. It was developed as an educational project at age 17, with a focus on clarity, determinism, and stable simulation under simple physical assumptions.</p>
+Zenoa is a real-time 2D rigid-body physics engine built in modern C++17. It was developed as an educational project at age 17, with a focus on clarity, determinism, and stable simulation under simple physical assumptions.
 
-    <p>The engine supports convex polygon and circle bodies, impulse-based collision resolution, and visual debugging through SFML. While compact in scope, it demonstrates working solutions to core physics simulation problems like friction, stacking, and energy conservation.</p>
-</div>
+The engine supports convex polygon and circle bodies, impulse-based collision resolution, and visual debugging through SFML. While compact in scope, it demonstrates working solutions to core physics simulation problems like friction, stacking, and energy conservation.
 
-<hr>
+---
 
 ## Contents
 
-<nav class="table-of-contents">
-    <ul>
-        <li><a href="#collision-handling">Collision Handling</a></li>
-        <li><a href="#physics-model">Physics Model</a></li>
-        <li><a href="#design-notes">Design Notes</a></li>
-        <li><a href="#demonstration">Visual Demos</a></li>
-        <li><a href="#build-instructions-linux">Build Instructions</a></li>
-        <li><a href="#dependencies">Dependencies</a></li>
-    </ul>
-</nav>
+- [Collision Handling](#collision-handling)
+- [Physics Model](#physics-model)
+- [Design Notes](#design-notes)
+- [Visual Demos](#demonstration)
+- [Build Instructions](#build-instructions-(linux))
+- [Dependencies](#dependencies)
 
-<hr>
+---
 
 ## Collision Handling
 
-<div class="feature-section">
-    <h3>Convex Shapes</h3>
-    <p>Collision detection between convex polygons uses the <strong>Separating Axis Theorem (SAT)</strong>. Contact points are computed using face clipping and penetration depth is used to generate response impulses.</p>
+### Convex Shapes
 
-    <h3>Circle–Polygon Interactions</h3>
-    <p>Circles are handled with a <strong>face projection method</strong>, allowing smooth resolution against polygon edges without excessive branching or shape-specific logic.</p>
+Collision detection between convex polygons uses the **Separating Axis Theorem (SAT)**. Contact points are computed using face clipping and penetration depth is used to generate response impulses.
 
-    <h3>Wall and Border Contacts</h3>
-    <p>Simple deepest-point resolution is used to prevent tunneling and maintain expected object boundaries in confined scenes.</p>
-</div>
+### Circle–Polygon Interactions
 
-<hr>
+Circles are handled with a **face projection method**, allowing smooth resolution against polygon edges without excessive branching or shape-specific logic.
+
+### Wall and Border Contacts
+
+Simple deepest-point resolution is used to prevent tunneling and maintain expected object boundaries in confined scenes.
+
+---
 
 ## Physics Model
 
-<div class="feature-section">
-    <h3>Impulse Resolution</h3>
-    <p>Collisions are resolved using a basic impulse solver. Linear and angular velocities are updated using the relative velocity at the contact point and the combined inverse mass and inertia of the two bodies.</p>
+### Impulse Resolution
 
-    <div class="formula">
-        <p><strong>Impulse formula:</strong></p>
+Collisions are resolved using a basic impulse solver. Linear and angular velocities are updated using the relative velocity at the contact point and the combined inverse mass and inertia of the two bodies.
 
-        $$J = \frac{-(1 + e) \cdot (\vec{v}_{rel} \cdot \vec{n})}{\frac{1}{m_A} + \frac{1}{m_B} + \frac{(\vec{r}_A \times \vec{n})^2}{I_A} + \frac{(\vec{r}_B \times \vec{n})^2}{I_B}}$$
+**Impulse formula:**
 
-        <p><strong>Where:</strong></p>
+$$
+J =
+\frac{
+-(1 + e) \cdot (\vec{v}_{rel} \cdot \vec{n})
+}{
+\frac{1}{m_A} + \frac{1}{m_B} +
+\frac{(\vec{r}_A \times \vec{n})^2}{I_A} +
+\frac{(\vec{r}_B \times \vec{n})^2}{I_B}
+}
+$$
 
-        <ul>
-            <li>$e$ is the restitution coefficient</li>
-            <li>$\vec{v}_{rel}$ is the relative velocity at the contact</li>
-            <li>$\vec{n}$ is the contact normal</li>
-            <li>$m$, $I$ are the mass and moment of inertia</li>
-        </ul>
-    </div>
+**Where:**
 
-    <h3>Friction</h3>
-    <p>Basic Coulomb friction is supported. Tangential impulses are clamped relative to the normal impulse, allowing simple sliding and resting contact behavior.</p>
-</div>
+-	$e$ is the restitution coefficient
+-	$\vec{v}_{rel}$ is the relative velocity at the contact
+-	$\vec{n}$ is the contact normal
+-	$m$, $I$ are the mass and moment of inertia
 
-<hr>
+
+### Friction
+
+Basic Coulomb friction is supported. Tangential impulses are clamped relative to the normal impulse, allowing simple sliding and resting contact behavior.
+
+---
 
 ## Design Notes
 
-<div class="feature-section">
-    <ul class="feature-list">
-        <li>Uses <strong>Structure of Arrays (SoA)</strong> for better cache behavior during updates.</li>
-        <li>Simulation runs on a <strong>fixed timestep</strong> for consistency and repeatability.</li>
-        <li>Engine <strong>state</strong> is stored in a <strong>self-contained context</strong>, allowing integration into other applications or environments.</li>
-        <li>The API is exposed via the interface header: <a href="src/engine/interface.h"><code>src/engine/interface.h</code></a>.</li>
-        <li>Usage examples are provided in the <a href="examples/"><code>examples</code></a> directory.</li>
-    </ul>
-</div>
+- Uses **Structure of Arrays (SoA)** for better cache behavior during updates.
+- Simulation runs on a **fixed timestep** for consistency and repeatability.
+- Engine **state** is stored in a **self-contained context**, allowing integration into other applications or environments.
+- The API is exposed via the interface header: [`src/engine/interface.h`](src/engine/interface.h).
+- Usage examples are provided in the [`examples`](examples/) directory.
 
-<hr>
+---
 
 ## Demonstration
 
-<div class="demos">
-    <div class="demo-section">
-        <h3>Convex + Circle Impulse and Friction Resolution</h3>
-        <p>Demonstrates contact resolution, restitution, and friction between convex shapes and circles.</p>
+### Convex + Circle Impulse and Friction Resolution
 
-        <div class="demo-image">
-            <img src="media/convex_circle_impulse.gif" alt="Convex + circle impulse and friction resolution">
-            <div class="demo-caption">
-                <a href="examples/collision_demo.cpp">View source code</a>
-            </div>
-        </div>
-    </div>
+Demonstrates contact resolution, restitution, and friction between convex shapes and circles.
 
-    <hr>
+![Convex + circle impulse and friction resolution](media/convex_circle_impulse.gif)
 
-    <div class="demo-section">
-        <h3>Mass Disparity Stability Test</h3>
-        <p>Tests stability under differences in body mass and geometry.</p>
+[`View source code`](examples/collision_demo.cpp)
 
-        <div class="demo-image">
-            <img src="media/50convex_50circle.gif" alt="Piling stability under mass disparity">
-        </div>
-    </div>
-</div>
+---
 
-<hr>
+### Mass Disparity Stability Test
+
+Tests stability under differences in body mass and geometry.
+
+![Piling stability under mass disparity](media/50convex_50circle.gif)
+
+---
 
 ## Build Instructions (Linux)
 
-<div class="code-section">
-    <div class="code-block">
-        <pre><code class="bash">sudo pacman -S git clang cmake make sfml glm
+``` bash
+sudo pacman -S git clang cmake make sfml glm
 git clone https://github.com/cianleypoldt/SAT-Impulse-Physics.git
 mkdir Zenoa/build; cd Zenoa/build
 cmake ..; make
-./Zenoa</code></pre>
-    </div>
-</div>
+./Zenoa
+```
 
-<hr>
+---
 
 ## Dependencies
 
-<div class="dependencies">
-    <ul>
-        <li><strong>GLM</strong> – Vector math and linear algebra</li>
-        <li><strong>SFML</strong> – Debug rendering and input</li>
-    </ul>
-</div>
+ - **GLM** – Vector math and linear algebra
+ - **SFML** – Debug rendering and input
 
-<hr>
+---
 
 ## License
 
-<div class="license-section">
-    <p>Zenoa is released under the MIT License.</p>
-</div>
+Zenoa is released under the MIT License.
