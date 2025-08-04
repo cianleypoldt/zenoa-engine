@@ -1,4 +1,4 @@
-<h1 id="zenoa-engine">Zenoa Engine (C++)</h1>
+# Zenoa Engine (C++)
 
 <div class="engine-overview">
     <p>Zenoa is a real-time 2D rigid-body physics engine built in modern C++17. It was developed as an educational project at age 17, with a focus on clarity, determinism, and stable simulation under simple physical assumptions.</p>
@@ -8,7 +8,7 @@
 
 <hr>
 
-<h2 id="contents">Contents</h2>
+## Contents
 
 <nav class="table-of-contents">
     <ul>
@@ -23,7 +23,7 @@
 
 <hr>
 
-<h2 id="collision-handling">Collision Handling</h2>
+## Collision Handling
 
 <div class="feature-section">
     <h3>Convex Shapes</h3>
@@ -38,7 +38,7 @@
 
 <hr>
 
-<h2 id="physics-model">Physics Model</h2>
+## Physics Model
 
 <div class="feature-section">
     <h3>Impulse Resolution</h3>
@@ -65,7 +65,7 @@
 
 <hr>
 
-<h2 id="design-notes">Design Notes</h2>
+## Design Notes
 
 <div class="feature-section">
     <ul class="feature-list">
@@ -79,7 +79,7 @@
 
 <hr>
 
-<h2 id="demonstration">Demonstration</h2>
+## Demonstration
 
 <div class="demos">
     <div class="demo-section">
@@ -108,7 +108,7 @@
 
 <hr>
 
-<h2 id="build-instructions-linux">Build Instructions (Linux)</h2>
+## Build Instructions (Linux)
 
 <div class="code-section">
     <div class="code-block">
@@ -122,7 +122,7 @@ cmake ..; make
 
 <hr>
 
-<h2 id="dependencies">Dependencies</h2>
+## Dependencies
 
 <div class="dependencies">
     <ul>
@@ -133,7 +133,7 @@ cmake ..; make
 
 <hr>
 
-<h2 id="license">License</h2>
+## License
 
 <div class="license-section">
     <p>Zenoa is released under the MIT License.</p>
