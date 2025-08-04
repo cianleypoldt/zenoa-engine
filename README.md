@@ -1,4 +1,4 @@
-<h1 id="zenoa-engine-c">Zenoa Engine (C++)</h1>
+<h1 id="zenoa-engine">Zenoa Engine (C++)</h1>
 
 <p>Zenoa is a real-time 2D rigid-body physics engine built in modern C++17. It was developed as an educational project at age 17, with a focus on clarity, determinism, and stable simulation under simple physical assumptions.</p>
 
@@ -21,15 +21,15 @@
 
 <h2 id="collision-handling">Collision Handling</h2>
 
-<h3 id="convex-shapes">Convex Shapes</h3>
+<h3>Convex Shapes</h3>
 
 <p>Collision detection between convex polygons uses the <strong>Separating Axis Theorem (SAT)</strong>. Contact points are computed using face clipping and penetration depth is used to generate response impulses.</p>
 
-<h3 id="circle-polygon-interactions">Circle–Polygon Interactions</h3>
+<h3>Circle–Polygon Interactions</h3>
 
 <p>Circles are handled with a <strong>face projection method</strong>, allowing smooth resolution against polygon edges without excessive branching or shape-specific logic.</p>
 
-<h3 id="wall-and-border-contacts">Wall and Border Contacts</h3>
+<h3>Wall and Border Contacts</h3>
 
 <p>Simple deepest-point resolution is used to prevent tunneling and maintain expected object boundaries in confined scenes.</p>
 
@@ -37,33 +37,35 @@
 
 <h2 id="physics-model">Physics Model</h2>
 
-<h3 id="impulse-resolution">Impulse Resolution</h3>
+<h3>Impulse Resolution</h3>
 
 <p>Collisions are resolved using a basic impulse solver. Linear and angular velocities are updated using the relative velocity at the contact point and the combined inverse mass and inertia of the two bodies.</p>
 
-<p><strong>Impulse formula:</strong></p>
+<div class="formula">
+  <p><strong>Impulse formula:</strong></p>
 
-$$
-J =
-\frac{
--(1 + e) \cdot (\vec{v}_{rel} \cdot \vec{n})
-}{
-\frac{1}{m_A} + \frac{1}{m_B} +
-\frac{(\vec{r}_A \times \vec{n})^2}{I_A} +
-\frac{(\vec{r}_B \times \vec{n})^2}{I_B}
-}
-$$
+  $$
+  J =
+  \frac{
+  -(1 + e) \cdot (\vec{v}_{rel} \cdot \vec{n})
+  }{
+  \frac{1}{m_A} + \frac{1}{m_B} +
+  \frac{(\vec{r}_A \times \vec{n})^2}{I_A} +
+  \frac{(\vec{r}_B \times \vec{n})^2}{I_B}
+  }
+  $$
 
-<p><strong>Where:</strong></p>
+  <p><strong>Where:</strong></p>
 
-<ul>
-  <li>$e$ is the restitution coefficient</li>
-  <li>$\vec{v}_{rel}$ is the relative velocity at the contact</li>
-  <li>$\vec{n}$ is the contact normal</li>
-  <li>$m$, $I$ are the mass and moment of inertia</li>
-</ul>
+  <ul>
+    <li>$e$ is the restitution coefficient</li>
+    <li>$\vec{v}_{rel}$ is the relative velocity at the contact</li>
+    <li>$\vec{n}$ is the contact normal</li>
+    <li>$m$, $I$ are the mass and moment of inertia</li>
+  </ul>
+</div>
 
-<h3 id="friction">Friction</h3>
+<h3>Friction</h3>
 
 <p>Basic Coulomb friction is supported. Tangential impulses are clamped relative to the normal impulse, allowing simple sliding and resting contact behavior.</p>
 
@@ -83,32 +85,38 @@ $$
 
 <h2 id="demonstration">Demonstration</h2>
 
-<h3 id="convex-circle-impulse-and-friction-resolution">Convex + Circle Impulse and Friction Resolution</h3>
+<h3>Convex + Circle Impulse and Friction Resolution</h3>
 
 <p>Demonstrates contact resolution, restitution, and friction between convex shapes and circles.</p>
 
-<p><img src="media/convex_circle_impulse.gif" alt="Convex + circle impulse and friction resolution"></p>
-
-<p><a href="examples/collision_demo.cpp"><code>View source code</code></a></p>
+<div class="demo-image">
+  <img src="media/convex_circle_impulse.gif" alt="Convex + circle impulse and friction resolution">
+  <div class="demo-caption">
+    <a href="examples/collision_demo.cpp">View source code</a>
+  </div>
+</div>
 
 <hr>
 
-<h3 id="mass-disparity-stability-test">Mass Disparity Stability Test</h3>
+<h3>Mass Disparity Stability Test</h3>
 
 <p>Tests stability under differences in body mass and geometry.</p>
 
-<p><img src="media/50convex_50circle.gif" alt="Piling stability under mass disparity"></p>
+<div class="demo-image">
+  <img src="media/50convex_50circle.gif" alt="Piling stability under mass disparity">
+</div>
 
 <hr>
 
 <h2 id="build-instructions-linux">Build Instructions (Linux)</h2>
 
-<pre><code class="language-bash">sudo pacman -S git clang cmake make sfml glm
+<div class="code-block">
+<pre><code class="bash">sudo pacman -S git clang cmake make sfml glm
 git clone https://github.com/cianleypoldt/SAT-Impulse-Physics.git
 mkdir Zenoa/build; cd Zenoa/build
 cmake ..; make
-./Zenoa
-</code></pre>
+./Zenoa</code></pre>
+</div>
 
 <hr>
 
