@@ -1,4 +1,11 @@
+<div align="center">
+
 # Zenoa Engine (C++)
+
+**A Real-Time 2D Rigid-Body Physics Engine**
+
+
+<div align="center">
 
 Zenoa is a real-time 2D rigid-body physics engine built in modern C++17. It was developed as an educational project at age 17, with a focus on clarity, determinism, and stable simulation under simple physical assumptions.
 
