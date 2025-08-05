@@ -1,15 +1,17 @@
 <h1 align="center">Zenoa Engine</h1>
 
 <p align="center">
+  2D rigid-body physics engine focused on clarity, determinism, and physical stability
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/badge/Physics-8E44AD?style=for-the-badge&logo=physics&logoColor=white" />
   <img src="https://img.shields.io/badge/C++17-1E90FF?style=for-the-badge&logo=c%2B%2B&logoColor=white" />
   <img src="https://img.shields.io/badge/SFML-34495E?style=for-the-badge&logo=sfml&logoColor=white" />
   <img src="https://img.shields.io/badge/GLM-3D9970?style=for-the-badge&logo=circle&logoColor=white" />
 </p>
 
-<p align="center">
-  2D rigid-body physics engine focused on clarity, determinism, and physical stability
-</p>
+
 <p align="center" style="line-height:1.6;">
   <a href="#collision-handling">Collision Handling</a> •
   <a href="#physics-model">Physics Model</a> •
