@@ -12,10 +12,12 @@
 <p align="center" style="line-height:1.6;">
   <a href="#collision-handling">Collision Handling</a> •
   <a href="#physics-model">Physics Model</a> •
-  <a href="#design-notes">Design Notes</a> •
+  <a href="#design-notes">Design Notes</a>
 </p>
 
 <img src="media/50convex_50circle.gif" alt="Piling stability under mass disparity" width="100%" />
+
+---
 
 **The engine supports**:
 - Convex polygon and circle bodies  
@@ -36,6 +38,13 @@ cmake ..; make
 
 ---
 
+## Dependencies
+
+- **GLM** – Vector math and linear algebra
+- **SFML** – Debug rendering and input
+
+---
+
 ## Collision Handling
 
 ### Convex Shapes
@@ -44,6 +53,7 @@ Collision detection between convex polygons uses the **Separating Axis Theorem (
 
 ### Circle–Polygon Interactions
 
+<img src="media/convex_circle_impulse.gif" alt="Convex + circle impulse and friction resolution" width="100%" />
 Circles are handled with a **face projection method**, allowing smooth resolution against polygon edges without excessive branching or shape-specific logic.
 
 ### Wall and Border Contacts
@@ -84,30 +94,6 @@ Basic Coulomb friction is supported. Tangential impulses are clamped relative to
 - Engine **state** is stored in a **self-contained context**, allowing integration into other applications or environments.
 - The API is exposed via the interface header: [`src/engine/interface.h`](src/engine/interface.h).
 - Usage examples are provided in the [`examples`](examples/) directory.
-
----
-
-## Demonstration
-
-### Convex + Circle Impulse and Friction Resolution
-
-Demonstrates contact resolution, restitution, and friction between convex shapes and circles.
-
-<img src="media/convex_circle_impulse.gif" alt="Convex + circle impulse and friction resolution" width="100%" />
-
----
-
-### Mass Disparity Stability Test
-
-Tests stability under differences in body mass and geometry.
-
-
----
-
-## Dependencies
-
-- **GLM** – Vector math and linear algebra
-- **SFML** – Debug rendering and input
 
 ---
 
