@@ -1,3 +1,0 @@
-/home/runner/work/RigidBody-Engine/RigidBody-Engine/build/CMakeFiles/Zenoa.dir
-/home/runner/work/RigidBody-Engine/RigidBody-Engine/build/CMakeFiles/edit_cache.dir
-/home/runner/work/RigidBody-Engine/RigidBody-Engine/build/CMakeFiles/rebuild_cache.dir
