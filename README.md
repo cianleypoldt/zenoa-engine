@@ -1,19 +1,24 @@
-# Zenoa Engine (C++)
+# **Zenoa Engine** (C++)
 
-Zenoa is a real-time 2D rigid-body physics engine built in modern C++17. It was developed as an educational project at age 17, with a focus on clarity, determinism, and stability under physical constraints.
+**Zenoa** is a real-time 2D rigid-body physics engine written in modern **C++17**. Developed as an educational project at age 17, it emphasizes clarity, determinism, and stability under physical constraints.
 
-The engine supports convex polygon and circle bodies, impulse-based collision resolution, and visual debugging through SFML.
+The engine supports:
+- Convex polygon and circle bodies  
+- Impulse-based collision resolution  
+- Visual debugging through **SFML**
 
 ---
 
-## Contents
+## **Contents**
 
-- [Collision Handling](#collision-handling)
-- [Physics Model](#physics-model)
-- [Design Notes](#design-notes)
-- [Visual Demos](#demonstration)
-- [Build Instructions](#build-instructions-(linux))
-- [Dependencies](#dependencies)
+| Section                                              | Description                                 |
+|------------------------------------------------------|---------------------------------------------|
+| [Collision Handling](#collision-handling)            | Collision detection and resolution logic     |
+| [Physics Model](#physics-model)                      | Mathematical and physical model overview     |
+| [Design Notes](#design-notes)                        | Architectural insights and design rationale  |
+| [Visual Demos](#demonstration)                       | Demonstrations of engine features            |
+| [Build Instructions (Linux)](#build-instructions-linux) | Step-by-step build and run guide             |
+| [Dependencies](#dependencies)                        | External libraries and their roles           |
 
 ---
 
