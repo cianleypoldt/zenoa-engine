@@ -1,4 +1,3 @@
-#pragma once
 #include "interface.h"
 
 #include "context.h"

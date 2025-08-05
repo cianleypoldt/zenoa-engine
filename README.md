@@ -30,25 +30,44 @@
 
 ---
 
-## Build Instructions (Linux)
+## Quick Start
 
+### Linux (Ubuntu/Debian)
 ```bash
-sudo pacman -S git clang cmake make sfml glm
-git clone https://github.com/cianleypoldt/SAT-Impulse-Physics.git
-mkdir Zenoa/build; cd Zenoa/build
-cmake ..; make
+sudo apt install build-essential cmake libsfml-dev libglm-dev
+git clone https://github.com/cianleypoldt/RigidBody-Engine.git
+cd RigidBody-Engine
+mkdir build && cd build
+cmake .. && make
 ./Zenoa
 ```
+
+### Linux (Arch/Manjaro)
+```bash
+sudo pacman -S git clang cmake make sfml glm
+git clone https://github.com/cianleypoldt/RigidBody-Engine.git
+cd RigidBody-Engine
+mkdir build && cd build
+cmake .. && make
+./Zenoa
+```
+
+### Other Platforms
+For Windows, macOS, and detailed build instructions, see **[BUILD.md](BUILD.md)**.
 
 ### Dependencies
 
 - **GLM** – Vector math and linear algebra
-- **SFML** – Debug rendering and input
+- **SFML 2.6+** – Graphics rendering and window management
+- **CMake 3.15+** – Build system
+- **C++17** compatible compiler
 
-### Usage
+### API Documentation
 
-- The API is exposed via the interface header: [`src/engine/interface.h`](src/engine/interface.h).
-- Usage examples are provided in the [`examples`](examples/) directory.
+- **Complete API Reference:** [`API_REFERENCE.md`](API_REFERENCE.md)
+- **Build System Guide:** [`BUILD.md`](BUILD.md)  
+- **Interface Header:** [`src/engine/interface.h`](src/engine/interface.h)
+- **Usage Examples:** [`examples/`](examples/) directory
 
 ---
 

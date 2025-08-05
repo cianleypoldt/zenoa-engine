@@ -1,6 +1,6 @@
 #pragma once
 #include "../engine/context.h"
-#include "/home/cianleypoldt/Documents/cpp/Zenoa/src/engine/bodies.h"
+#include "../engine/bodies.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <cstdint>
@@ -11,16 +11,18 @@
 #include <glm/ext/vector_float2.hpp>
 #include <SFML/Window/ContextSettings.hpp>
 #include <SFML/Window/VideoMode.hpp>
-#include <SFML/Window/WindowEnums.hpp>
+#include <SFML/Window/WindowStyle.hpp>  // SFML 2.x equivalent of WindowEnums
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
-#include <SFML/System/Angle.hpp>
 #include <SFML/System/Sleep.hpp>
 #include <vector>
 
 class Renderer
 {
+  private:
+    static constexpr float RAD_TO_DEG = 180.0f / 3.14159f;  // Conversion constant for SFML 2.x
+
   public:
     sf::RenderWindow&            window;
     std::vector<uint32_t>        circle;
@@ -43,11 +45,11 @@ class Renderer
         fullscreen(fullscreen_param),
         frame_time(sf::seconds(1.0f / fps)) {
         sf::ContextSettings settings;
-        settings.antiAliasingLevel = 16;
+        settings.antialiasingLevel = 16;  // SFML 2.x uses antialiasingLevel (no capital A)
         if (fullscreen_param) {
-            window.create(sf::VideoMode({ 1000, 500 }), "Debug View", sf::Style::None, sf::State::Fullscreen, settings);
+            window.create(sf::VideoMode(1000, 500), "Debug View", sf::Style::Fullscreen, settings);
         } else {
-            window.create(sf::VideoMode({ 1000, 500 }), "Debug View", sf::Style::None, sf::State::Windowed, settings);
+            window.create(sf::VideoMode(1000, 500), "Debug View", sf::Style::Default, settings);
         }
         window.setPosition({ 0, 0 });
         window.display();
@@ -111,7 +113,7 @@ class Renderer
             line.setPosition(translate(bodies.position[circle[i]]));
             line.setPosition(translate(bodies.position[circle[i]]));
             line.setSize({ circle_shape.getRadius(), 1 });
-            line.setRotation(-sf::radians(bodies.rotation[circle[i]] + 3.14 / 2));
+            line.setRotation(-(bodies.rotation[circle[i]] + 3.14f / 2) * RAD_TO_DEG);
             window.draw(line);
             window.draw(circle_shape);
         }
@@ -122,7 +124,7 @@ class Renderer
                 convex_shapes[i].setOutlineColor(sf::Color::Green);
             }
             convex_shapes[i].setPosition(translate(bodies.position[convex[i]]));
-            convex_shapes[i].setRotation(sf::radians(-bodies.rotation[convex[i]]));
+            convex_shapes[i].setRotation(-bodies.rotation[convex[i]] * RAD_TO_DEG);
             window.draw(convex_shapes[i]);
         }
 
