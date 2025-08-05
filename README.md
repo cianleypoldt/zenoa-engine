@@ -42,7 +42,7 @@ cmake ..; make
 ./Zenoa
 ```
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/cianleypoldt/RigidBody-Physics)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/cianleypoldt/RigidBody-Engine)
 
 ### Dependencies
 
