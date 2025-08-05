@@ -1,10 +1,10 @@
 <h1 align="center">Zenoa Engine</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/-Physics-blueviolet?style=for-the-badge&logo=physics" />
-  <img src="https://img.shields.io/badge/-C++17-blue?style=for-the-badge&logo=c%2B%2B" />
-  <img src="https://img.shields.io/badge/-SFML-lightblue?style=for-the-badge&logo=sfml" />
-  <img src="https://img.shields.io/badge/-GLM-orange?style=for-the-badge&logo=circle&logoColor=white" />
+  <img src="https://img.shields.io/badge/Physics-6A0DAD?style=for-the-badge&logo=physics&logoColor=white" />
+  <img src="https://img.shields.io/badge/C++17-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white" />
+  <img src="https://img.shields.io/badge/SFML-2C3E50?style=for-the-badge&logo=sfml&logoColor=white" />
+  <img src="https://img.shields.io/badge/GLM-F39C12?style=for-the-badge&logo=circle&logoColor=white" />
 </p>
 
 <p align="center">
