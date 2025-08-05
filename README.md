@@ -22,8 +22,6 @@
 
 <img src="media/convex_circle_impulse.gif" alt="Convex + circle impulse and friction resolution" width="100%" />
 
-<img src="media/50convex_50circle.gif" alt="Piling stability under mass disparity" width="100%" />
-
 ---
 
 **The engine supports**:
@@ -90,6 +88,7 @@ Basic Coulomb friction is supported. Tangential impulses are clamped relative to
 
 Demonstrates contact resolution, restitution, and friction between convex shapes and circles.
 
+<img src="media/50convex_50circle.gif" alt="Piling stability under mass disparity" width="100%" />
 
 ---
 
