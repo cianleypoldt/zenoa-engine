@@ -42,6 +42,8 @@ cmake ..; make
 ./Zenoa
 ```
 
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/cianleypoldt/RigidBody-Physics)
+
 ### Dependencies
 
 - **GLM** – Vector math and linear algebra
