@@ -22,7 +22,8 @@
 
 ---
 
-**The engine supports**:
+### The engine supports:
+
 - Convex polygon and circle bodies  
 - Performant impulse-based collision resolution
 - Visual debugging through _SFML_
