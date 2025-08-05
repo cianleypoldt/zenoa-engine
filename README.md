@@ -22,8 +22,6 @@
 
 <img src="media/convex_circle_impulse.gif" alt="Convex + circle impulse and friction resolution" width="100%" />
 
-View <a href="examples/collision_demo.cpp" class="code-link">source code</a>
-
 <img src="media/50convex_50circle.gif" alt="Piling stability under mass disparity" width="100%" />
 
 ---
