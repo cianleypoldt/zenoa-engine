@@ -27,7 +27,8 @@
 - Convex polygon and circle bodies  
 - Performant impulse-based collision resolution
 - Visual debugging through _SFML_
-
+> NOTE: 
+> Zenoa currently lacks event callbacks
 ---
 
 ## Build Instructions (Linux)
