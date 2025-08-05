@@ -1,7 +1,7 @@
 <h1 align="center">Zenoa Engine</h1>
 
 <p align="center">
-  2D rigid-body physics engine focused on clarity, determinism, and physical stability
+  2D rigid-body physics engine focused on performance, determinism, and physical stability
 </p>
 
 <p align="center">
