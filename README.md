@@ -8,15 +8,6 @@ Real-time 2D rigid-body physics engine focused on clarity, determinism, and phys
 </p>
 <br>
 
-**The engine supports**:
-- Convex polygon and circle bodies  
-- Impulse-based collision resolution  
-- Visual debugging through **SFML**
-
----
-
-<h2 align="center">Contents</h2>
-
 <p align="center">
   <a href="#collision-handling">Collision Handling</a> •
   <a href="#physics-model">Physics Model</a> •
@@ -25,6 +16,13 @@ Real-time 2D rigid-body physics engine focused on clarity, determinism, and phys
   <a href="#build-instructions-linux">Build Instructions (Linux)</a> •
   <a href="#dependencies">Dependencies</a>
 </p>
+
+---
+
+**The engine supports**:
+- Convex polygon and circle bodies  
+- Impulse-based collision resolution  
+- Visual debugging through **SFML**
 
 ---
 
