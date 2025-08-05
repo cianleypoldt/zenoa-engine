@@ -15,7 +15,7 @@ The engine supports:
   <a href="#collision-handling">Collision Handling</a> •
   <a href="#physics-model">Physics Model</a> •
   <a href="#design-notes">Design Notes</a> •
-  <a href="#demonstration">Visual Demos</a> •
+  <a href="#demonstration">Visual Demos</a><br>
   <a href="#build-instructions-linux">Build Instructions (Linux)</a> •
   <a href="#dependencies">Dependencies</a>
 </p>
