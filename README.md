@@ -1,6 +1,12 @@
-# **Zenoa Engine** (C++)
+<h1 align="center">Zenoa Engine</h1>
 
-**Zenoa** is a real-time 2D rigid-body physics engine written in modern **C++17**. Developed as an educational project at age 17, it emphasizes clarity, determinism, and stability under physical constraints.
+<p align="center">
+    <img src="https://img.shields.io/badge/-C++17-blue?style=for-the-badge&logo=c%2B%2B" />
+</p>
+<p align="center">
+Real-time 2D rigid-body physics engine focused on clarity, determinism, and physical stability
+</p>
+<br>
 
 **The engine supports**:
 - Convex polygon and circle bodies  
