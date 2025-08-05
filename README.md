@@ -5,10 +5,10 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Physics-8E44AD?style=for-the-badge&logo=physics&logoColor=white" />
-  <img src="https://img.shields.io/badge/C++17-1E90FF?style=for-the-badge&logo=c%2B%2B&logoColor=white" />
-  <img src="https://img.shields.io/badge/SFML-34495E?style=for-the-badge&logo=sfml&logoColor=white" />
-  <img src="https://img.shields.io/badge/GLM-3D9970?style=for-the-badge&logo=circle&logoColor=white" />
+  <img src="https://img.shields.io/badge/Physics-8E44AD?style=for-the-badge" alt="Physics Badge" />
+  <img src="https://img.shields.io/badge/C++17-00599C?style=for-the-badge&logo=cpp&logoColor=white" alt="C++17 Badge" />
+  <img src="https://img.shields.io/badge/SFML-2E8B57?style=for-the-badge&logo=github&logoColor=white" alt="SFML Badge" />
+  <img src="https://img.shields.io/badge/GLM-Matrix%20Math-3D9970?style=for-the-badge" alt="GLM Badge" />
 </p>
 
 
