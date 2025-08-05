@@ -36,12 +36,14 @@ cmake ..; make
 ./Zenoa
 ```
 
----
-
-## Dependencies
+#### Dependencies
 
 - **GLM** – Vector math and linear algebra
 - **SFML** – Debug rendering and input
+
+#### Usage
+- The API is exposed via the interface header: [`src/engine/interface.h`](src/engine/interface.h).
+- Usage examples are provided in the [`examples`](examples/) directory.
 
 ---
 
@@ -92,8 +94,6 @@ Basic Coulomb friction is supported. Tangential impulses are clamped relative to
 - Uses **Structure of Arrays (SoA)** for better cache behavior during updates.
 - Simulation runs on a **fixed timestep** for consistency and repeatability.
 - Engine **state** is stored in a **self-contained context**, allowing integration into other applications or environments.
-- The API is exposed via the interface header: [`src/engine/interface.h`](src/engine/interface.h).
-- Usage examples are provided in the [`examples`](examples/) directory.
 
 ---
 
