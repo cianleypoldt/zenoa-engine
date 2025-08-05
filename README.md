@@ -28,7 +28,7 @@
 - Performant impulse-based collision resolution
 - Visual debugging through _SFML_
 
-> As of now ([Download v1.2.3](https://github.com/cianleypoldt/RigidBody-Engine/releases/tag/latest)), collision callbacks are not supported.
+> As of now ([Zenoa v1](https://github.com/cianleypoldt/RigidBody-Engine/releases/tag/latest)), collision callbacks are not supported.
 
 ---
 
