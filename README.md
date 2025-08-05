@@ -9,18 +9,13 @@
 <p align="center">
   2D rigid-body physics engine focused on clarity, determinism, and physical stability
 </p>
-<br>
 <p align="center" style="line-height:1.6;">
-    <a href="#build-instructions-linux">Build Instructions (Linux)</a> •
   <a href="#collision-handling">Collision Handling</a> •
   <a href="#physics-model">Physics Model</a> •
   <a href="#design-notes">Design Notes</a> •
-  <a href="#dependencies">Dependencies</a>
 </p>
 
 <img src="media/50convex_50circle.gif" alt="Piling stability under mass disparity" width="100%" />
-
----
 
 **The engine supports**:
 - Convex polygon and circle bodies  
