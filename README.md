@@ -9,18 +9,16 @@ The engine supports:
 
 ---
 
-## <div align="center">Contents</div>
+<h2 align="center">Contents</h2>
 
-<div align="center">
-
-<a href="#collision-handling">Collision Handling</a><br>
-<a href="#physics-model">Physics Model</a><br>
-<a href="#design-notes">Design Notes</a><br>
-<a href="#demonstration">Visual Demos</a><br>
-<a href="#build-instructions-linux">Build Instructions (Linux)</a><br>
-<a href="#dependencies">Dependencies</a>
-
-</div>
+<p align="center">
+  <a href="#collision-handling">Collision Handling</a> •
+  <a href="#physics-model">Physics Model</a> •
+  <a href="#design-notes">Design Notes</a> •
+  <a href="#demonstration">Visual Demos</a> •
+  <a href="#build-instructions-linux">Build Instructions (Linux)</a> •
+  <a href="#dependencies">Dependencies</a>
+</p>
 
 ---
 
