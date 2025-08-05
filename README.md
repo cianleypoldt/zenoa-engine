@@ -31,6 +31,18 @@
 
 ---
 
+## Build Instructions (Linux)
+
+```bash
+sudo pacman -S git clang cmake make sfml glm
+git clone https://github.com/cianleypoldt/SAT-Impulse-Physics.git
+mkdir Zenoa/build; cd Zenoa/build
+cmake ..; make
+./Zenoa
+```
+
+---
+
 ## Collision Handling
 
 ### Convex Shapes
@@ -96,19 +108,6 @@ Demonstrates contact resolution, restitution, and friction between convex shapes
 
 Tests stability under differences in body mass and geometry.
 
-
-
----
-
-## Build Instructions (Linux)
-
-```bash
-sudo pacman -S git clang cmake make sfml glm
-git clone https://github.com/cianleypoldt/SAT-Impulse-Physics.git
-mkdir Zenoa/build; cd Zenoa/build
-cmake ..; make
-./Zenoa
-```
 
 ---
 
