@@ -5,7 +5,7 @@
   <img src="https://img.shields.io/badge/C++17-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white" />
   <img src="https://img.shields.io/badge/SFML-2C3E50?style=for-the-badge&logo=sfml&logoColor=white" />
   <img src="https://img.shields.io/badge/GLM-556B2F?style=for-the-badge&logo=circle&logoColor=white" />
-  <img src="https://img.shields.io/badge/OS-Linux-FF6C37?style=for-the-badge&logo=linux&logoColor=white" />
+  <img src="https://img.shields.io/badge/Linux-FF6C37?style=for-the-badge&logo=linux&logoColor=white" />
 </p>
 
 <p align="center">
