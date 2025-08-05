@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  Real-time 2D rigid-body physics engine focused on clarity, determinism, and physical stability
+  2D rigid-body physics engine focused on clarity, determinism, and physical stability
 </p>
 <br>
 
@@ -19,6 +19,7 @@
   <a href="#build-instructions-linux">Build Instructions (Linux)</a> •
   <a href="#dependencies">Dependencies</a>
 </p>
+
 ---
 
 **The engine supports**:
