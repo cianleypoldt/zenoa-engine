@@ -28,7 +28,7 @@
 - Performant impulse-based collision resolution
 - Visual debugging through _SFML_
 > NOTE: 
-> Zenoa currently lacks event callbacks
+> As of now, Zenoa does not support collision callbacks.
 ---
 
 ## Build Instructions (Linux)
