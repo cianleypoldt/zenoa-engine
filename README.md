@@ -1,9 +1,10 @@
 <h1 align="center">Zenoa Engine</h1>
 
 <p align="center">
+  <img src="https://img.shields.io/badge/-Physics-blueviolet?style=for-the-badge&logo=physics" />
   <img src="https://img.shields.io/badge/-C++17-blue?style=for-the-badge&logo=c%2B%2B" />
   <img src="https://img.shields.io/badge/-SFML-lightblue?style=for-the-badge&logo=sfml" />
-  <img src="https://img.shields.io/badge/-Physics-blueviolet?style=for-the-badge&logo=physics" />
+  <img src="https://img.shields.io/badge/-GLM-orange?style=for-the-badge&logo=circle&logoColor=white" />
 </p>
 
 <p align="center">
@@ -56,9 +57,9 @@ Collision detection between convex polygons uses the **Separating Axis Theorem (
 
 ### Circle–Polygon Interactions
 
-<img src="media/convex_circle_impulse.gif" alt="Convex + circle impulse and friction resolution" width="100%" />
-
 Circles are handled with a **face projection method**, allowing smooth resolution against polygon edges without excessive branching or shape-specific logic.
+
+<img src="media/convex_circle_impulse.gif" alt="Convex + circle impulse and friction resolution" width="100%" />
 
 ### Wall and Border Contacts
 
