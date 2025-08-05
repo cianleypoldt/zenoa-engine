@@ -9,11 +9,14 @@
   <img src="https://img.shields.io/badge/C++17-1E90FF?style=for-the-badge&logo=c%2B%2B&logoColor=white" />
   <img src="https://img.shields.io/badge/SFML-34495E?style=for-the-badge&logo=sfml&logoColor=white" />
   <img src="https://img.shields.io/badge/GLM-3D9970?style=for-the-badge&logo=circle&logoColor=white" />
-  <a href="https://github.com/cianleypoldt/RigidBody-Engine/releases/tag/latest">
-  <img src="https://img.shields.io/github/v/release/cianleypoldt/RigidBody-Engine?style=for-the-badge&label=release" alt="Latest Release Badge" />
-</a>
+
 </p>
 
+ <p align="center">
+  <a class="github-button" href="https://github.com/cianleypoldt/RigidBody-Engine" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star cianleypoldt/RigidBody-Engine on GitHub">Star</a>
+</p>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
 
 <p align="center" style="line-height:1.6;">
   <a href="#collision-handling">Collision Handling</a> •
