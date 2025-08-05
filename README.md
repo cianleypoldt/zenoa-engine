@@ -36,12 +36,13 @@ cmake ..; make
 ./Zenoa
 ```
 
-#### Dependencies
+### Dependencies
 
 - **GLM** – Vector math and linear algebra
 - **SFML** – Debug rendering and input
 
-#### Usage
+### Usage
+
 - The API is exposed via the interface header: [`src/engine/interface.h`](src/engine/interface.h).
 - Usage examples are provided in the [`examples`](examples/) directory.
 
@@ -56,6 +57,7 @@ Collision detection between convex polygons uses the **Separating Axis Theorem (
 ### Circle–Polygon Interactions
 
 <img src="media/convex_circle_impulse.gif" alt="Convex + circle impulse and friction resolution" width="100%" />
+
 Circles are handled with a **face projection method**, allowing smooth resolution against polygon edges without excessive branching or shape-specific logic.
 
 ### Wall and Border Contacts
