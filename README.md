@@ -11,14 +11,14 @@ The engine supports:
 
 ## **Contents**
 
-| Section                                              | Description                                 |
-|------------------------------------------------------|---------------------------------------------|
-| [Collision Handling](#collision-handling)            | Collision detection and resolution logic     |
-| [Physics Model](#physics-model)                      | Mathematical and physical model overview     |
-| [Design Notes](#design-notes)                        | Architectural insights and design rationale  |
-| [Visual Demos](#demonstration)                       | Demonstrations of engine features            |
-| [Build Instructions (Linux)](#build-instructions-linux) | Step-by-step build and run guide             |
-| [Dependencies](#dependencies)                        | External libraries and their roles           |
+|                      Section                       |
+|:--------------------------------------------------:|
+| [Collision Handling](#collision-handling)          |
+| [Physics Model](#physics-model)                    |
+| [Design Notes](#design-notes)                      |
+| [Visual Demos](#demonstration)                     |
+| [Build Instructions (Linux)](#build-instructions-linux) |
+| [Dependencies](#dependencies)                      |
 
 ---
 
