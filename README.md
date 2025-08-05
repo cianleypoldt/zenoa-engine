@@ -9,6 +9,9 @@
   <img src="https://img.shields.io/badge/C++17-1E90FF?style=for-the-badge&logo=c%2B%2B&logoColor=white" />
   <img src="https://img.shields.io/badge/SFML-34495E?style=for-the-badge&logo=sfml&logoColor=white" />
   <img src="https://img.shields.io/badge/GLM-3D9970?style=for-the-badge&logo=circle&logoColor=white" />
+  <a href="https://github.com/cianleypoldt/RigidBody-Engine/releases/latest">
+  <img src="https://img.shields.io/github/v/release/cianleypoldt/RigidBody-Engine?style=for-the-badge&label=release" alt="Latest Release Badge" />
+</a>
 </p>
 
 
