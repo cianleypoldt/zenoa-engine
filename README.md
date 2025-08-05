@@ -9,16 +9,18 @@ The engine supports:
 
 ---
 
-## **Contents**
+## <div align="center">Contents</div>
 
-|                      Section                       |
-|:--------------------------------------------------:|
-| [Collision Handling](#collision-handling)          |
-| [Physics Model](#physics-model)                    |
-| [Design Notes](#design-notes)                      |
-| [Visual Demos](#demonstration)                     |
-| [Build Instructions (Linux)](#build-instructions-linux) |
-| [Dependencies](#dependencies)                      |
+<div align="center">
+
+<a href="#collision-handling">Collision Handling</a><br>
+<a href="#physics-model">Physics Model</a><br>
+<a href="#design-notes">Design Notes</a><br>
+<a href="#demonstration">Visual Demos</a><br>
+<a href="#build-instructions-linux">Build Instructions (Linux)</a><br>
+<a href="#dependencies">Dependencies</a>
+
+</div>
 
 ---
 
