@@ -1,14 +1,17 @@
 <h1 align="center">Zenoa Engine</h1>
 
 <p align="center">
-    <img src="https://img.shields.io/badge/-C++17-blue?style=for-the-badge&logo=c%2B%2B" />
+  <img src="https://img.shields.io/badge/-C++17-blue?style=for-the-badge&logo=c%2B%2B" />
+  <img src="https://img.shields.io/badge/-SFML-lightblue?style=for-the-badge&logo=sfml" />
+  <img src="https://img.shields.io/badge/-Physics-blueviolet?style=for-the-badge&logo=physics" />
 </p>
+
 <p align="center">
-Real-time 2D rigid-body physics engine focused on clarity, determinism, and physical stability
+  Real-time 2D rigid-body physics engine focused on clarity, determinism, and physical stability
 </p>
 <br>
 
-<p align="center">
+<p align="center" style="line-height:1.6;">
   <a href="#collision-handling">Collision Handling</a> •
   <a href="#physics-model">Physics Model</a> •
   <a href="#design-notes">Design Notes</a> •
@@ -16,7 +19,6 @@ Real-time 2D rigid-body physics engine focused on clarity, determinism, and phys
   <a href="#build-instructions-linux">Build Instructions (Linux)</a> •
   <a href="#dependencies">Dependencies</a>
 </p>
-
 ---
 
 **The engine supports**:
