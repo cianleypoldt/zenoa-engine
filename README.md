@@ -2,7 +2,6 @@
 
 <p align="center">
   2D rigid-body physics engine focused on performance, determinism, and physical stability.<br>
-  Developed at age 17.
 </p>
 
 <p align="center">
@@ -15,7 +14,8 @@
 <p align="center" style="line-height:1.6;">
   <a href="#collision-handling">Collision Handling</a> •
   <a href="#physics-model">Physics Model</a> •
-  <a href="#design-notes">Design Notes</a>
+  <a href="#design-notes">Design Notes</a> •
+  <a href="#about">About</a>
 </p>
 
 <img src="media/50convex_50circle.gif" alt="Piling stability under mass disparity" width="100%" />
@@ -103,6 +103,14 @@ Basic Coulomb friction is supported. Tangential impulses are clamped relative to
 - Simulation runs on a **fixed timestep** for consistency and repeatability.
 - Engine **state** is stored in a **self-contained context**, allowing integration into other applications or environments.
 - Custom `entity_list` structure keeps all IDs consistent through deletions and avoids large memory moves or resizes.
+
+---
+
+## About
+
+Zenoa is a minimal, deterministic 2D rigid-body physics engine developed as a personal project to explore low-level engine architecture, performance, and numerical stability in simulation. It is built entirely in C++17 with a focus on cache efficiency, fixed-timestep consistency, and clean API design.
+
+The engine is developed and maintained by a 17-year-old student as an educational project. While not intended as a full replacement for production-grade physics engines, Zenoa serves as a performant and lightweight foundation for learning, experimentation, and further extension.
 
 ---
 
