@@ -108,9 +108,7 @@ Basic Coulomb friction is supported. Tangential impulses are clamped relative to
 
 ## About
 
-Zenoa is a minimal, deterministic 2D rigid-body physics engine developed as a personal project to explore low-level engine architecture, performance, and numerical stability in simulation. It is built entirely in C++17 with a focus on cache efficiency, fixed-timestep consistency, and clean API design.
-
-The engine is developed and maintained by a 17-year-old student as an educational project. While not intended as a full replacement for production-grade physics engines, Zenoa serves as a performant and lightweight foundation for learning, experimentation, and further extension.
+Zenoa is an ongoing physics engine project developed at 17 with a focus on performance, determinism, and low-level system design—built both as a functional engine and as a deeper study in real-time simulation.
 
 ---
 
