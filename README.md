@@ -108,10 +108,12 @@ Basic Coulomb friction is supported. Tangential impulses are clamped relative to
 
 ## About
 
-Zenoa is an ongoing physics engine project developed at 17 with a focus on performance, determinism, and low-level system design—built both as a functional engine and as a deeper study in real-time simulation.
+Zenoa is an ongoing physics engine project developed at age 17 with a focus on performance, determinism, and low-level system design—built both as a functional engine and as a deeper study in real-time simulation.
 
 ---
 
 ## License
 
-Zenoa is released under the MIT License.
+## License
+
+[MIT License](https://opensource.org/licenses/MIT) © Cian Leypoldt
