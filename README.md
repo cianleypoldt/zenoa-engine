@@ -114,4 +114,4 @@ Zenoa is an ongoing physics engine project developed at age 17 with a focus on p
 
 ## License
 
-[MIT License](https://opensource.org/licenses/MIT) © Cian Leypoldt
+[MIT License](LICENSE.txt) © Cian Leypoldt
