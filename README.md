@@ -101,7 +101,7 @@ Basic Coulomb friction is supported. Tangential impulses are clamped relative to
 - Uses **Structure of Arrays (SoA)** for better cache behavior during updates.
 - Simulation runs on a **fixed timestep** for consistency and repeatability.
 - Engine **state** is stored in a **self-contained context**, allowing integration into other applications or environments.
-- Custom `entity_list` structure keeps all IDs consistent through deletions and avoids large memory moves and resizes.
+- Custom `entity_list` structure keeps all IDs consistent through deletions and avoids large memory moves or resizes.
 
 ---
 
