@@ -58,9 +58,20 @@ cmake ..; make
 
 ### Convex Shapes
 
-Collision detection between convex polygons uses the **Separating Axis Theorem (SAT)**. Contact points are computed using face clipping, and penetration depth is used to generate response impulses.
+
 
 ### Circle–Polygon Interactions
+
+This engine uses the Separating Axis Theorem (SAT) for detecting collisions between convex polygons. SAT works by projecting both shapes onto potential separating axes (typically normals of edges). If there’s an axis where the projections don’t overlap, the polygons are not colliding. If all projections overlap, the axis with the smallest overlap determines the minimum translation vector (MTV) used to resolve the collision.
+
+<p align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Separating_axis_theorem2008.png" alt="Separating Axis Theorem" width="400"/>
+</p>
+
+Once a collision is confirmed, contact points are computed using face clipping—a process of selecting reference and incident faces, then clipping the incident face against side planes of the reference to find accurate contact points.
+
+The penetration depth and contact points are used to calculate impulses that resolve interpenetration and apply realistic forces to the bodies. Collision response considers mass, restitution, and friction to simulate believable physical interactions.
+
 
 Circles are handled with a **face projection method**, allowing smooth resolution against polygon edges without excessive branching or shape-specific logic.
 
