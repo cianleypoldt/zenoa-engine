@@ -82,7 +82,7 @@ Static boundaries are handled with a **deepest-point resolution** strategy. This
 
 ### Impulse Resolution
 
-Collisions are resolved using a basic impulse solver. Linear and angular velocities are updated using the relative velocity at the contact point and the combined inverse mass and inertia of the two bodies.
+Collisions are resolved using an **impulse-based solver**, which adjusts both **linear** and **angular velocities** based on the relative motion at the contact point. The impulse magnitude is calculated using the objects’ **inverse mass**, **moment of inertia**, and the **relative velocity** along the contact normal.
 
 **Impulse formula:**
 
@@ -91,30 +91,33 @@ J = \frac{-(1 + e) \cdot (\vec{v}_{rel} \cdot \vec{n})}{\frac{1}{m_A} + \frac{1}
 $$
 
 **Where:**
+- $e$: coefficient of restitution (bounciness)
+- $\vec{v}_{rel}$: relative velocity at the contact point
+- $\vec{n}$: collision normal
+- $m$: mass of the body
+- $I$: moment of inertia
+- $\vec{r}$: vector from center of mass to contact point
 
-- $e$ is the restitution coefficient
-- $\vec{v}_{rel}$ is the relative velocity at the contact
-- $\vec{n}$ is the contact normal
-- $m$, $I$ are the mass and moment of inertia
+The result is an instantaneous impulse that separates the objects and transfers momentum in a physically consistent way.
 
 ### Friction
 
-Basic Coulomb friction is supported. Tangential impulses are clamped relative to the normal impulse, allowing simple sliding and resting contact behavior.
+The engine supports **Coulomb friction** using a simplified model. A tangential impulse is applied at the contact point and **clamped relative to the normal impulse**, allowing for basic **sliding** and **static contact** behavior. This enables support for resting contacts, surface drag, and glancing collisions with minimal complexity.
 
 ---
 
 ## Design Notes
 
-- Uses **Structure of Arrays (SoA)** for better cache behavior during updates.
-- Simulation runs on a **fixed timestep** for consistency and repeatability.
-- Engine **state** is stored in a **self-contained context**, allowing integration into other applications or environments.
-- Custom `entity_list` structure keeps all IDs consistent through deletions and avoids large memory moves or resizes.
+- Implements a **Structure of Arrays (SoA)** layout to improve cache efficiency during simulation steps.
+- Runs on a **fixed timestep** to ensure deterministic behavior and consistent results across platforms.
+- Stores the entire engine **state in a single context object**, making integration into other systems straightforward and self-contained.
+- Uses a custom `entity_list` structure to maintain stable IDs across deletions and avoid costly memory reallocations or shuffling.
 
 ---
 
 ## About
 
-Zenoa is a physics engine project developed at age 17 with a focus on performance, determinism, and low-level system design—built both as a functional engine and as a deeper study in real-time simulation.
+**Zenoa** is a custom 2D physics engine developed at age 17, designed with an emphasis on **performance**, **determinism**, and **low-level system architecture**. It serves both as a functional simulation engine and a hands-on exploration of real-time physics modeling.
 
 ---
 
