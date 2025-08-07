@@ -68,13 +68,13 @@ The resulting contact data, along with **penetration depth**, is used to compute
 
 ### Circle-Polygon Collisions
 
-Collisions between circles and polygons use a **face projection method**, projecting the circle center onto polygon edges to identify contact. This avoids excessive branching while maintaining consistent behavior across shape types.
+Collisions between circles and polygons use a **face projection method**, projecting the circle center onto the nearst two polygon edges and using the circles radius to identify contact.
 
 <img src="media/convex_circle_impulse.gif" alt="Convex + circle impulse and friction resolution" width="100%" />
 
 ### Walls and Borders
 
-Static boundaries are handled with a **deepest-point resolution** strategy. This ensures stable contact, prevents tunneling, and keeps objects confined to the expected play area.
+Static boundaries are handled per **deepest-point resolution**, preventing two polygon verticies from recieving the same impulse if both contact the wall in simulation step.
 
 ---
 
