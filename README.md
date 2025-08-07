@@ -66,6 +66,8 @@ This engine uses the Separating Axis Theorem (SAT) for detecting collisions betw
 
 ### **Collision Detection and Resolution**
 
+### **Collision Detection and Resolution**
+
 This engine uses the **Separating Axis Theorem (SAT)** for detecting collisions between **convex polygons**. SAT works by projecting both shapes onto potential separating axes (typically normals of edges). If there’s an axis where the projections don’t overlap, the polygons are not colliding. If all projections overlap, the axis with the **smallest overlap** determines the **minimum translation vector (MTV)** used to resolve the collision.
 
 <div align="center" style="background-color: white; padding: 10px; display: inline-block;">
@@ -76,10 +78,7 @@ Once a collision is confirmed, **contact points** are computed using **face clip
 
 The **penetration depth** and contact points are used to calculate **impulses** that resolve interpenetration and apply realistic forces to the bodies. Collision response considers **mass, restitution**, and **friction** to simulate believable physical interactions.
 
-Once a collision is confirmed, contact points are computed using face clipping—a process of selecting reference and incident faces, then clipping the incident face against side planes of the reference to find accurate contact points.
-
-The penetration depth and contact points are used to calculate impulses that resolve interpenetration and apply realistic forces to the bodies. Collision response considers mass, restitution, and friction to simulate believable physical interactions.
-
+### Circle Polygon Collisions
 
 Circles are handled with a **face projection method**, allowing smooth resolution against polygon edges without excessive branching or shape-specific logic.
 
