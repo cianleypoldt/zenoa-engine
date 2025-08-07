@@ -56,37 +56,25 @@ cmake ..; make
 
 ## Collision Handling
 
-### Convex Shapes
+### Convex Polygons
 
+Collisions between convex polygons are detected using the **Separating Axis Theorem (SAT)**. Each shape is projected onto axes defined by the **normals of its edges**. If a separating axis exists—i.e., an axis where the projections don’t overlap—the shapes are not colliding. Otherwise, the axis with the smallest overlap is used to compute the **minimum translation vector (MTV)** for resolving the collision.
 
+For a visual overview, see the [Wikipedia article on SAT](https://en.wikipedia.org/wiki/Hyperplane_separation_theorem#Separating_axis_theorem).
 
-### Circle–Polygon Interactions
+If a collision is detected, **face clipping** is used to find precise **contact points**. This involves selecting a reference and incident face, and clipping the incident face against the reference’s side planes.
 
-This engine uses the Separating Axis Theorem (SAT) for detecting collisions between convex polygons. SAT works by projecting both shapes onto potential separating axes (typically normals of edges). If there’s an axis where the projections don’t overlap, the polygons are not colliding. If all projections overlap, the axis with the smallest overlap determines the minimum translation vector (MTV) used to resolve the collision.
+The resulting contact data, along with **penetration depth**, is used to compute **collision response impulses**, resolving interpenetration while applying realistic forces. Impulse resolution accounts for **mass, restitution**, and **friction**.
 
-### **Collision Detection and Resolution**
+### Circle-Polygon Collisions
 
-### **Collision Detection and Resolution**
-
-This engine uses the **Separating Axis Theorem (SAT)** for detecting collisions between **convex polygons**. SAT works by projecting both shapes onto potential separating axes (typically normals of edges). If there’s an axis where the projections don’t overlap, the polygons are not colliding. If all projections overlap, the axis with the **smallest overlap** determines the **minimum translation vector (MTV)** used to resolve the collision.
-
-<div align="center" style="background-color: white; padding: 10px; display: inline-block;">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Separating_axis_theorem2008.png" alt="Separating Axis Theorem" width="400"/>
-</div>
-
-Once a collision is confirmed, **contact points** are computed using **face clipping**—a process of selecting reference and incident faces, then clipping the incident face against side planes of the reference to find accurate contact points.
-
-The **penetration depth** and contact points are used to calculate **impulses** that resolve interpenetration and apply realistic forces to the bodies. Collision response considers **mass, restitution**, and **friction** to simulate believable physical interactions.
-
-### Circle Polygon Collisions
-
-Circles are handled with a **face projection method**, allowing smooth resolution against polygon edges without excessive branching or shape-specific logic.
+Collisions between circles and polygons use a **face projection method**, projecting the circle center onto polygon edges to identify contact. This avoids excessive branching while maintaining consistent behavior across shape types.
 
 <img src="media/convex_circle_impulse.gif" alt="Convex + circle impulse and friction resolution" width="100%" />
 
-### Wall and Border Contacts
+### Walls and Borders
 
-A simple deepest-point resolution is used to prevent tunneling and maintain expected object boundaries in confined scenes.
+Static boundaries are handled with a **deepest-point resolution** strategy. This ensures stable contact, prevents tunneling, and keeps objects confined to the expected play area.
 
 ---
 
