@@ -68,7 +68,7 @@ The resulting contact data, along with **penetration depth**, is used to compute
 
 ### Circle-Polygon Collisions
 
-Collisions between circles and polygons use a **face projection method**, projecting the circle center onto the nearst two polygon edges and using the circles radius to identify contact.
+Collisions between circles and polygons use a **face projection method**. The circle center is projected onto the nearst two polygon edges and it's radius is used to identify contact.
 
 <img src="media/convex_circle_impulse.gif" alt="Convex + circle impulse and friction resolution" width="100%" />
 
@@ -82,7 +82,7 @@ Static boundaries are handled per **deepest-point resolution**, preventing two p
 
 ### Impulse Resolution
 
-Collisions are resolved using an **impulse-based solver**, which adjusts both **linear** and **angular velocities** based on the relative motion at the contact point. The impulse magnitude is calculated using the objects’ **inverse mass**, **moment of inertia**, and the **relative velocity** along the contact normal.
+Zenoa resolves collisions using an **impulse-based solver** that adjusts **linear** and **angular velocities** in proportion to the objects’ **inverse mass**, **moment of inertia**, and the **relative velocity** along the contact normal.
 
 **Impulse formula:**
 
@@ -102,16 +102,18 @@ The result is an instantaneous impulse that separates the objects and transfers 
 
 ### Friction
 
-The engine supports **Coulomb friction** using a simplified model. A tangential impulse is applied at the contact point and **clamped relative to the normal impulse**, allowing for basic **sliding** and **static contact** behavior. This enables support for resting contacts, surface drag, and glancing collisions with minimal complexity.
+Here’s a clearer and more concise version:
+
+The engine uses the Coulomb friction model, applying an impulse scaled by the friction coefficient and the relative tangential velocity at the contact point. This impulse is clamped based on the normal impulse, enabling both sliding and static contact behavior.
 
 ---
 
 ## Design Notes
 
-- Implements a **Structure of Arrays (SoA)** layout to improve cache efficiency during simulation steps.
-- Runs on a **fixed timestep** to ensure deterministic behavior and consistent results across platforms.
-- Stores the entire engine **state in a single context object**, making integration into other systems straightforward and self-contained.
-- Uses a custom `entity_list` structure to maintain stable IDs across deletions and avoid costly memory reallocations or shuffling.
+- Zenoa implements a **Structure of Arrays (SoA)** layout to improve cache efficiency during simulation steps,
+- runs on a **fixed timestep** to ensure deterministic behavior and consistent results across platforms,
+- stores the entire engine **state in a single context object**, making integration into other systems straightforward and self-contained, and
+- uses a custom `entity_list` structure to maintain stable IDs across deletions and avoid costly memory reallocations or shuffling.
 
 ---
 
