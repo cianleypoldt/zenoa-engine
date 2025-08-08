@@ -87,7 +87,7 @@ Zenoa resolves collisions using an **impulse-based solver** that adjusts **linea
 **Impulse formula:**
 
 <p align="center">
-  <img src="media/impulse_formula_latex.png" width="70%">
+  <img src="media/impulse_formula_latex.png" width="60%">
 </p>
 
 **Where:**
