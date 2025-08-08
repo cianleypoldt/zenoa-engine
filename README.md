@@ -86,9 +86,9 @@ Zenoa resolves collisions using an **impulse-based solver** that adjusts **linea
 
 **Impulse formula:**
 
-$$
-J = \frac{-(1 + e) \cdot (\vec{v}_{rel} \cdot \vec{n})}{\frac{1}{m_A} + \frac{1}{m_B} + \frac{(\vec{r}_A \times \vec{n})^2}{I_A} + \frac{(\vec{r}_B \times \vec{n})^2}{I_B}}
-$$
+<p align="center">
+  <img src="media/impulse_formula_latex.png" width="50%">
+</p>
 
 **Where:**
 - $e$: coefficient of restitution (bounciness)
