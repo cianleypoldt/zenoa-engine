@@ -1,3 +1,0 @@
-/home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles/Zenoa.dir
-/home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles/edit_cache.dir
-/home/cianleypoldt/Documents/cpp/Zenoa/build/CMakeFiles/rebuild_cache.dir
