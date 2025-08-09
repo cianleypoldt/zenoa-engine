@@ -119,8 +119,6 @@ The engine uses the Coulomb friction model, applying an impulse scaled by the fr
 
 ## About
 
-Here’s the revised version:
-
 Zenoa was created and completed at age 17 as an educational project. It is a functional simulation engine designed for experimenting with and demonstrating real-time physics modeling.
 
 ---
