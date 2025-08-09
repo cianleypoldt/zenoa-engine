@@ -32,7 +32,7 @@
 
 ---
 
-## Build Instructions (Linux)
+## Build Instructions (Unix-like)
 
 ```bash
 sudo pacman -S git clang cmake make sfml glm
@@ -60,7 +60,7 @@ cmake ..; make
 
 Zenoa detects collisions between convex polygons using the **Separating Axis Theorem (SAT)**. It projects the vertices of both shapes onto axes defined by the normals of their edges. If there is an axis where the projections do not overlap, the shapes are not colliding. If all projections overlap, the axis with the smallest overlap is used to calculate the minimum translation vector (MTV) to resolve the collision.
 
-For a visual overview, see the [Wikipedia article on SAT](https://en.wikipedia.org/wiki/Hyperplane_separation_theorem#Separating_axis_theorem).
+For a more concrete explaination, see the [Wikipedia article on SAT](https://en.wikipedia.org/wiki/Hyperplane_separation_theorem#Separating_axis_theorem).
 
 If a collision is detected, **face clipping** is used to find precise **contact points**. This involves selecting a reference and incident face, and clipping the incident face against the reference’s side planes.
 
@@ -68,13 +68,13 @@ The resulting contact data, along with **penetration depth**, is used to compute
 
 ### Circle-Polygon Collisions
 
-Collisions between circles and polygons use a **face projection method**. The circle center is projected onto the nearst two polygon edges and it's radius is used to identify contact.
+Collisions between circles and polygons use a **face projection method**. The circle center is projected onto the nearest two polygon edges and it's radius is used to identify contact.
 
 <img src="media/convex_circle_impulse.gif" alt="Convex + circle impulse and friction resolution" width="100%" />
 
 ### Walls and Borders
 
-Static boundaries are handled per **deepest-point resolution**, preventing two polygon verticies from recieving the same impulse if both contact the wall in simulation step.
+Static boundaries are handled per **deepest-point resolution**, preventing two polygon vertices from receiving the same impulse if both contact the wall in simulation step.
 
 ---
 
@@ -98,11 +98,9 @@ Zenoa resolves collisions using an **impulse-based solver** that adjusts **linea
 - $I$: moment of inertia
 - $\vec{r}$: vector from center of mass to contact point
 
-The result is an instantaneous impulse that separates the objects and transfers momentum in a physically consistent way.
+This resulting impulse $j$ is used to compute the linear and angular forces applied.
 
 ### Friction
-
-Here’s a clearer and more concise version:
 
 The engine uses the Coulomb friction model, applying an impulse scaled by the friction coefficient and the relative tangential velocity at the contact point. This impulse is clamped based on the normal impulse, enabling both sliding and static contact behavior.
 
