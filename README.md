@@ -58,7 +58,7 @@ cmake ..; make
 
 ### Convex Polygons
 
-Zenoa detects collisions between convex polygons using the **Separating Axis Theorem (SAT)**. Each shape is projected onto axes defined by the **normals of its edges**. If a separating axis exists—i.e., an axis where the projections don’t overlap—the shapes are not colliding. Otherwise, the axis with the smallest overlap is used to compute the **minimum translation vector (MTV)** for resolving the collision.
+Zenoa detects collisions between convex polygons using the **Separating Axis Theorem (SAT)**. It projects the vertices of both shapes onto axes defined by the normals of their edges. If there is an axis where the projections do not overlap, the shapes are not colliding. If all projections overlap, the axis with the smallest overlap is used to calculate the minimum translation vector (MTV) to resolve the collision.
 
 For a visual overview, see the [Wikipedia article on SAT](https://en.wikipedia.org/wiki/Hyperplane_separation_theorem#Separating_axis_theorem).
 
