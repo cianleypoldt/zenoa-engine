@@ -119,7 +119,9 @@ The engine uses the Coulomb friction model, applying an impulse scaled by the fr
 
 ## About
 
-**Zenoa** is a custom 2D physics engine developed at age 17, designed with an emphasis on **performance**, **determinism**, and **low-level system architecture**. It serves both as a functional simulation engine and a hands-on exploration of real-time physics modeling.
+Here’s the revised version:
+
+Zenoa was created and completed at age 17 as an educational project. It is a functional simulation engine designed for experimenting with and demonstrating real-time physics modeling.
 
 ---
 
