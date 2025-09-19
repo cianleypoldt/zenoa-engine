@@ -27,7 +27,7 @@ Zenoa resolves collisions using an **impulse-based solver** that adjusts linear 
 **Impulse formula:**
 
 <p align="center">
-  <img src="media/impulse_formula_latex.png" width="300">
+  <img src="../media/impulse_formula_latex.png" width="300">
 </p>
 
 **Where:**
