@@ -12,9 +12,9 @@
 </p>
 
 <p align="center" style="line-height:1.6;">
-  <a href="#collision-handling">Collision Handling</a> •
-  <a href="#physics-model">Physics Model</a> •
-  <a href="#design-notes">Design Notes</a> •
+ <a href="docs/engine-architecture.md#collision-handling">Collision Handling</a> •
+  <a href="docs/engine-architecture.md#physics-model">Physics Model</a> •
+  <a href="docs/engine-architecture.md#design-notes">Design Notes</a> •
   <a href="#about">About</a>
 </p>
 
@@ -56,7 +56,7 @@ cmake ..; make
 
 ## About
 
-Read about implementation details [here](docs/INFO.md).
+Read about implementation details [here](docs/engine-architecture.md).
 
 Zenoa was created as an educational project at age 17. While it functions as a working simulation engine, it is not designed to compete with established physics libraries such as Box2D or Chipmunk2D.
 
