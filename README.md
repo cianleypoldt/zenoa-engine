@@ -58,23 +58,19 @@ cmake ..; make
 
 ### Convex Polygons
 
-Zenoa detects collisions between convex polygons using the **Separating Axis Theorem (SAT)**. It projects the vertices of both shapes onto axes defined by the normals of their edges. If there is an axis where the projections do not overlap, the shapes are not colliding. If all projections overlap, the axis with the smallest overlap is used to calculate the minimum translation vector (MTV) to resolve the collision.
+Collisions between convex polygons are determined using the Separating Axis Theorem (SAT). The process involves projecting the vertices of both polygons onto axes aligned with the normals of their edges. If any axis reveals no overlap between the projections, a separating axis exists and the polygons are not in contact. If all projections overlap, the axis with the smallest overlap is used for face clipping, a technique where one polygon’s edge is “clipped” against the other’s edges to trim away non-overlapping parts. This produces the exact region of contact, allowing a precise contact point to be identified.
 
-For a more concrete explaination, see the [Wikipedia article on SAT](https://en.wikipedia.org/wiki/Hyperplane_separation_theorem#Separating_axis_theorem).
-
-If a collision is detected, **face clipping** is used to find precise **contact points**. This involves selecting a reference and incident face, and clipping the incident face against the reference’s side planes.
-
-The resulting contact data, along with **penetration depth**, is used to compute **collision response impulses**, resolving interpenetration while applying realistic forces. Impulse resolution accounts for **mass, restitution**, and **friction**.
+For a more concrete explaination on SAT, see the [Wikipedia article](https://en.wikipedia.org/wiki/Hyperplane_separation_theorem#Separating_axis_theorem).
 
 ### Circle-Polygon Collisions
 
-Collisions between circles and polygons use a **face projection method**. The circle center is projected onto the nearest two polygon edges and it's radius is used to identify contact.
+Collisions between circles and polygons are detected by projecting the circle’s center onto the two closest edges of the polygon and comparing the resulting distances with the circle’s radius to determine whether a contact point exists.
 
 <img src="media/convex_circle_impulse.gif" alt="Convex + circle impulse and friction resolution" width="100%" />
 
 ### Walls and Borders
 
-Static boundaries are handled per **deepest-point resolution**, preventing two polygon vertices from receiving the same impulse if both contact the wall in simulation step.
+Static boundaries are resolved using the deepest-point method, ensuring that when two polygon vertices contact a wall during the same simulation step, only the deepest contact point receives an impulse.
 
 ---
 
@@ -82,7 +78,7 @@ Static boundaries are handled per **deepest-point resolution**, preventing two p
 
 ### Impulse Resolution
 
-Zenoa resolves collisions using an **impulse-based solver** that adjusts **linear** and **angular velocities** in proportion to the objects’ **inverse mass**, **moment of inertia**, and the **relative velocity** along the contact normal.
+Zenoa resolves collisions using an **impulse-based solver** that adjusts linear and angular velocities in proportion to the objects’ inverse mass, moment of inertia, and the relative velocity along the contact normal.
 
 **Impulse formula:**
 
@@ -91,7 +87,7 @@ Zenoa resolves collisions using an **impulse-based solver** that adjusts **linea
 </p>
 
 **Where:**
-- $e$: coefficient of restitution (bounciness)
+- $e$: coefficient of restitution
 - $\vec{v}_{rel}$: relative velocity at the contact point
 - $\vec{n}$: collision normal
 - $m$: mass of the body
@@ -102,22 +98,22 @@ This resulting impulse $j$ is used to compute the linear and angular forces appl
 
 ### Friction
 
-The engine uses the Coulomb friction model, applying an impulse scaled by the friction coefficient and the relative tangential velocity at the contact point. This impulse is clamped based on the normal impulse, enabling both sliding and static contact behavior.
+The engine applies the **Coulomb friction model**, where the friction impulse is calculated from the friction coefficient and the relative tangential velocity at the contact point, then limited by the magnitude of the normal impulse.
 
 ---
 
 ## Design Notes
 
 - Zenoa implements a **Structure of Arrays (SoA)** layout to improve cache efficiency during simulation steps,
-- runs on a **fixed timestep** to ensure deterministic behavior and consistent results across platforms,
-- stores the entire engine **state in a single context object**, making integration into other systems straightforward and self-contained, and
+- runs on a **fixed timestep**,
+- stores the entire engine state in a single context object, making integration into other systems straightforward and self-contained, and
 - uses a custom `entity_list` structure to maintain stable IDs across deletions and avoid costly memory reallocations or shuffling.
 
 ---
 
 ## About
 
-Zenoa was developed and finished as an educational project at age 17. Although it is a working simulation engine, it is not intended to compete with established physics systems like Box2D or Chipmunk2D. Instead, Zenoa can serve as a foundation for learning and building your own custom 2D rigid-body simulation engine.
+Zenoa was created as an educational project at age 17. While it functions as a working simulation engine, it is not designed to compete with established physics libraries such as Box2D or Chipmunk2D.
 
 ---
 
