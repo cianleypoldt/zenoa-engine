@@ -22,13 +22,15 @@
 
 ---
 
-### The engine supports:
+### Features
 
-- Convex polygon and circle bodies  
-- Impulse-based collision and friction resolution
-- Visual debugging through _SFML_
+- Convex polygon and circle body support  
+- Impulse-based collision and friction resolution  
+- Semi-implicit Euler integration  
+- Visual debugging with _SFML_  
 
-> As of now ([Zenoa v1](https://github.com/cianleypoldt/RigidBody-Engine/releases/tag/latest)), collision callbacks are not supported.
+> Note: As of [Zenoa v1](https://github.com/cianleypoldt/RigidBody-Engine/releases/tag/latest),  
+> collision callbacks are not yet supported.
 
 ---
 
