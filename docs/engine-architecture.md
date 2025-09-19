@@ -1,3 +1,14 @@
+# Engine Architecture
+
+This document outlines the core systems behind the Zenoa physics engine.  
+It covers collision detection, collision response, friction modeling,  
+and the main design decisions made to improve performance and stability.  
+
+It is intended as an overview of the engine’s internal design rather than  
+a usage guide.
+
+---
+
 ## Collision Handling
 
 ### Convex Polygons
