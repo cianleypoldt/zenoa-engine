@@ -10,7 +10,7 @@ For a more concrete explaination on SAT, see the [Wikipedia article](https://en.
 
 Collisions between circles and polygons are detected by projecting the circle’s center onto the two closest edges of the polygon and comparing the resulting distances with the circle’s radius to determine whether a contact point exists.
 
-<img src="media/convex_circle_impulse.gif" alt="Convex + circle impulse and friction resolution" width="100%" />
+<img src="../media/convex_circle_impulse.gif" alt="Convex + circle impulse and friction resolution" width="100%" />
 
 ### Walls and Borders
 
