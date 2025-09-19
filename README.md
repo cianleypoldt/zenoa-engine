@@ -44,7 +44,7 @@ cmake ..; make
 
 ### Dependencies
 
-- **GLM** – Vector math and linear algebra
+- **GLM** – Vector math
 - **SFML** – Debug rendering and input
 
 ### Usage
