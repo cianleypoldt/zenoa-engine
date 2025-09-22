@@ -25,21 +25,32 @@
 
 - Convex polygon and circle body support  
 - Impulse-based collision and friction resolution  
-- Semi-implicit Euler integration  
-- Visual debugging with _SFML_  
+- Semi-implicit Euler integration
 
 > Note: As of [Zenoa v1](https://github.com/cianleypoldt/RigidBody-Engine/releases/tag/latest),  
 > collision callbacks are not yet supported.
 
 ---
 
-## Build Instructions (Unix-like)
+## Build Instructions
+
+Zenoa can benbuolt on most Unix-like systems.
+
+### Prerequesits
+
+ - clang C++17
+ - CMake
+ - SFML
+ - GLM
+
+### Build
 
 ```bash
-sudo pacman -S git clang cmake make sfml glm
 git clone https://github.com/cianleypoldt/zenoa-engine.git
-mkdir zenoa-engine/build; cd zenoa-engine/build
-cmake ..; make
+cd zenoa-engine
+mkdir build && cd build
+cmake ..
+make
 ./Zenoa
 ```
 
@@ -58,8 +69,6 @@ cmake ..; make
 ## About
 
 Read about implementation details [here](docs/engine-architecture.md).
-
-Zenoa was created as an educational project at age 17. While it functions as a working physics engine, its primary purpose is to assist users in learning about rigid-body simulation.
 
 ---
 
