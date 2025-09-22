@@ -34,7 +34,8 @@
 
 ## Build Instructions
 
-Zenoa can benbuolt on most Unix-like systems.
+Zenoa can be built on most Unix-like systems.
+
 Before building Zenoa, make sure the following are installed on your system:
 
 - **Clang (C++17)** – C++ compiler  
