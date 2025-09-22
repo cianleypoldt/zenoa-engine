@@ -59,7 +59,7 @@ cmake ..; make
 
 Read about implementation details [here](docs/engine-architecture.md).
 
-Zenoa was created as an educational project at the age of 17. While it functions as a working physics engine, its primary purpose is to assist users in learning about rigid-body simulation.
+Zenoa was created as an educational project at age 17. While it functions as a working physics engine, its primary purpose is to assist users in learning about rigid-body simulation.
 
 ---
 
