@@ -59,7 +59,7 @@ cmake ..; make
 
 Read about implementation details [here](docs/engine-architecture.md).
 
-Zenoa was created as an educational project at age 17. While it functions as a working simulation engine, it is not designed to compete with established physics libraries such as Box2D or Chipmunk2D.
+Zenoa was created as an educational project at age 17. While it functions as a working simulation engine, its primary purpose is to help users learn about physics simulations.
 
 ---
 
