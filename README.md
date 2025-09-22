@@ -54,15 +54,11 @@ make
 ./Zenoa
 ```
 
-### Dependencies
+### Notes
 
-- **GLM** – Vector math
-- **SFML** – Debug rendering and input
-
-### Usage
-
+- The build creates an executable named Zenoa in the build directory.
+- Usage examples are provided in the [`examples/`](examples/) directory.
 - The API is exposed via the interface header: [`src/engine/interface.h`](src/engine/interface.h).
-- Usage examples are provided in the [`examples`](examples/) directory.
 
 ---
 
