@@ -37,8 +37,8 @@
 
 ```bash
 sudo pacman -S git clang cmake make sfml glm
-git clone https://github.com/cianleypoldt/SAT-Impulse-Physics.git
-mkdir Zenoa/build; cd Zenoa/build
+git clone https://github.com/cianleypoldt/zenoa-engine.git
+mkdir zenoa-engine/build; cd zenoa-engine/build
 cmake ..; make
 ./Zenoa
 ```
