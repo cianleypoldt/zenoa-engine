@@ -13,8 +13,7 @@
 <p align="center" style="line-height:1.6;">
  <a href="docs/engine-architecture.md#collision-handling">Collision Handling</a> •
   <a href="docs/engine-architecture.md#physics-model">Physics Model</a> •
-  <a href="docs/engine-architecture.md#design-notes">Design Notes</a> •
-  <a href="#about">About</a>
+  <a href="docs/engine-architecture.md#design-notes">Design Notes</a>
 </p>
 
 <img src="media/50convex_50circle.gif" alt="Piling stability under mass disparity" width="100%" />
@@ -24,18 +23,18 @@
 ### Features
 
 - Convex polygon and circle body support  
-- Impulse-based collision and friction resolution  
+- Impulse-based collision and Coulomb friction resolution
 - Semi-implicit Euler integration
 
-> Note: As of [Zenoa v1](https://github.com/cianleypoldt/RigidBody-Engine/releases/tag/latest),  
+> **Note:** As of [Zenoa v1](https://github.com/cianleypoldt/RigidBody-Engine/releases/tag/latest),  
 > collision callbacks are not yet supported.
 
 ---
 
 ## Build Instructions
 
-Zenoa can be built on most Unix-like systems.<br>
-Before building Zenoa, make sure the following are installed on your system:
+Zenoa runs on most Unix-like systems.<br>
+Before building, make sure the following are installed on your system:
 
 - **Clang (C++17)** – C++ compiler  
 - **CMake** – build system generator  
@@ -59,7 +58,7 @@ make
 - Usage examples are provided in the [`examples/`](examples/) directory.
 - The API is exposed via the interface header: [`src/engine/interface.h`](src/engine/interface.h).
 
-Learn about implementation [here](docs/engine-architecture.md).
+Learn about implementation at [`docs/implementation-details.md`](docs/implementation-details.md).
 
 ---
 
