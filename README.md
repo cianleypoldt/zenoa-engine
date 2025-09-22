@@ -59,7 +59,7 @@ make
 - Usage examples are provided in the [`examples/`](examples/) directory.
 - The API is exposed via the interface header: [`src/engine/interface.h`](src/engine/interface.h).
 
-Read about implementation details [here](docs/engine-architecture.md).
+Learn about implementation details [here](docs/engine-architecture.md).
 
 ---
 
