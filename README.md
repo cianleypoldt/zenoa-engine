@@ -36,12 +36,14 @@
 
 Zenoa can benbuolt on most Unix-like systems.
 
-### Prerequesits
+### Prerequisites
 
- - clang C++17
- - CMake
- - SFML
- - GLM
+Before building Zenoa, make sure the following are installed on your system:
+
+- **C++17 compiler clang**
+- **CMake** – build system generator  
+- **SFML** – for graphics rendering and input  
+- **GLM** – for vector and matrix math
 
 ### Build
 
