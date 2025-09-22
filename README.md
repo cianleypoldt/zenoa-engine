@@ -63,5 +63,4 @@ Learn about implementation [here](docs/engine-architecture.md).
 
 ---
 
-*License:*
 [MIT](LICENSE) © 2025 Cian Leypoldt
