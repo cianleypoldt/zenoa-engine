@@ -40,12 +40,12 @@ Zenoa can benbuolt on most Unix-like systems.
 
 Before building Zenoa, make sure the following are installed on your system:
 
-- **C++17 compiler clang**
+- **Clang (C++17)** – C++ compiler  
 - **CMake** – build system generator  
 - **SFML** – for graphics rendering and input  
 - **GLM** – for vector and matrix math
 
-### Build
+#### Build
 
 ```bash
 git clone https://github.com/cianleypoldt/zenoa-engine.git
@@ -56,7 +56,7 @@ make
 ./Zenoa
 ```
 
-### Notes
+#### Notes
 
 - The build creates an executable named Zenoa in the build directory.
 - Usage examples are provided in the [`examples/`](examples/) directory.
