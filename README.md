@@ -11,9 +11,9 @@
 </p>
 
 <p align="center" style="line-height:1.6;">
- <a href="docs/engine-architecture.md#collision-handling">Collision Handling</a> •
-  <a href="docs/engine-architecture.md#physics-model">Physics Model</a> •
-  <a href="docs/engine-architecture.md#design-notes">Design Notes</a>
+ <a href="docs/implementation-details.md#collision-handling">Collision Handling</a> •
+  <a href="docs/implementation-details.md#physics-model">Physics Model</a> •
+  <a href="docs/implementation-details.md#design-notes">Design Notes</a>
 </p>
 
 <img src="media/50convex_50circle.gif" alt="Piling stability under mass disparity" width="100%" />
