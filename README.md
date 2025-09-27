@@ -4,11 +4,6 @@
   2D rigid-body physics engine focused on modular design and physical stability.<br>
 </p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/C++17-1E90FF?style=for-the-badge&logo=c%2B%2B&logoColor=white" />
-  <img src="https://img.shields.io/badge/SFML-34495E?style=for-the-badge&logo=sfml&logoColor=white" />
-  <img src="https://img.shields.io/badge/GLM-3D9970?style=for-the-badge&logo=circle&logoColor=white" />
-</p>
 
 <p align="center" style="line-height:1.6;">
  <a href="docs/implementation-details.md#collision-handling">Collision Handling</a> •
@@ -16,18 +11,15 @@
   <a href="docs/implementation-details.md#design-notes">Design Notes</a>
 </p>
 
-<img src="media/50convex_50circle.gif" alt="Piling stability under mass disparity" width="100%" />
+<img src="media/50convex_50circle.gif" alt="Piling stability demo" width="100%" />
 
 ---
 
-### Features
+## Features
 
 - Convex polygon and circle body support  
 - Impulse-based collision and Coulomb friction resolution
 - Semi-implicit Euler integration
-
-> **Note:** As of [Zenoa v1](https://github.com/cianleypoldt/RigidBody-Engine/releases/tag/latest),  
-> collision callbacks are not yet supported.
 
 ---
 
@@ -52,9 +44,8 @@ make
 ./Zenoa
 ```
 
-### Notes
+### Documentation
 
-- The build creates an executable named Zenoa in the build directory.
 - Usage examples are provided in the [`examples/`](examples/) directory.
 - The API is exposed via the interface header: [`src/engine/interface.h`](src/engine/interface.h).
 
@@ -62,4 +53,11 @@ Learn about implementation at [`docs/implementation-details.md`](docs/implementa
 
 ---
 
-[MIT](LICENSE) © 2025 Cian Leypoldt
+## Project Status
+Built in 2025 at age 17 as a learning project in physics simulation and C++ architecture.  
+The repository is archived and not under active development.
+
+
+---
+
+[MIT](LICENSE) © Cian Leypoldt
